@@ -91,7 +91,7 @@ struct AppContainer {
 
 struct RootView: View {
     let container: AppContainer
-    var body: some View { CaptureView(container: container) }
+    var body: some View { Text("Gázóra leolvasás") }
 }
 ```
 
