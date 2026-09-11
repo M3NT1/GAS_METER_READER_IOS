@@ -1,13 +1,11 @@
 import Foundation
 import SwiftData
 
-protocol PhotoArchive: Sendable {}
 protocol InferenceService: Sendable {}
 protocol CredentialStore: Sendable {}
 protocol HomeAssistantClient: Sendable {}
 protocol TrainingService: Sendable {}
 
-final class LocalPhotoArchive: PhotoArchive, @unchecked Sendable {}
 final class StubInferenceService: InferenceService, @unchecked Sendable {}
 final class ONNXInferenceService: InferenceService, @unchecked Sendable {}
 final class KeychainCredentialStore: CredentialStore, @unchecked Sendable {}

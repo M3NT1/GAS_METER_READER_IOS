@@ -179,7 +179,7 @@ Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -de
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit the audited reading model.**
+- [x] **Step 6: Commit the audited reading model.**
 
 ```bash
 git add GasPhotoIOS/Domain GasPhotoIOS/Data GasPhotoIOSTests/ReadingValidatorTests.swift GasPhotoIOSTests/SwiftDataReadingRepositoryTests.swift
@@ -199,7 +199,7 @@ git commit -m "feat: add local reading audit model"
 - Produces: `PhotoReference(id:fileName:sha256:capturedAt:)`, `PhotoArchive.storeOriginal(_:)`, and `CameraCaptureService.capture()`.
 - Consumes: `CryptoKit.SHA256`, ImageIO EXIF metadata, and `MeterReading.photoID`.
 
-- [ ] **Step 1: Write a failing metadata fixture test.**
+- [x] **Step 1: Write a failing metadata fixture test.**
 
 ```swift
 func testReadsOriginalSubsecondCaptureTimeWithOffset() throws {
@@ -208,13 +208,13 @@ func testReadsOriginalSubsecondCaptureTimeWithOffset() throws {
 }
 ```
 
-- [ ] **Step 2: Run the fixture test to verify missing reader failure.**
+- [x] **Step 2: Run the fixture test to verify missing reader failure.**
 
 Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' -only-testing:GasPhotoIOSTests/ImageMetadataReaderTests`
 
 Expected: FAIL with unresolved `ImageMetadataReader`.
 
-- [ ] **Step 3: Implement ImageIO metadata extraction and archive storage.**
+- [x] **Step 3: Implement ImageIO metadata extraction and archive storage.**
 
 Use `CGImageSourceCopyPropertiesAtIndex`, parse `DateTimeOriginal`, `OffsetTimeOriginal`, and `SubSecTimeOriginal`, and reject data that lacks an offset-aware captured date. Write the exact original bytes below `Application Support/originals/<SHA256>.<extension>` using complete file protection. Return a relative path only; never expose an absolute sandbox path to SwiftData.
 
@@ -225,11 +225,11 @@ protocol PhotoArchive: Sendable {
 }
 ```
 
-- [ ] **Step 4: Implement `AVCapturePhotoOutput` capture without recompressing the returned image data.**
+- [x] **Step 4: Implement `AVCapturePhotoOutput` capture without recompressing the returned image data.**
 
 The capture delegate passes `AVCapturePhoto.fileDataRepresentation()` directly to `PhotoArchive.storeOriginal`; photo-library imports use the original resource data when available and are rejected when a capture timestamp cannot be proven.
 
-- [ ] **Step 5: Run the photo tests.**
+- [x] **Step 5: Run the photo tests.**
 
 Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' -only-testing:GasPhotoIOSTests/ImageMetadataReaderTests -only-testing:GasPhotoIOSTests/PhotoArchiveTests`
 
