@@ -1,0 +1,2 @@
+#include? "../Pods/Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.debug.xcconfig"
+#include "BuildSettings.xcconfig"

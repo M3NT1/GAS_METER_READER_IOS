@@ -6,7 +6,7 @@
 
 **Architecture:** A SwiftUI app owns presentation and calls focused services through protocols: photo/archive, inference, reading repository, credentials, Home Assistant transport, and training. SwiftData stores only local audit metadata; original images and activated model files are kept in Application Support. Objective-C++ bridges Swift to ONNX Runtime Mobile inference and training APIs so business rules stay unit-testable in Swift.
 
-**Tech Stack:** Swift 6.3, SwiftUI, SwiftData, AVFoundation, ImageIO, CryptoKit, Security/Keychain, AuthenticationServices, URLSession, XCTest, CocoaPods (`onnxruntime-objc` and `onnxruntime-training-c`), Objective-C++.
+**Tech Stack:** Swift 6.3, SwiftUI, SwiftData, AVFoundation, ImageIO, CryptoKit, Security/Keychain, AuthenticationServices, URLSession, XCTest, CocoaPods (`onnxruntime-objc` for inference), and an audited ONNX Runtime Training build/artifact bundle for later on-device training, Objective-C++.
 
 **Spec:** `docs/superpowers/specs/2026-09-11-ios-gas-meter-reader-design.md`
 
@@ -35,12 +35,14 @@
 - Create: `GasPhotoIOS/App/AppContainer.swift`
 - Create: `GasPhotoIOS/App/RootView.swift`
 - Create: `GasPhotoIOSTests/AppContainerTests.swift`
+- Create: `Config/BuildSettings.xcconfig`, `Config/Debug.xcconfig`, `Config/Release.xcconfig`
+- Create: `Scripts/create_xcode_project.rb`, `Scripts/create_shared_scheme.rb`, `Scripts/configure_xcode_project.rb`, `Scripts/sync_xcode_sources.rb`
 
 **Interfaces:**
 - Produces: `AppContainer` with injectable `readingRepository`, `photoArchive`, `inferenceService`, `credentialStore`, `homeAssistantClient`, and `trainingService` dependencies.
 - Produces: application target `GasPhotoIOS` and XCTest bundle `GasPhotoIOSTests`.
 
-- [ ] **Step 1: Write the failing container composition test.**
+- [x] **Step 1: Write the failing container composition test.**
 
 ```swift
 func testLiveContainerUsesDistinctConcreteServices() {
@@ -50,7 +52,7 @@ func testLiveContainerUsesDistinctConcreteServices() {
 }
 ```
 
-- [ ] **Step 2: Run the target test to verify it fails because the application module is absent.**
+- [x] **Step 2: Run the target test to verify it fails because the application module is absent.**
 
 Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' -only-testing:GasPhotoIOSTests/AppContainerTests/testLiveContainerUsesDistinctConcreteServices`
 
@@ -63,7 +65,6 @@ platform :ios, '26.0'
 use_frameworks! :linkage => :static
 target 'GasPhotoIOS' do
   pod 'onnxruntime-objc'
-  pod 'onnxruntime-training-c'
 end
 ```
 
@@ -75,9 +76,11 @@ struct GasPhotoIOSApp: App {
 }
 ```
 
-Create one manual `.xcodeproj` application target, add the Pods workspace, set `IPHONEOS_DEPLOYMENT_TARGET = 26.0`, enable `SWIFT_STRICT_CONCURRENCY = complete`, and add all later `GasPhotoIOS/**` sources through synchronized folders. Keep the bundle identifier in an `.xcconfig` file, not source code.
+Create one manual `.xcodeproj` application target, add the Pods workspace, set `IPHONEOS_DEPLOYMENT_TARGET = 26.0`, enable `SWIFT_STRICT_CONCURRENCY = complete`, and add later Swift sources through the checked-in source-sync script. Keep the bundle identifier in an `.xcconfig` file, not source code. Training integration is deliberately deferred until its required runtime build and training artifacts have been verified.
 
-- [ ] **Step 4: Implement the smallest container that satisfies the test.**
+- [x] **Step 3: Create the Xcode app/test targets and CocoaPods inference dependency.**
+
+- [x] **Step 4: Implement the smallest container that satisfies the test.**
 
 ```swift
 struct AppContainer {
@@ -95,7 +98,7 @@ struct RootView: View {
 }
 ```
 
-- [ ] **Step 5: Re-run the target test, then build the app.**
+- [x] **Step 5: Re-run the target test, then build the app.**
 
 Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' -only-testing:GasPhotoIOSTests/AppContainerTests`
 
