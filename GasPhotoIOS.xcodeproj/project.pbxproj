@@ -12,6 +12,7 @@
 		14AF86F34CD34E9941043E01 /* InferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992EFA0046EC8A206DC91702 /* InferenceService.swift */; };
 		243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */; };
 		3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */; };
+		38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */; };
 		4571EA6A02E301B11FBB1269 /* ImageMetadataReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */; };
 		4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */; };
 		4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */ = {isa = PBXBuildFile; fileRef = F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */; };
@@ -26,7 +27,10 @@
 		AD6CA90B2838F36D494C89C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */; };
 		C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85715E93D44CB82FB34564 /* RootView.swift */; };
+		CD5B507D183A670417C91653 /* ONNXRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF99951854638D414690828 /* ONNXRuntime.swift */; };
 		D426DB4B7C02D82A5574816B /* ImageMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */; };
+		D5CBA00F005885BDCD086BBE /* ModelBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */; };
+		D84E4AC9361C937B54FEE9CC /* ORTInferenceBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */; };
 		E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */; };
 		EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */; };
 		F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */; };
@@ -57,22 +61,28 @@
 		56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingValidatorTests.swift; sourceTree = "<group>"; };
 		64FFA69D3E581647A53AFD72 /* Pods-GasPhotoIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.release.xcconfig"; sourceTree = "<group>"; };
+		66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = ORTInferenceBridge.mm; path = Inference/ORTInferenceBridge.mm; sourceTree = "<group>"; };
 		6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftDataReadingRepositoryTests.swift; sourceTree = "<group>"; };
 		7C71CD57169C261974A0DFEE /* Reading.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reading.swift; path = Domain/Reading.swift; sourceTree = "<group>"; };
+		7E2B938AA9088A66F35E7213 /* GasPhotoIOS-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GasPhotoIOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImagePreprocessorTests.swift; sourceTree = "<group>"; };
 		7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "digit-classifier-active.onnx"; path = "Resources/Models/digit-classifier-active.onnx"; sourceTree = "<group>"; };
+		8AF99951854638D414690828 /* ONNXRuntime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ONNXRuntime.swift; path = Inference/ONNXRuntime.swift; sourceTree = "<group>"; };
 		8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppContainerTests.swift; sourceTree = "<group>"; };
 		985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageMetadataReader.swift; path = Photos/ImageMetadataReader.swift; sourceTree = "<group>"; };
+		9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ONNXRuntimeTests.swift; sourceTree = "<group>"; };
 		992EFA0046EC8A206DC91702 /* InferenceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InferenceService.swift; path = Inference/InferenceService.swift; sourceTree = "<group>"; };
 		9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataReadingRepository.swift; path = Data/SwiftDataReadingRepository.swift; sourceTree = "<group>"; };
 		9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhotoArchiveTests.swift; sourceTree = "<group>"; };
 		A1D2C3EA5CF679746A9ECB5F /* Pods-GasPhotoIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B746235883114E787EFEF222 /* ORTInferenceBridge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ORTInferenceBridge.h; path = Inference/ORTInferenceBridge.h; sourceTree = "<group>"; };
 		BB85715E93D44CB82FB34564 /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = App/RootView.swift; sourceTree = "<group>"; };
 		C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoArchive.swift; path = Photos/PhotoArchive.swift; sourceTree = "<group>"; };
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePreprocessor.swift; path = Inference/ImagePreprocessor.swift; sourceTree = "<group>"; };
 		D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraCaptureService.swift; path = Photos/CameraCaptureService.swift; sourceTree = "<group>"; };
 		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
+		E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelBundle.swift; path = Inference/ModelBundle.swift; sourceTree = "<group>"; };
 		E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageMetadataReaderTests.swift; sourceTree = "<group>"; };
 		E7A0E76E453223BA64927F63 /* GasPhotoIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GasPhotoIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1DB3D1B091705049838DD23 /* AppContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppContainer.swift; path = App/AppContainer.swift; sourceTree = "<group>"; };
@@ -139,6 +149,11 @@
 				7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */,
 				F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */,
 				992EFA0046EC8A206DC91702 /* InferenceService.swift */,
+				E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */,
+				66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */,
+				7E2B938AA9088A66F35E7213 /* GasPhotoIOS-Bridging-Header.h */,
+				B746235883114E787EFEF222 /* ORTInferenceBridge.h */,
+				8AF99951854638D414690828 /* ONNXRuntime.swift */,
 			);
 			name = GasPhotoIOS;
 			path = GasPhotoIOS;
@@ -196,6 +211,7 @@
 				9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */,
 				7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */,
 				4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */,
+				9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */,
 			);
 			name = GasPhotoIOSTests;
 			path = GasPhotoIOSTests;
@@ -349,6 +365,7 @@
 				F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */,
 				3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */,
 				0C9A8EC8C3F2C23CF36E78C3 /* InferenceServiceTests.swift in Sources */,
+				38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +385,9 @@
 				ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */,
 				90C7B67A8C08FBBE2791285A /* ImagePreprocessor.swift in Sources */,
 				14AF86F34CD34E9941043E01 /* InferenceService.swift in Sources */,
+				D5CBA00F005885BDCD086BBE /* ModelBundle.swift in Sources */,
+				D84E4AC9361C937B54FEE9CC /* ORTInferenceBridge.mm in Sources */,
+				CD5B507D183A670417C91653 /* ONNXRuntime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,10 +409,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/GasPhotoIOS/GasPhotoIOS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -404,10 +426,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/GasPhotoIOS/GasPhotoIOS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;

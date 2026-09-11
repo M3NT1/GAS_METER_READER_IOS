@@ -14,11 +14,17 @@ def sync_sources(project, group_name, directory, target_name)
     .filter_map { |child| child.real_path.to_s if child.respond_to?(:real_path) }
     .to_set
 
-  Dir.glob(File.join(directory, '**', '*.swift')).sort.each do |path|
+  Dir.glob(File.join(directory, '**', '*.{swift,mm}')).sort.each do |path|
     next if known_paths.include?(path)
 
     reference = group.new_file(path)
     target.source_build_phase.add_file_reference(reference)
+  end
+
+  Dir.glob(File.join(directory, '**', '*.h')).sort.each do |path|
+    next if known_paths.include?(path)
+
+    group.new_file(path)
   end
 
   Dir.glob(File.join(directory, '**', '*.onnx')).sort.each do |path|
