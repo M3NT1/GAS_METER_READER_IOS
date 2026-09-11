@@ -27,6 +27,13 @@ final class ReviewViewModelTests: XCTestCase {
         XCTAssertEqual(stored.approvedDigits, "01817.759")
     }
 
+    func testApprovalButtonEnablesOnlyForExactlyEightDigits() {
+        let model = ReviewViewModel(reading: makeReading(), repository: InMemoryReadingRepository())
+
+        XCTAssertFalse(model.canApprove(displayDigits: "1817.759"))
+        XCTAssertTrue(model.canApprove(displayDigits: "01817.759"))
+    }
+
     private func makeReading() -> MeterReading {
         MeterReading(
             id: UUID(),

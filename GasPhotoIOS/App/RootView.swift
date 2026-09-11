@@ -2,12 +2,20 @@ import SwiftUI
 
 struct RootView: View {
     let container: AppContainer
+    @State private var capture: CaptureViewModel
+
+    init(container: AppContainer) {
+        self.container = container
+        _capture = State(initialValue: CaptureViewModel(container: container))
+    }
 
     var body: some View {
-        ContentUnavailableView(
-            "Gázóra leolvasás",
-            systemImage: "gauge.with.dots.needle.50percent",
-            description: Text("Az alkalmazás indításra kész.")
-        )
+        NavigationStack {
+            if let review = capture.review {
+                ReviewView(model: review.model, photoURL: review.photoURL)
+            } else {
+                CaptureView(model: capture)
+            }
+        }
     }
 }
