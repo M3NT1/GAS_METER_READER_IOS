@@ -13,7 +13,9 @@
 		243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */; };
 		3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */; };
 		38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */; };
+		3EB6E9A4DA5582E0E79771C5 /* HomeAssistantResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55107C5A917A02B6DB15908 /* HomeAssistantResponseDecoder.swift */; };
 		4571EA6A02E301B11FBB1269 /* ImageMetadataReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */; };
+		45E796E2876A30F5564D1801 /* HomeAssistantResponseDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */; };
 		4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */; };
 		4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */ = {isa = PBXBuildFile; fileRef = F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */; };
 		54364DB541F122608369E259 /* PhotoArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */; };
@@ -93,6 +95,7 @@
 		CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePreprocessor.swift; path = Inference/ImagePreprocessor.swift; sourceTree = "<group>"; };
 		D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraCaptureService.swift; path = Photos/CameraCaptureService.swift; sourceTree = "<group>"; };
 		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
+		D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantResponseDecoderTests.swift; sourceTree = "<group>"; };
 		E01B4BD076964A406B00BA3F /* CaptureViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureViewModel.swift; path = Features/Capture/CaptureViewModel.swift; sourceTree = "<group>"; };
 		E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelBundle.swift; path = Inference/ModelBundle.swift; sourceTree = "<group>"; };
 		E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageMetadataReaderTests.swift; sourceTree = "<group>"; };
@@ -100,6 +103,7 @@
 		F1DB3D1B091705049838DD23 /* AppContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppContainer.swift; path = App/AppContainer.swift; sourceTree = "<group>"; };
 		F2676F0D023030C2B6731A98 /* Pods-GasPhotoIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "window-detector-best.onnx"; path = "Resources/Models/window-detector-best.onnx"; sourceTree = "<group>"; };
+		F55107C5A917A02B6DB15908 /* HomeAssistantResponseDecoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantResponseDecoder.swift; path = HomeAssistant/HomeAssistantResponseDecoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 				8526B5303533654CF80143DE /* WindowEditorView.swift */,
 				BBF70B63B6B19885EBE3D531 /* CaptureView.swift */,
 				E01B4BD076964A406B00BA3F /* CaptureViewModel.swift */,
+				F55107C5A917A02B6DB15908 /* HomeAssistantResponseDecoder.swift */,
 			);
 			name = GasPhotoIOS;
 			path = GasPhotoIOS;
@@ -230,6 +235,7 @@
 				4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */,
 				9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */,
 				8D0998D5DDCDABC7650B6BAB /* ReviewViewModelTests.swift */,
+				D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */,
 			);
 			name = GasPhotoIOSTests;
 			path = GasPhotoIOSTests;
@@ -385,6 +391,7 @@
 				0C9A8EC8C3F2C23CF36E78C3 /* InferenceServiceTests.swift in Sources */,
 				38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */,
 				552C57A75A4B74AF9C334D47 /* ReviewViewModelTests.swift in Sources */,
+				45E796E2876A30F5564D1801 /* HomeAssistantResponseDecoderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +419,7 @@
 				71AC044032C76F461230BF23 /* WindowEditorView.swift in Sources */,
 				D02656B1A297E9C82C2099AF /* CaptureView.swift in Sources */,
 				86D6508DAEBC0F2C6152793D /* CaptureViewModel.swift in Sources */,
+				3EB6E9A4DA5582E0E79771C5 /* HomeAssistantResponseDecoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
