@@ -20,6 +20,13 @@ def sync_sources(project, group_name, directory, target_name)
     reference = group.new_file(path)
     target.source_build_phase.add_file_reference(reference)
   end
+
+  Dir.glob(File.join(directory, '**', '*.onnx')).sort.each do |path|
+    next if known_paths.include?(path)
+
+    reference = group.new_file(path)
+    target.resources_build_phase.add_file_reference(reference)
+  end
 end
 
 sync_sources(project, 'GasPhotoIOS', File.expand_path('../GasPhotoIOS', __dir__), 'GasPhotoIOS')

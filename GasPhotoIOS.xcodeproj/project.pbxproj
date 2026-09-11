@@ -8,20 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		0375CE2F853EDD2CE192DB7C /* Pods_GasPhotoIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346DD9FA336C67C2E6D86A3E /* Pods_GasPhotoIOSTests.framework */; };
+		0C9A8EC8C3F2C23CF36E78C3 /* InferenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */; };
+		14AF86F34CD34E9941043E01 /* InferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992EFA0046EC8A206DC91702 /* InferenceService.swift */; };
 		243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */; };
+		3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */; };
 		4571EA6A02E301B11FBB1269 /* ImageMetadataReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */; };
 		4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */; };
+		4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */ = {isa = PBXBuildFile; fileRef = F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */; };
 		54364DB541F122608369E259 /* PhotoArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */; };
 		54543D0F389460519525D497 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB3D1B091705049838DD23 /* AppContainer.swift */; };
 		67FB2C507700E8F3BB4F6EFD /* Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C71CD57169C261974A0DFEE /* Reading.swift */; };
 		6B7D7174AB3C3E269460B148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */; };
 		82F569FAE9EB57BEC19C9A81 /* AppContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */; };
+		90C7B67A8C08FBBE2791285A /* ImagePreprocessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */; };
 		95F1C06D36B95FDB5B76F5DB /* GasPhotoIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */; };
 		AD6CA90B2838F36D494C89C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */; };
 		C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85715E93D44CB82FB34564 /* RootView.swift */; };
 		D426DB4B7C02D82A5574816B /* ImageMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */; };
+		E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */; };
 		EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */; };
 		F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */; };
 		F86FF76EFF593C1A224E5A91 /* SwiftDataReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */; };
@@ -47,25 +53,31 @@
 		3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingValidator.swift; path = Domain/ReadingValidator.swift; sourceTree = "<group>"; };
 		430D2B50CF73EE9C1C72B5A0 /* Release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		44277C478B0A08980C3E1506 /* GasPhotoIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasPhotoIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InferenceServiceTests.swift; sourceTree = "<group>"; };
 		56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingValidatorTests.swift; sourceTree = "<group>"; };
 		64FFA69D3E581647A53AFD72 /* Pods-GasPhotoIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.release.xcconfig"; sourceTree = "<group>"; };
 		6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftDataReadingRepositoryTests.swift; sourceTree = "<group>"; };
 		7C71CD57169C261974A0DFEE /* Reading.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reading.swift; path = Domain/Reading.swift; sourceTree = "<group>"; };
+		7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImagePreprocessorTests.swift; sourceTree = "<group>"; };
+		7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "digit-classifier-active.onnx"; path = "Resources/Models/digit-classifier-active.onnx"; sourceTree = "<group>"; };
 		8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppContainerTests.swift; sourceTree = "<group>"; };
 		985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageMetadataReader.swift; path = Photos/ImageMetadataReader.swift; sourceTree = "<group>"; };
+		992EFA0046EC8A206DC91702 /* InferenceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InferenceService.swift; path = Inference/InferenceService.swift; sourceTree = "<group>"; };
 		9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataReadingRepository.swift; path = Data/SwiftDataReadingRepository.swift; sourceTree = "<group>"; };
 		9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhotoArchiveTests.swift; sourceTree = "<group>"; };
 		A1D2C3EA5CF679746A9ECB5F /* Pods-GasPhotoIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB85715E93D44CB82FB34564 /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = App/RootView.swift; sourceTree = "<group>"; };
 		C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoArchive.swift; path = Photos/PhotoArchive.swift; sourceTree = "<group>"; };
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePreprocessor.swift; path = Inference/ImagePreprocessor.swift; sourceTree = "<group>"; };
 		D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraCaptureService.swift; path = Photos/CameraCaptureService.swift; sourceTree = "<group>"; };
 		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
 		E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageMetadataReaderTests.swift; sourceTree = "<group>"; };
 		E7A0E76E453223BA64927F63 /* GasPhotoIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GasPhotoIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1DB3D1B091705049838DD23 /* AppContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppContainer.swift; path = App/AppContainer.swift; sourceTree = "<group>"; };
 		F2676F0D023030C2B6731A98 /* Pods-GasPhotoIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "window-detector-best.onnx"; path = "Resources/Models/window-detector-best.onnx"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +135,10 @@
 				985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */,
 				C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */,
 				D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */,
+				CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */,
+				7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */,
+				F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */,
+				992EFA0046EC8A206DC91702 /* InferenceService.swift */,
 			);
 			name = GasPhotoIOS;
 			path = GasPhotoIOS;
@@ -178,6 +194,8 @@
 				6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */,
 				E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */,
 				9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */,
+				7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */,
+				4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */,
 			);
 			name = GasPhotoIOSTests;
 			path = GasPhotoIOSTests;
@@ -258,6 +276,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */,
+				4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +347,8 @@
 				7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */,
 				4571EA6A02E301B11FBB1269 /* ImageMetadataReaderTests.swift in Sources */,
 				F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */,
+				3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */,
+				0C9A8EC8C3F2C23CF36E78C3 /* InferenceServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +366,8 @@
 				D426DB4B7C02D82A5574816B /* ImageMetadataReader.swift in Sources */,
 				54364DB541F122608369E259 /* PhotoArchive.swift in Sources */,
 				ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */,
+				90C7B67A8C08FBBE2791285A /* ImagePreprocessor.swift in Sources */,
+				14AF86F34CD34E9941043E01 /* InferenceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

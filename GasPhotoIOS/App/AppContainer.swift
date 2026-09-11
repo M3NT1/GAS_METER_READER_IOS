@@ -1,13 +1,13 @@
 import Foundation
 import SwiftData
 
-protocol InferenceService: Sendable {}
+protocol ReadingInferenceService: Sendable {}
 protocol CredentialStore: Sendable {}
 protocol HomeAssistantClient: Sendable {}
 protocol TrainingService: Sendable {}
 
-final class StubInferenceService: InferenceService, @unchecked Sendable {}
-final class ONNXInferenceService: InferenceService, @unchecked Sendable {}
+final class StubInferenceService: ReadingInferenceService, @unchecked Sendable {}
+final class ONNXInferenceService: ReadingInferenceService, @unchecked Sendable {}
 final class KeychainCredentialStore: CredentialStore, @unchecked Sendable {}
 final class URLSessionHomeAssistantClient: HomeAssistantClient, @unchecked Sendable {}
 final class LocalTrainingService: TrainingService, @unchecked Sendable {}
@@ -16,7 +16,7 @@ final class LocalTrainingService: TrainingService, @unchecked Sendable {}
 struct AppContainer {
     let readingRepository: any ReadingRepository
     let photoArchive: any PhotoArchive
-    let inferenceService: any InferenceService
+    let inferenceService: any ReadingInferenceService
     let credentialStore: any CredentialStore
     let homeAssistantClient: any HomeAssistantClient
     let trainingService: any TrainingService
