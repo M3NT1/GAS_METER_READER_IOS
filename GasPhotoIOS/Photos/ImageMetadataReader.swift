@@ -17,11 +17,11 @@ enum ImageMetadataReader {
               let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any],
               let exif = properties[kCGImagePropertyExifDictionary] as? [CFString: Any],
               let original = exif[kCGImagePropertyExifDateTimeOriginal] as? String,
-              let offset = exif["OffsetTimeOriginal" as CFString] as? String else {
+              let offset = exif[kCGImagePropertyExifOffsetTimeOriginal] as? String else {
             throw ImageMetadataError.missingCaptureTime
         }
 
-        let subsecond = exif["SubSecTimeOriginal" as CFString] as? String ?? "0"
+        let subsecond = exif[kCGImagePropertyExifSubsecTimeOriginal] as? String ?? "0"
         return PhotoCaptureMetadata(capturedAt: try captureDate(
             original: original,
             offset: offset,

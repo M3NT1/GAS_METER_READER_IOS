@@ -25,7 +25,14 @@ final class ReviewViewModel {
             var updated = reading
             updated.approvedDigits = approved.displayValue
             updated.status = .pendingSync
-            try await repository.insert(updated)
+            updated.revision += 1
+
+            do {
+                try await repository.update(updated, expectedRevision: reading.revision)
+            } catch ReadingRepositoryError.readingNotFound {
+                updated.revision = reading.revision
+                try await repository.insert(updated)
+            }
             reading = updated
             lastError = nil
         } catch {

@@ -38,8 +38,8 @@ final class PhotoArchiveTests: XCTestCase {
         let properties: [CFString: Any] = [
             kCGImagePropertyExifDictionary: [
                 kCGImagePropertyExifDateTimeOriginal: "2026:06:18 22:43:42",
-                "OffsetTimeOriginal": "+02:00",
-                "SubSecTimeOriginal": "865"
+                kCGImagePropertyExifOffsetTimeOriginal: "+02:00",
+                kCGImagePropertyExifSubsecTimeOriginal: "865"
             ]
         ]
         CGImageDestinationAddImage(destination, image, properties as CFDictionary)

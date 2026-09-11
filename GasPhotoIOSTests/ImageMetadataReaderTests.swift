@@ -39,8 +39,8 @@ final class ImageMetadataReaderTests: XCTestCase {
         let properties: [CFString: Any] = [
             kCGImagePropertyExifDictionary: [
                 kCGImagePropertyExifDateTimeOriginal: dateTimeOriginal,
-                "OffsetTimeOriginal": offsetTimeOriginal,
-                "SubSecTimeOriginal": subsecondTimeOriginal
+                kCGImagePropertyExifOffsetTimeOriginal: offsetTimeOriginal,
+                kCGImagePropertyExifSubsecTimeOriginal: subsecondTimeOriginal
             ]
         ]
         CGImageDestinationAddImage(destination, image, properties as CFDictionary)

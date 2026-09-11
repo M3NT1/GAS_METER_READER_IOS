@@ -27,6 +27,22 @@ final class ReviewViewModelTests: XCTestCase {
         XCTAssertEqual(stored.approvedDigits, "01817.759")
     }
 
+    func testApproveUpdatesAnExistingCapturedReadingToPendingSync() async throws {
+        let repository = InMemoryReadingRepository()
+        let captured = makeReading()
+        try await repository.insert(captured)
+        let model = ReviewViewModel(reading: captured, repository: repository)
+
+        await model.approve(displayDigits: "01817.759")
+
+        let stored = try await repository.reading(id: captured.id)
+        XCTAssertEqual(model.status, .pendingSync)
+        XCTAssertEqual(model.reading.revision, 1)
+        XCTAssertEqual(stored.revision, 1)
+        XCTAssertEqual(stored.status, .pendingSync)
+        XCTAssertEqual(stored.approvedDigits, "01817.759")
+    }
+
     func testApprovalButtonEnablesOnlyForExactlyEightDigits() {
         let model = ReviewViewModel(reading: makeReading(), repository: InMemoryReadingRepository())
 
