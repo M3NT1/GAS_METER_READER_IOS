@@ -125,7 +125,7 @@ git commit -m "feat: bootstrap iOS gas photo app"
 **Interfaces:**
 - Produces: `MeterReading`, `ReadingStatus`, `NormalizedRect`, `DigitProposal`, `ReadingValidator`, and `ReadingRepository`.
 
-- [ ] **Step 1: Write failing validator tests for display form, upload value, and approval transition.**
+- [x] **Step 1: Write failing validator tests for display form, upload value, and approval transition.**
 
 ```swift
 func testApprovalPreservesEightDigitsButNormalizesUploadValue() throws {
@@ -139,13 +139,13 @@ func testApprovalRejectsWrongDigitShape() {
 }
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail because the domain types are absent.**
+- [x] **Step 2: Run the tests to verify they fail because the domain types are absent.**
 
 Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' -only-testing:GasPhotoIOSTests/ReadingValidatorTests`
 
 Expected: FAIL with unresolved `ReadingValidator`.
 
-- [ ] **Step 3: Implement the immutable domain model and validator.**
+- [x] **Step 3: Implement the immutable domain model and validator.**
 
 ```swift
 enum ReadingStatus: String, Codable { case needsReview, positionIdentified, counterRecognized, pendingSync, synced }
@@ -160,7 +160,7 @@ struct MeterReading: Identifiable, Codable, Equatable {
 
 `ReadingValidator.approvedDigits(_:)` must accept exactly `[0-9]{5}.[0-9]{3}`, retain the display value, and produce upload digits by stripping leading zeroes from the integer portion while leaving at least one integer digit.
 
-- [ ] **Step 4: Add a SwiftData-backed repository and red-green tests for revision-safe updates.**
+- [x] **Step 4: Add a SwiftData-backed repository and red-green tests for revision-safe updates.**
 
 ```swift
 protocol ReadingRepository: Sendable {
@@ -173,7 +173,7 @@ protocol ReadingRepository: Sendable {
 
 The update implementation must increment `revision` only after `expectedRevision` equals the stored revision; mismatches throw `ReadingRepositoryError.staleRevision`.
 
-- [ ] **Step 5: Run focused domain and persistence tests.**
+- [x] **Step 5: Run focused domain and persistence tests.**
 
 Run: `xcodebuild test -workspace GasPhotoIOS.xcworkspace -scheme GasPhotoIOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max' -only-testing:GasPhotoIOSTests/ReadingValidatorTests -only-testing:GasPhotoIOSTests/SwiftDataReadingRepositoryTests`
 

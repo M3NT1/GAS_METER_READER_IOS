@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		0375CE2F853EDD2CE192DB7C /* Pods_GasPhotoIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346DD9FA336C67C2E6D86A3E /* Pods_GasPhotoIOSTests.framework */; };
+		243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */; };
+		4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */; };
 		54543D0F389460519525D497 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB3D1B091705049838DD23 /* AppContainer.swift */; };
+		67FB2C507700E8F3BB4F6EFD /* Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C71CD57169C261974A0DFEE /* Reading.swift */; };
 		6B7D7174AB3C3E269460B148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
+		7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */; };
 		82F569FAE9EB57BEC19C9A81 /* AppContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */; };
 		95F1C06D36B95FDB5B76F5DB /* GasPhotoIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */; };
 		AD6CA90B2838F36D494C89C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85715E93D44CB82FB34564 /* RootView.swift */; };
+		EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */; };
+		F86FF76EFF593C1A224E5A91 /* SwiftDataReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */; };
 		FC040E3D1BC4A43EB9E1E821 /* Pods_GasPhotoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,14 +39,20 @@
 		27A128588490D9709D87CC53 /* BuildSettings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BuildSettings.xcconfig; sourceTree = "<group>"; };
 		2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GasPhotoIOSApp.swift; path = App/GasPhotoIOSApp.swift; sourceTree = "<group>"; };
 		346DD9FA336C67C2E6D86A3E /* Pods_GasPhotoIOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingValidator.swift; path = Domain/ReadingValidator.swift; sourceTree = "<group>"; };
 		430D2B50CF73EE9C1C72B5A0 /* Release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		44277C478B0A08980C3E1506 /* GasPhotoIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasPhotoIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingValidatorTests.swift; sourceTree = "<group>"; };
 		64FFA69D3E581647A53AFD72 /* Pods-GasPhotoIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.release.xcconfig"; sourceTree = "<group>"; };
+		6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftDataReadingRepositoryTests.swift; sourceTree = "<group>"; };
+		7C71CD57169C261974A0DFEE /* Reading.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reading.swift; path = Domain/Reading.swift; sourceTree = "<group>"; };
 		8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppContainerTests.swift; sourceTree = "<group>"; };
+		9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataReadingRepository.swift; path = Data/SwiftDataReadingRepository.swift; sourceTree = "<group>"; };
 		A1D2C3EA5CF679746A9ECB5F /* Pods-GasPhotoIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB85715E93D44CB82FB34564 /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = App/RootView.swift; sourceTree = "<group>"; };
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
 		E7A0E76E453223BA64927F63 /* GasPhotoIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GasPhotoIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1DB3D1B091705049838DD23 /* AppContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppContainer.swift; path = App/AppContainer.swift; sourceTree = "<group>"; };
 		F2676F0D023030C2B6731A98 /* Pods-GasPhotoIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -94,6 +106,10 @@
 				F1DB3D1B091705049838DD23 /* AppContainer.swift */,
 				2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */,
 				BB85715E93D44CB82FB34564 /* RootView.swift */,
+				7C71CD57169C261974A0DFEE /* Reading.swift */,
+				3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */,
+				9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */,
+				D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */,
 			);
 			name = GasPhotoIOS;
 			path = GasPhotoIOS;
@@ -145,6 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */,
+				5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */,
+				6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */,
 			);
 			name = GasPhotoIOSTests;
 			path = GasPhotoIOSTests;
@@ -290,6 +308,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				82F569FAE9EB57BEC19C9A81 /* AppContainerTests.swift in Sources */,
+				EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */,
+				7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +320,10 @@
 				54543D0F389460519525D497 /* AppContainer.swift in Sources */,
 				95F1C06D36B95FDB5B76F5DB /* GasPhotoIOSApp.swift in Sources */,
 				C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */,
+				67FB2C507700E8F3BB4F6EFD /* Reading.swift in Sources */,
+				243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */,
+				F86FF76EFF593C1A224E5A91 /* SwiftDataReadingRepository.swift in Sources */,
+				4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
