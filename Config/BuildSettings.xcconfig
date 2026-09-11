@@ -3,4 +3,3 @@ PRODUCT_BUNDLE_IDENTIFIER = hu.m3nt1.gasphoto.ios
 SWIFT_VERSION = 6.0
 SWIFT_STRICT_CONCURRENCY = complete
 PODS_PODFILE_DIR_PATH = ${SRCROOT}
-INFOPLIST_KEY_NSCameraUsageDescription = A gázóra leolvasásához a kamera eredeti fényképére van szükség.

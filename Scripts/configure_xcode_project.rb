@@ -24,6 +24,8 @@ app_target.build_configurations.each do |configuration|
   configuration.build_settings.delete('IPHONEOS_DEPLOYMENT_TARGET')
   configuration.build_settings.delete('SWIFT_VERSION')
   configuration.build_settings.delete('SWIFT_STRICT_CONCURRENCY')
+  configuration.build_settings['INFOPLIST_FILE'] = 'GasPhotoIOS/Info.plist'
+  configuration.build_settings.delete('GENERATE_INFOPLIST_FILE')
   configuration.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'gnu++17'
   configuration.build_settings['SWIFT_OBJC_BRIDGING_HEADER'] = '$(SRCROOT)/GasPhotoIOS/GasPhotoIOS-Bridging-Header.h'
 end

@@ -4,8 +4,6 @@ import SwiftData
 protocol ReadingInferenceService: Sendable {
     func propose(imageURL: URL, manualWindow: NormalizedRect?) async throws -> RecognitionResult
 }
-protocol CredentialStore: Sendable {}
-protocol HomeAssistantClient: Sendable {}
 protocol TrainingService: Sendable {}
 
 final class StubInferenceService: ReadingInferenceService, @unchecked Sendable {
@@ -26,8 +24,6 @@ final class ONNXInferenceService: ReadingInferenceService, @unchecked Sendable {
         try await service.propose(imageURL: imageURL, manualWindow: manualWindow)
     }
 }
-final class KeychainCredentialStore: CredentialStore, @unchecked Sendable {}
-final class URLSessionHomeAssistantClient: HomeAssistantClient, @unchecked Sendable {}
 final class LocalTrainingService: TrainingService, @unchecked Sendable {}
 
 @MainActor

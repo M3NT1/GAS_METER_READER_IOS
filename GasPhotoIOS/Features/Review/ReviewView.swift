@@ -56,6 +56,18 @@ struct ReviewView: View {
                 .controlSize(.large)
                 .disabled(!model.canApprove(displayDigits: displayDigits))
                 .accessibilityHint("Csak ellenőrzés után menti a leolvasást feltöltésre váró állapotba.")
+
+                if model.status == .pendingSync {
+                    Button("Feltöltés a Home Assistantba") {
+                        Task { await model.syncApprovedReading() }
+                    }
+                    .buttonStyle(.bordered)
+                }
+
+                if model.status == .synced {
+                    Label("A Home Assistant visszaigazolta a leolvasást.", systemImage: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                }
             }
             .padding()
         }

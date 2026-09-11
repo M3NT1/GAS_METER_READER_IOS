@@ -11,10 +11,20 @@ struct RootView: View {
 
     var body: some View {
         NavigationStack {
-            if let review = capture.review {
-                ReviewView(model: review.model, photoURL: review.photoURL)
-            } else {
-                CaptureView(model: capture)
+            Group {
+                if let review = capture.review {
+                    ReviewView(model: review.model, photoURL: review.photoURL)
+                } else {
+                    CaptureView(model: capture)
+                }
+            }
+            .toolbar {
+                NavigationLink {
+                    HomeAssistantSettingsView(credentialStore: container.credentialStore)
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .accessibilityLabel("Home Assistant beállítások")
             }
         }
     }

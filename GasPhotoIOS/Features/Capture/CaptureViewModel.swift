@@ -10,6 +10,8 @@ final class CaptureViewModel {
     private let repository: any ReadingRepository
     private let archive: any PhotoArchive
     private let inference: any ReadingInferenceService
+    private let credentialStore: any CredentialStore
+    private let homeAssistantClient: any HomeAssistantClient
     private var captureService: CameraCaptureService?
 
     var isConfigured = false
@@ -21,6 +23,8 @@ final class CaptureViewModel {
         repository = container.readingRepository
         archive = container.photoArchive
         inference = container.inferenceService
+        credentialStore = container.credentialStore
+        homeAssistantClient = container.homeAssistantClient
     }
 
     func configureAndStart() {
@@ -73,7 +77,15 @@ final class CaptureViewModel {
             reading.status = recognition.proposal == nil ? .needsReview : .counterRecognized
             try await repository.update(reading, expectedRevision: 0)
             reading.revision = 1
-            review = (ReviewViewModel(reading: reading, repository: repository), photoURL)
+            review = (
+                ReviewViewModel(
+                    reading: reading,
+                    repository: repository,
+                    credentialStore: credentialStore,
+                    homeAssistantClient: homeAssistantClient
+                ),
+                photoURL
+            )
             session.stopRunning()
         } catch {
             errorMessage = "A fénykép feldolgozása nem sikerült. Próbáld újra."
