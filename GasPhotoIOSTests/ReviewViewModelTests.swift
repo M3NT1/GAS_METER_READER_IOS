@@ -50,6 +50,26 @@ final class ReviewViewModelTests: XCTestCase {
         XCTAssertTrue(model.canApprove(displayDigits: "01817.759"))
     }
 
+    func testApproveRecordsCorrectedWindowedReadingAsTrainingExample() async throws {
+        let repository = InMemoryReadingRepository()
+        let trainingStore = InMemoryTrainingExampleStore()
+        var reading = makeReading()
+        reading.window = NormalizedRect(left: 0.1, top: 0.2, right: 0.9, bottom: 0.4)
+        reading.proposal = DigitProposal(digits: "01817758", confidences: Array(repeating: 0.9, count: 8), uncertainPositions: [])
+        let model = ReviewViewModel(
+            reading: reading,
+            repository: repository,
+            trainingExampleStore: trainingStore
+        )
+
+        await model.approve(displayDigits: "01817.759")
+
+        let example = try await trainingStore.example(readingID: reading.id)
+        XCTAssertEqual(example?.digits, "01817.759")
+        XCTAssertEqual(example?.decision, .corrected)
+        XCTAssertEqual(example?.window, reading.window)
+    }
+
     private func makeReading() -> MeterReading {
         MeterReading(
             id: UUID(),

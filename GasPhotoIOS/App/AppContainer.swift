@@ -31,6 +31,7 @@ struct AppContainer {
     let readingRepository: any ReadingRepository
     let photoArchive: any PhotoArchive
     let inferenceService: any ReadingInferenceService
+    let trainingExampleStore: any TrainingExampleStore
     let credentialStore: any CredentialStore
     let homeAssistantClient: any HomeAssistantClient
     let trainingService: any TrainingService
@@ -38,7 +39,7 @@ struct AppContainer {
     static func live() -> AppContainer {
         let modelContainer: ModelContainer
         do {
-            modelContainer = try ModelContainer(for: PersistedMeterReading.self)
+            modelContainer = try ModelContainer(for: PersistedMeterReading.self, PersistedTrainingExample.self)
         } catch {
             fatalError("A helyi leolvasási napló nem indítható el.")
         }
@@ -54,6 +55,7 @@ struct AppContainer {
             readingRepository: SwiftDataReadingRepository(modelContainer: modelContainer),
             photoArchive: LocalPhotoArchive(),
             inferenceService: inferenceService,
+            trainingExampleStore: SwiftDataTrainingExampleStore(modelContainer: modelContainer),
             credentialStore: KeychainCredentialStore(),
             homeAssistantClient: URLSessionHomeAssistantClient(),
             trainingService: LocalTrainingService()

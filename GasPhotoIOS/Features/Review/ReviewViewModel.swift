@@ -7,6 +7,7 @@ final class ReviewViewModel {
     private let repository: any ReadingRepository
     private let credentialStore: (any CredentialStore)?
     private let homeAssistantClient: (any HomeAssistantClient)?
+    private let trainingExampleStore: (any TrainingExampleStore)?
     private(set) var reading: MeterReading
     private(set) var lastError: String?
 
@@ -16,12 +17,14 @@ final class ReviewViewModel {
         reading: MeterReading,
         repository: any ReadingRepository,
         credentialStore: (any CredentialStore)? = nil,
-        homeAssistantClient: (any HomeAssistantClient)? = nil
+        homeAssistantClient: (any HomeAssistantClient)? = nil,
+        trainingExampleStore: (any TrainingExampleStore)? = nil
     ) {
         self.reading = reading
         self.repository = repository
         self.credentialStore = credentialStore
         self.homeAssistantClient = homeAssistantClient
+        self.trainingExampleStore = trainingExampleStore
     }
 
     func canApprove(displayDigits: String) -> Bool {
@@ -49,6 +52,8 @@ final class ReviewViewModel {
             return
         }
 
+        await recordTrainingExampleIfPossible()
+
         await syncApprovedReading()
     }
 
@@ -70,5 +75,29 @@ final class ReviewViewModel {
         } catch {
             lastError = "A Home Assistant feltöltés nem sikerült; a leolvasás a telefonon maradt."
         }
+    }
+
+    private func recordTrainingExampleIfPossible() async {
+        guard let trainingExampleStore,
+              let window = reading.window,
+              let digits = reading.approvedDigits else { return }
+
+        let proposedValue: String?
+        if let proposal = reading.proposal, proposal.digits.count == 8 {
+            let index = proposal.digits.index(proposal.digits.startIndex, offsetBy: 5)
+            proposedValue = String(proposal.digits[..<index]) + "." + String(proposal.digits[index...])
+        } else {
+            proposedValue = nil
+        }
+        let decision: TrainingDecision = proposedValue == digits ? .approved : .corrected
+        let example = TrainingExample(
+            readingID: reading.id,
+            photoID: reading.photoID,
+            window: window,
+            digits: digits,
+            decision: decision,
+            createdAt: .now
+        )
+        try? await trainingExampleStore.record(example)
     }
 }

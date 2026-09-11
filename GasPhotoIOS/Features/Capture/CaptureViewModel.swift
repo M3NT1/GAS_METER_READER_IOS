@@ -12,6 +12,7 @@ final class CaptureViewModel {
     private let inference: any ReadingInferenceService
     private let credentialStore: any CredentialStore
     private let homeAssistantClient: any HomeAssistantClient
+    private let trainingExampleStore: any TrainingExampleStore
     private var captureService: CameraCaptureService?
 
     var isConfigured = false
@@ -25,6 +26,7 @@ final class CaptureViewModel {
         inference = container.inferenceService
         credentialStore = container.credentialStore
         homeAssistantClient = container.homeAssistantClient
+        trainingExampleStore = container.trainingExampleStore
     }
 
     func configureAndStart() {
@@ -82,7 +84,8 @@ final class CaptureViewModel {
                     reading: reading,
                     repository: repository,
                     credentialStore: credentialStore,
-                    homeAssistantClient: homeAssistantClient
+                    homeAssistantClient: homeAssistantClient,
+                    trainingExampleStore: trainingExampleStore
                 ),
                 photoURL
             )
