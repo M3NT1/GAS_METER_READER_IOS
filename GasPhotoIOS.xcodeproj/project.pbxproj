@@ -18,6 +18,7 @@
 		4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */ = {isa = PBXBuildFile; fileRef = F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */; };
 		54364DB541F122608369E259 /* PhotoArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */; };
 		54543D0F389460519525D497 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB3D1B091705049838DD23 /* AppContainer.swift */; };
+		552C57A75A4B74AF9C334D47 /* ReviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0998D5DDCDABC7650B6BAB /* ReviewViewModelTests.swift */; };
 		67FB2C507700E8F3BB4F6EFD /* Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C71CD57169C261974A0DFEE /* Reading.swift */; };
 		6B7D7174AB3C3E269460B148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */; };
@@ -31,6 +32,7 @@
 		D426DB4B7C02D82A5574816B /* ImageMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */; };
 		D5CBA00F005885BDCD086BBE /* ModelBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */; };
 		D84E4AC9361C937B54FEE9CC /* ORTInferenceBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */; };
+		E3609994E6AAD3304D3046B8 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */; };
 		E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */; };
 		EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */; };
 		F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */; };
@@ -50,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0B0E3E55197811A4B85F22C8 /* Pods-GasPhotoIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewViewModel.swift; path = Features/Review/ReviewViewModel.swift; sourceTree = "<group>"; };
 		249CF9D89D7AD78277562664 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		27A128588490D9709D87CC53 /* BuildSettings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BuildSettings.xcconfig; sourceTree = "<group>"; };
 		2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GasPhotoIOSApp.swift; path = App/GasPhotoIOSApp.swift; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 		7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImagePreprocessorTests.swift; sourceTree = "<group>"; };
 		7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "digit-classifier-active.onnx"; path = "Resources/Models/digit-classifier-active.onnx"; sourceTree = "<group>"; };
 		8AF99951854638D414690828 /* ONNXRuntime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ONNXRuntime.swift; path = Inference/ONNXRuntime.swift; sourceTree = "<group>"; };
+		8D0998D5DDCDABC7650B6BAB /* ReviewViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewViewModelTests.swift; sourceTree = "<group>"; };
 		8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppContainerTests.swift; sourceTree = "<group>"; };
 		985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageMetadataReader.swift; path = Photos/ImageMetadataReader.swift; sourceTree = "<group>"; };
 		9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ONNXRuntimeTests.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				7E2B938AA9088A66F35E7213 /* GasPhotoIOS-Bridging-Header.h */,
 				B746235883114E787EFEF222 /* ORTInferenceBridge.h */,
 				8AF99951854638D414690828 /* ONNXRuntime.swift */,
+				0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */,
 			);
 			name = GasPhotoIOS;
 			path = GasPhotoIOS;
@@ -212,6 +217,7 @@
 				7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */,
 				4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */,
 				9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */,
+				8D0998D5DDCDABC7650B6BAB /* ReviewViewModelTests.swift */,
 			);
 			name = GasPhotoIOSTests;
 			path = GasPhotoIOSTests;
@@ -366,6 +372,7 @@
 				3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */,
 				0C9A8EC8C3F2C23CF36E78C3 /* InferenceServiceTests.swift in Sources */,
 				38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */,
+				552C57A75A4B74AF9C334D47 /* ReviewViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +395,7 @@
 				D5CBA00F005885BDCD086BBE /* ModelBundle.swift in Sources */,
 				D84E4AC9361C937B54FEE9CC /* ORTInferenceBridge.mm in Sources */,
 				CD5B507D183A670417C91653 /* ONNXRuntime.swift in Sources */,
+				E3609994E6AAD3304D3046B8 /* ReviewViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
