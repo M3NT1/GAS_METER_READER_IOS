@@ -1,7 +1,11 @@
 .DS_Store
 .superpowers/
 DerivedData/
+.derivedData/
+build/
+.build/
 Pods/
 *.xcuserstate
 xcuserdata/
 :memory:.ses
+

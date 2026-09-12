@@ -12,6 +12,8 @@
     <string>6.0</string>
     <key>CFBundleName</key>
     <string>$(PRODUCT_NAME)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Gázóra</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
@@ -20,20 +22,20 @@
     <string>1</string>
     <key>NSAppTransportSecurity</key>
     <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
         <key>NSAllowsLocalNetworking</key>
         <true/>
-        <key>NSExceptionDomains</key>
-        <dict>
-            <key>192.168.0.99</key>
-            <dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-            </dict>
-        </dict>
     </dict>
     <key>NSCameraUsageDescription</key>
     <string>A gázóra leolvasásához a kamera eredeti fényképére van szükség.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>A meglévő gázóra fotók beolvasásához és digitális leolvasásához.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Az elkészített gázóra fotók mentéséhez a Fotók könyvtárba.</string>
     <key>NSLocalNetworkUsageDescription</key>
     <string>A jóváhagyott gázóra-leolvasás helyi Home Assistant rendszerbe való feltöltéséhez szükséges.</string>
+    <key>UILaunchScreen</key>
+    <dict/>
 </dict>
 </plist>

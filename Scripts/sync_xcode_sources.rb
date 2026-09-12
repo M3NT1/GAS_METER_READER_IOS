@@ -27,7 +27,8 @@ def sync_sources(project, group_name, directory, target_name)
     group.new_file(path)
   end
 
-  Dir.glob(File.join(directory, '**', '*.onnx')).sort.each do |path|
+  resource_paths = Dir.glob(File.join(directory, '**', '*.onnx')) + Dir.glob(File.join(directory, '**', 'checkpoint')) + Dir.glob(File.join(directory, '**', '*.xcassets'))
+  resource_paths.sort.each do |path|
     next if known_paths.include?(path)
 
     reference = group.new_file(path)

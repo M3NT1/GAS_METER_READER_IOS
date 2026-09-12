@@ -22,6 +22,22 @@ final class SwiftDataReadingRepositoryTests: XCTestCase {
         }
     }
 
+    func testAllReadingsAndDeletion() async throws {
+        let repository = try makeRepository()
+        let reading1 = makeReading(revision: 0)
+        let reading2 = makeReading(revision: 0)
+        try await repository.insert(reading1)
+        try await repository.insert(reading2)
+
+        let all = try await repository.allReadings()
+        XCTAssertEqual(all.count, 2)
+
+        try await repository.delete(id: reading1.id)
+        let remaining = try await repository.allReadings()
+        XCTAssertEqual(remaining.count, 1)
+        XCTAssertEqual(remaining.first?.id, reading2.id)
+    }
+
     private func makeRepository() throws -> SwiftDataReadingRepository {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(

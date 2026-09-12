@@ -41,6 +41,46 @@ final class InferenceServiceTests: XCTestCase {
         XCTAssertEqual(result.proposal?.uncertainPositions, [2])
         XCTAssertEqual(result.decimalReviewPositions, [5])
     }
+
+    func testProposeReportsInferenceProgressPhases() async throws {
+        let window = NormalizedRect(left: 0.1, top: 0.2, right: 0.8, bottom: 0.3)
+        let service = InferenceService(runtime: FakeRuntime(
+            detector: [DetectorCandidate(window: window, confidence: 0.95)],
+            classifier: (0..<8).map { ClassifierOutput(digit: $0, confidence: 0.99) }
+        ))
+
+        let recorder = ProgressRecorder()
+        let result = try await service.propose(
+            imageURL: URL(fileURLWithPath: "/meter.jpg"),
+            manualWindow: nil,
+            onProgress: { progress in
+                recorder.record(progress)
+            }
+        )
+
+        XCTAssertEqual(result.proposal?.digits, "01234567")
+        XCTAssertEqual(recorder.recorded, [
+            .detectingWindow,
+            .classifyingDigits(window: window)
+        ])
+    }
+}
+
+private final class ProgressRecorder: @unchecked Sendable {
+    private let lock = NSLock()
+    private var items: [InferenceProgress] = []
+
+    func record(_ progress: InferenceProgress) {
+        lock.lock()
+        defer { lock.unlock() }
+        items.append(progress)
+    }
+
+    var recorded: [InferenceProgress] {
+        lock.lock()
+        defer { lock.unlock() }
+        return items
+    }
 }
 
 private actor FakeRuntime: InferenceRuntime {

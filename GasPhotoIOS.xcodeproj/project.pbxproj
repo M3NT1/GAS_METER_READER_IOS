@@ -7,19 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00AD58ED217163A7C74409B4 /* RollerDialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9FA6AC8950C818977A7D08 /* RollerDialsView.swift */; };
 		0375CE2F853EDD2CE192DB7C /* Pods_GasPhotoIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 346DD9FA336C67C2E6D86A3E /* Pods_GasPhotoIOSTests.framework */; };
 		08ADC9CD5EC469E6D29EAF1A /* URLSessionHomeAssistantClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C13EFA3968EC89D772A1CB /* URLSessionHomeAssistantClient.swift */; };
+		0AB5BE1A256EA605184D69DB /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8615757AB5359AB45A07905C /* AppSettingsView.swift */; };
 		0C9A8EC8C3F2C23CF36E78C3 /* InferenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */; };
 		0CAEF3D7E3365CAD09EF85DC /* HomeAssistantCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E5D1A8BF222606F3A4CC2 /* HomeAssistantCredentials.swift */; };
+		0DFA6C48383B5C2072794D22 /* ModelTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1401BAD402CE0F541FF5138C /* ModelTrainingView.swift */; };
+		0F1D3F6ED5A8572DFC7C6CCF /* ReadingsHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB77467BA6D76D9E4EB7FE7 /* ReadingsHistoryViewModelTests.swift */; };
 		14AF86F34CD34E9941043E01 /* InferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992EFA0046EC8A206DC91702 /* InferenceService.swift */; };
 		182176F7EEADDCF80501B43B /* InMemoryTrainingExampleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBE2BE3AC217676BC784030 /* InMemoryTrainingExampleStore.swift */; };
+		1DD4A3B9A691F2807FAFBAA4 /* NormalizedRectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFD6B8B511C2005FEF6DE7D /* NormalizedRectTests.swift */; };
 		243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */; };
+		3225C69110E03B8ABC3C24DE /* training_model.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 9D71ED24593CD02F93073A98 /* training_model.onnx */; };
 		3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */; };
 		38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */; };
 		3EB6E9A4DA5582E0E79771C5 /* HomeAssistantResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55107C5A917A02B6DB15908 /* HomeAssistantResponseDecoder.swift */; };
 		4571EA6A02E301B11FBB1269 /* ImageMetadataReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */; };
 		45E796E2876A30F5564D1801 /* HomeAssistantResponseDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */; };
 		4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */; };
+		4A63CFFC63076BC847E17A34 /* ModelTrainingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3DB9BA6D059E7A0FF3EFD /* ModelTrainingViewModelTests.swift */; };
 		4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */ = {isa = PBXBuildFile; fileRef = F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */; };
 		512BEB98D92C40F25C50819D /* KeychainCredentialStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18D13F80DFC9ABEA0EE008E /* KeychainCredentialStoreTests.swift */; };
 		54364DB541F122608369E259 /* PhotoArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */; };
@@ -31,16 +38,22 @@
 		6E6B7F68C5CB456FA9576A68 /* SwiftDataTrainingExampleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B200A757D5CEBD487E1CE4 /* SwiftDataTrainingExampleStore.swift */; };
 		71AC044032C76F461230BF23 /* WindowEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8526B5303533654CF80143DE /* WindowEditorView.swift */; };
 		740ECCC6AE2BAF2BEA9E54B0 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F732FD5BD6911616589F732 /* ReviewView.swift */; };
+		791DCFE48156391603D3C103 /* MagnifierLoupeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C69E6B2CBCE604077C267 /* MagnifierLoupeView.swift */; };
 		7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */; };
+		7F02C5C55F7AC2A607A92350 /* ModelTrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D92F9A6AA0D5F0EFB61F8 /* ModelTrainingViewModel.swift */; };
 		82F569FAE9EB57BEC19C9A81 /* AppContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E99B0DB029F6D7B1844BA34 /* AppContainerTests.swift */; };
 		86D6508DAEBC0F2C6152793D /* CaptureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B4BD076964A406B00BA3F /* CaptureViewModel.swift */; };
+		8AD4A0902A135EEE3E5E040B /* TrainingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA0402B1023366416620FC3 /* TrainingService.swift */; };
 		90C7B67A8C08FBBE2791285A /* ImagePreprocessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */; };
 		95F1C06D36B95FDB5B76F5DB /* GasPhotoIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */; };
 		9723517E762709BAD5BF088B /* HomeAssistantSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C74485611129318E6E97AB /* HomeAssistantSettingsView.swift */; };
+		983B2CE7496071B3CB7BD769 /* ModelTrainingDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F8099C481661BD71E75E78 /* ModelTrainingDomain.swift */; };
 		9A79ED4D9BC631907C53C6D1 /* HomeAssistantClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8780A305A3B5270212F649 /* HomeAssistantClientTests.swift */; };
+		9F6FDB0C82DFBB8B2543703D /* eval_model.onnx in Resources */ = {isa = PBXBuildFile; fileRef = AA47D6BC46CC87282F41E4DF /* eval_model.onnx */; };
 		A5591B768618192B3BE39AB1 /* TrainingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40FA05B07D7CDF051A90F9 /* TrainingExample.swift */; };
 		AD6CA90B2838F36D494C89C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */; };
+		B1809E95AE672DD2CBC20C9F /* ReadingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372126694358FA576FF61676 /* ReadingsHistoryView.swift */; };
 		C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85715E93D44CB82FB34564 /* RootView.swift */; };
 		CD5B507D183A670417C91653 /* ONNXRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF99951854638D414690828 /* ONNXRuntime.swift */; };
 		D02656B1A297E9C82C2099AF /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF70B63B6B19885EBE3D531 /* CaptureView.swift */; };
@@ -48,10 +61,16 @@
 		D5CBA00F005885BDCD086BBE /* ModelBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */; };
 		D84E4AC9361C937B54FEE9CC /* ORTInferenceBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */; };
 		E3609994E6AAD3304D3046B8 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */; };
+		E53742171D03E6E0F514B344 /* ReadingsHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E39AC6E5FCE4EBB4B735A0 /* ReadingsHistoryViewModel.swift */; };
 		E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */; };
+		EA1C2E0E7EFEEDCF8E436BB3 /* WindowFineTuneSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6F945B84E1502A6D538ED9 /* WindowFineTuneSheet.swift */; };
 		EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */; };
+		F14F2F470F8DA8ED418A5D06 /* optimizer_model.onnx in Resources */ = {isa = PBXBuildFile; fileRef = E0171566F238FC7C23C2EC93 /* optimizer_model.onnx */; };
+		F42AF8682B7672CBBC3B19A8 /* checkpoint in Resources */ = {isa = PBXBuildFile; fileRef = 042C497C3759595B40FD1CB3 /* checkpoint */; };
 		F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */; };
+		F753F7AEA22C0507FE4C1E7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E246010151532361AABE6974 /* Assets.xcassets */; };
 		F86FF76EFF593C1A224E5A91 /* SwiftDataReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */; };
+		FA391CBA408649E83CC98931 /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7899E6D559CC797ABDD4B04 /* PhotoLibraryManager.swift */; };
 		FC040E3D1BC4A43EB9E1E821 /* Pods_GasPhotoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,32 +85,39 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		042C497C3759595B40FD1CB3 /* checkpoint */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = checkpoint; path = Resources/Training/Digit/checkpoint; sourceTree = "<group>"; };
 		0B0E3E55197811A4B85F22C8 /* Pods-GasPhotoIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewViewModel.swift; path = Features/Review/ReviewViewModel.swift; sourceTree = "<group>"; };
+		1401BAD402CE0F541FF5138C /* ModelTrainingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelTrainingView.swift; path = Features/Training/ModelTrainingView.swift; sourceTree = "<group>"; };
 		15C13EFA3968EC89D772A1CB /* URLSessionHomeAssistantClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLSessionHomeAssistantClient.swift; path = HomeAssistant/URLSessionHomeAssistantClient.swift; sourceTree = "<group>"; };
+		1BA0402B1023366416620FC3 /* TrainingService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrainingService.swift; path = Features/Training/TrainingService.swift; sourceTree = "<group>"; };
 		1C8780A305A3B5270212F649 /* HomeAssistantClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantClientTests.swift; sourceTree = "<group>"; };
 		249CF9D89D7AD78277562664 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		27A128588490D9709D87CC53 /* BuildSettings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BuildSettings.xcconfig; sourceTree = "<group>"; };
 		2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GasPhotoIOSApp.swift; path = App/GasPhotoIOSApp.swift; sourceTree = "<group>"; };
 		346DD9FA336C67C2E6D86A3E /* Pods_GasPhotoIOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		372126694358FA576FF61676 /* ReadingsHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingsHistoryView.swift; path = Features/History/ReadingsHistoryView.swift; sourceTree = "<group>"; };
 		3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingValidator.swift; path = Domain/ReadingValidator.swift; sourceTree = "<group>"; };
 		430D2B50CF73EE9C1C72B5A0 /* Release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		44277C478B0A08980C3E1506 /* GasPhotoIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasPhotoIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InferenceServiceTests.swift; sourceTree = "<group>"; };
+		558C69E6B2CBCE604077C267 /* MagnifierLoupeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MagnifierLoupeView.swift; path = Features/Review/MagnifierLoupeView.swift; sourceTree = "<group>"; };
 		56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BBE2BE3AC217676BC784030 /* InMemoryTrainingExampleStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryTrainingExampleStore.swift; path = Data/InMemoryTrainingExampleStore.swift; sourceTree = "<group>"; };
 		5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingValidatorTests.swift; sourceTree = "<group>"; };
+		5F6F945B84E1502A6D538ED9 /* WindowFineTuneSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowFineTuneSheet.swift; path = Features/Review/WindowFineTuneSheet.swift; sourceTree = "<group>"; };
 		64FFA69D3E581647A53AFD72 /* Pods-GasPhotoIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.release.xcconfig"; sourceTree = "<group>"; };
-		66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = ORTInferenceBridge.mm; path = Inference/ORTInferenceBridge.mm; sourceTree = "<group>"; };
+		66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = ORTInferenceBridge.mm; path = Inference/ORTInferenceBridge.mm; sourceTree = "<group>"; };
 		6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftDataReadingRepositoryTests.swift; sourceTree = "<group>"; };
 		7C71CD57169C261974A0DFEE /* Reading.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reading.swift; path = Domain/Reading.swift; sourceTree = "<group>"; };
 		7E2B938AA9088A66F35E7213 /* GasPhotoIOS-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GasPhotoIOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImagePreprocessorTests.swift; sourceTree = "<group>"; };
 		7F732FD5BD6911616589F732 /* ReviewView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewView.swift; path = Features/Review/ReviewView.swift; sourceTree = "<group>"; };
-		7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "digit-classifier-active.onnx"; path = "Resources/Models/digit-classifier-active.onnx"; sourceTree = "<group>"; };
+		7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "digit-classifier-active.onnx"; path = "Resources/Models/digit-classifier-active.onnx"; sourceTree = "<group>"; };
 		809E5D1A8BF222606F3A4CC2 /* HomeAssistantCredentials.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantCredentials.swift; path = HomeAssistant/HomeAssistantCredentials.swift; sourceTree = "<group>"; };
 		81C74485611129318E6E97AB /* HomeAssistantSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantSettingsView.swift; path = HomeAssistant/HomeAssistantSettingsView.swift; sourceTree = "<group>"; };
 		8526B5303533654CF80143DE /* WindowEditorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WindowEditorView.swift; path = Features/Review/WindowEditorView.swift; sourceTree = "<group>"; };
+		8615757AB5359AB45A07905C /* AppSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppSettingsView.swift; path = Features/Settings/AppSettingsView.swift; sourceTree = "<group>"; };
 		8A40FA05B07D7CDF051A90F9 /* TrainingExample.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrainingExample.swift; path = Domain/TrainingExample.swift; sourceTree = "<group>"; };
 		8AF99951854638D414690828 /* ONNXRuntime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ONNXRuntime.swift; path = Inference/ONNXRuntime.swift; sourceTree = "<group>"; };
 		8D0998D5DDCDABC7650B6BAB /* ReviewViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewViewModelTests.swift; sourceTree = "<group>"; };
@@ -101,27 +127,39 @@
 		992EFA0046EC8A206DC91702 /* InferenceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InferenceService.swift; path = Inference/InferenceService.swift; sourceTree = "<group>"; };
 		9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataReadingRepository.swift; path = Data/SwiftDataReadingRepository.swift; sourceTree = "<group>"; };
 		9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhotoArchiveTests.swift; sourceTree = "<group>"; };
+		9D71ED24593CD02F93073A98 /* training_model.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = training_model.onnx; path = Resources/Training/Digit/training_model.onnx; sourceTree = "<group>"; };
 		A1D2C3EA5CF679746A9ECB5F /* Pods-GasPhotoIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AA47D6BC46CC87282F41E4DF /* eval_model.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = eval_model.onnx; path = Resources/Training/Digit/eval_model.onnx; sourceTree = "<group>"; };
+		AFFD6B8B511C2005FEF6DE7D /* NormalizedRectTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NormalizedRectTests.swift; sourceTree = "<group>"; };
 		B18D13F80DFC9ABEA0EE008E /* KeychainCredentialStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeychainCredentialStoreTests.swift; sourceTree = "<group>"; };
 		B746235883114E787EFEF222 /* ORTInferenceBridge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ORTInferenceBridge.h; path = Inference/ORTInferenceBridge.h; sourceTree = "<group>"; };
 		BB85715E93D44CB82FB34564 /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = App/RootView.swift; sourceTree = "<group>"; };
+		BBB77467BA6D76D9E4EB7FE7 /* ReadingsHistoryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingsHistoryViewModelTests.swift; sourceTree = "<group>"; };
 		BBF70B63B6B19885EBE3D531 /* CaptureView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureView.swift; path = Features/Capture/CaptureView.swift; sourceTree = "<group>"; };
+		C1E39AC6E5FCE4EBB4B735A0 /* ReadingsHistoryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingsHistoryViewModel.swift; path = Features/History/ReadingsHistoryViewModel.swift; sourceTree = "<group>"; };
 		C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoArchive.swift; path = Photos/PhotoArchive.swift; sourceTree = "<group>"; };
+		C7899E6D559CC797ABDD4B04 /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoLibraryManager.swift; path = Photos/PhotoLibraryManager.swift; sourceTree = "<group>"; };
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePreprocessor.swift; path = Inference/ImagePreprocessor.swift; sourceTree = "<group>"; };
 		D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraCaptureService.swift; path = Photos/CameraCaptureService.swift; sourceTree = "<group>"; };
 		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
 		D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantResponseDecoderTests.swift; sourceTree = "<group>"; };
+		E0171566F238FC7C23C2EC93 /* optimizer_model.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = optimizer_model.onnx; path = Resources/Training/Digit/optimizer_model.onnx; sourceTree = "<group>"; };
 		E01B4BD076964A406B00BA3F /* CaptureViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureViewModel.swift; path = Features/Capture/CaptureViewModel.swift; sourceTree = "<group>"; };
 		E116B4F5FDE4BDC7AC79A036 /* TrainingExampleStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrainingExampleStoreTests.swift; sourceTree = "<group>"; };
+		E246010151532361AABE6974 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E2F3DB9BA6D059E7A0FF3EFD /* ModelTrainingViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelTrainingViewModelTests.swift; sourceTree = "<group>"; };
 		E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelBundle.swift; path = Inference/ModelBundle.swift; sourceTree = "<group>"; };
 		E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageMetadataReaderTests.swift; sourceTree = "<group>"; };
 		E6B200A757D5CEBD487E1CE4 /* SwiftDataTrainingExampleStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataTrainingExampleStore.swift; path = Data/SwiftDataTrainingExampleStore.swift; sourceTree = "<group>"; };
 		E7A0E76E453223BA64927F63 /* GasPhotoIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GasPhotoIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E80D92F9A6AA0D5F0EFB61F8 /* ModelTrainingViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelTrainingViewModel.swift; path = Features/Training/ModelTrainingViewModel.swift; sourceTree = "<group>"; };
 		F1DB3D1B091705049838DD23 /* AppContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppContainer.swift; path = App/AppContainer.swift; sourceTree = "<group>"; };
 		F2676F0D023030C2B6731A98 /* Pods-GasPhotoIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOS.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOS/Pods-GasPhotoIOS.debug.xcconfig"; sourceTree = "<group>"; };
-		F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */ = {isa = PBXFileReference; includeInIndex = 1; name = "window-detector-best.onnx"; path = "Resources/Models/window-detector-best.onnx"; sourceTree = "<group>"; };
+		F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "window-detector-best.onnx"; path = "Resources/Models/window-detector-best.onnx"; sourceTree = "<group>"; };
 		F55107C5A917A02B6DB15908 /* HomeAssistantResponseDecoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantResponseDecoder.swift; path = HomeAssistant/HomeAssistantResponseDecoder.swift; sourceTree = "<group>"; };
+		F9F8099C481661BD71E75E78 /* ModelTrainingDomain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModelTrainingDomain.swift; path = Domain/ModelTrainingDomain.swift; sourceTree = "<group>"; };
+		FA9FA6AC8950C818977A7D08 /* RollerDialsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RollerDialsView.swift; path = Features/Review/RollerDialsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +200,6 @@
 				0B0E3E55197811A4B85F22C8 /* Pods-GasPhotoIOSTests.release.xcconfig */,
 				A1D2C3EA5CF679746A9ECB5F /* Pods-GasPhotoIOSTests.debug.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -200,8 +237,23 @@
 				E6B200A757D5CEBD487E1CE4 /* SwiftDataTrainingExampleStore.swift */,
 				8A40FA05B07D7CDF051A90F9 /* TrainingExample.swift */,
 				5BBE2BE3AC217676BC784030 /* InMemoryTrainingExampleStore.swift */,
+				042C497C3759595B40FD1CB3 /* checkpoint */,
+				AA47D6BC46CC87282F41E4DF /* eval_model.onnx */,
+				E0171566F238FC7C23C2EC93 /* optimizer_model.onnx */,
+				9D71ED24593CD02F93073A98 /* training_model.onnx */,
+				FA9FA6AC8950C818977A7D08 /* RollerDialsView.swift */,
+				E246010151532361AABE6974 /* Assets.xcassets */,
+				558C69E6B2CBCE604077C267 /* MagnifierLoupeView.swift */,
+				5F6F945B84E1502A6D538ED9 /* WindowFineTuneSheet.swift */,
+				372126694358FA576FF61676 /* ReadingsHistoryView.swift */,
+				C1E39AC6E5FCE4EBB4B735A0 /* ReadingsHistoryViewModel.swift */,
+				C7899E6D559CC797ABDD4B04 /* PhotoLibraryManager.swift */,
+				F9F8099C481661BD71E75E78 /* ModelTrainingDomain.swift */,
+				8615757AB5359AB45A07905C /* AppSettingsView.swift */,
+				1401BAD402CE0F541FF5138C /* ModelTrainingView.swift */,
+				E80D92F9A6AA0D5F0EFB61F8 /* ModelTrainingViewModel.swift */,
+				1BA0402B1023366416620FC3 /* TrainingService.swift */,
 			);
-			name = GasPhotoIOS;
 			path = GasPhotoIOS;
 			sourceTree = "<group>";
 		};
@@ -243,7 +295,6 @@
 				C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */,
 				430D2B50CF73EE9C1C72B5A0 /* Release.xcconfig */,
 			);
-			name = Config;
 			path = Config;
 			sourceTree = "<group>";
 		};
@@ -263,8 +314,10 @@
 				B18D13F80DFC9ABEA0EE008E /* KeychainCredentialStoreTests.swift */,
 				1C8780A305A3B5270212F649 /* HomeAssistantClientTests.swift */,
 				E116B4F5FDE4BDC7AC79A036 /* TrainingExampleStoreTests.swift */,
+				BBB77467BA6D76D9E4EB7FE7 /* ReadingsHistoryViewModelTests.swift */,
+				E2F3DB9BA6D059E7A0FF3EFD /* ModelTrainingViewModelTests.swift */,
+				AFFD6B8B511C2005FEF6DE7D /* NormalizedRectTests.swift */,
 			);
-			name = GasPhotoIOSTests;
 			path = GasPhotoIOSTests;
 			sourceTree = "<group>";
 		};
@@ -316,6 +369,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					25892F660FEE598AB58F4FEB = {
+						DevelopmentTeam = TYZM6FTNXW;
+					};
+				};
 			};
 			buildConfigurationList = BA818CB79F8085EC538C220F /* Build configuration list for PBXProject "GasPhotoIOS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -326,8 +384,6 @@
 				Base,
 			);
 			mainGroup = 989ADB5E0CB9EFD71D8CE4E9;
-			minimizedProjectReferenceProxies = 0;
-			preferredProjectObjectVersion = 100;
 			productRefGroup = 84C43A6E12F47A116801E911 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -345,6 +401,11 @@
 			files = (
 				E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */,
 				4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */,
+				F42AF8682B7672CBBC3B19A8 /* checkpoint in Resources */,
+				9F6FDB0C82DFBB8B2543703D /* eval_model.onnx in Resources */,
+				F14F2F470F8DA8ED418A5D06 /* optimizer_model.onnx in Resources */,
+				3225C69110E03B8ABC3C24DE /* training_model.onnx in Resources */,
+				F753F7AEA22C0507FE4C1E7C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +483,9 @@
 				512BEB98D92C40F25C50819D /* KeychainCredentialStoreTests.swift in Sources */,
 				9A79ED4D9BC631907C53C6D1 /* HomeAssistantClientTests.swift in Sources */,
 				6C1077BA60209E8E341F46A4 /* TrainingExampleStoreTests.swift in Sources */,
+				0F1D3F6ED5A8572DFC7C6CCF /* ReadingsHistoryViewModelTests.swift in Sources */,
+				4A63CFFC63076BC847E17A34 /* ModelTrainingViewModelTests.swift in Sources */,
+				1DD4A3B9A691F2807FAFBAA4 /* NormalizedRectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +520,17 @@
 				6E6B7F68C5CB456FA9576A68 /* SwiftDataTrainingExampleStore.swift in Sources */,
 				A5591B768618192B3BE39AB1 /* TrainingExample.swift in Sources */,
 				182176F7EEADDCF80501B43B /* InMemoryTrainingExampleStore.swift in Sources */,
+				00AD58ED217163A7C74409B4 /* RollerDialsView.swift in Sources */,
+				791DCFE48156391603D3C103 /* MagnifierLoupeView.swift in Sources */,
+				EA1C2E0E7EFEEDCF8E436BB3 /* WindowFineTuneSheet.swift in Sources */,
+				B1809E95AE672DD2CBC20C9F /* ReadingsHistoryView.swift in Sources */,
+				E53742171D03E6E0F514B344 /* ReadingsHistoryViewModel.swift in Sources */,
+				FA391CBA408649E83CC98931 /* PhotoLibraryManager.swift in Sources */,
+				983B2CE7496071B3CB7BD769 /* ModelTrainingDomain.swift in Sources */,
+				0AB5BE1A256EA605184D69DB /* AppSettingsView.swift in Sources */,
+				0DFA6C48383B5C2072794D22 /* ModelTrainingView.swift in Sources */,
+				7F02C5C55F7AC2A607A92350 /* ModelTrainingViewModel.swift in Sources */,
+				8AD4A0902A135EEE3E5E040B /* TrainingService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +554,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				DEVELOPMENT_TEAM = TYZM6FTNXW;
 				INFOPLIST_FILE = GasPhotoIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
@@ -496,6 +572,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				DEVELOPMENT_TEAM = TYZM6FTNXW;
 				INFOPLIST_FILE = GasPhotoIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
@@ -630,8 +707,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

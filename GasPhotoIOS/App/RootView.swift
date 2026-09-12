@@ -13,18 +13,16 @@ struct RootView: View {
         NavigationStack {
             Group {
                 if let review = capture.review {
-                    ReviewView(model: review.model, photoURL: review.photoURL)
+                    ReviewView(
+                        model: review.model,
+                        photoURL: review.photoURL,
+                        onRetake: {
+                            capture.retake()
+                        }
+                    )
                 } else {
-                    CaptureView(model: capture)
+                    CaptureView(model: capture, credentialStore: container.credentialStore)
                 }
-            }
-            .toolbar {
-                NavigationLink {
-                    HomeAssistantSettingsView(credentialStore: container.credentialStore)
-                } label: {
-                    Image(systemName: "gearshape")
-                }
-                .accessibilityLabel("Home Assistant beállítások")
             }
         }
     }

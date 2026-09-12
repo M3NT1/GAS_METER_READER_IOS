@@ -1,5 +1,5 @@
 #import "ORTInferenceBridge.h"
-#import <onnxruntime_objc/onnxruntime.h>
+#import <onnxruntime_training_objc/onnxruntime.h>
 
 @interface ORTInferenceBridge ()
 

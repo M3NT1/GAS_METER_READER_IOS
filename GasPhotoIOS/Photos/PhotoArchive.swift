@@ -9,14 +9,24 @@ struct PhotoReference: Codable, Equatable, Sendable {
 }
 
 protocol PhotoArchive: Sendable {
+    func storeOriginal(_ data: Data, id: UUID, suggestedExtension: String) throws -> PhotoReference
     func storeOriginal(_ data: Data, suggestedExtension: String) throws -> PhotoReference
     func url(for photo: PhotoReference) throws -> URL
+    func url(for photoID: UUID) throws -> URL
+    func delete(photoID: UUID) throws
+}
+
+extension PhotoArchive {
+    func storeOriginal(_ data: Data, suggestedExtension: String) throws -> PhotoReference {
+        try storeOriginal(data, id: UUID(), suggestedExtension: suggestedExtension)
+    }
 }
 
 enum PhotoArchiveError: Error, Equatable {
     case invalidExtension
     case invalidReference
     case contentHashCollision
+    case photoNotFound
 }
 
 final class LocalPhotoArchive: PhotoArchive, @unchecked Sendable {
@@ -41,11 +51,15 @@ final class LocalPhotoArchive: PhotoArchive, @unchecked Sendable {
         try fileManager.createDirectory(at: originalsDirectory, withIntermediateDirectories: true)
     }
 
-    func storeOriginal(_ data: Data, suggestedExtension: String) throws -> PhotoReference {
+    func storeOriginal(
+        _ data: Data,
+        id: UUID = UUID(),
+        suggestedExtension: String
+    ) throws -> PhotoReference {
         let metadata = try ImageMetadataReader.read(data: data)
         let fileExtension = try validatedExtension(suggestedExtension)
         let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-        let fileName = "originals/\(digest).\(fileExtension)"
+        let fileName = "originals/\(id.uuidString).\(fileExtension)"
         let destination = try secureURL(forRelativePath: fileName)
 
         if fileManager.fileExists(atPath: destination.path) {
@@ -61,7 +75,7 @@ final class LocalPhotoArchive: PhotoArchive, @unchecked Sendable {
         }
 
         return PhotoReference(
-            id: UUID(),
+            id: id,
             fileName: fileName,
             sha256: digest,
             capturedAt: metadata.capturedAt
@@ -69,7 +83,37 @@ final class LocalPhotoArchive: PhotoArchive, @unchecked Sendable {
     }
 
     func url(for photo: PhotoReference) throws -> URL {
-        try secureURL(forRelativePath: photo.fileName)
+        let destination = try secureURL(forRelativePath: photo.fileName)
+        if fileManager.fileExists(atPath: destination.path) {
+            return destination
+        }
+        return try url(for: photo.id)
+    }
+
+    func url(for photoID: UUID) throws -> URL {
+        for ext in ["jpg", "jpeg", "heic", "png"] {
+            let candidate = originalsDirectory.appendingPathComponent("\(photoID.uuidString).\(ext)")
+            if fileManager.fileExists(atPath: candidate.path) {
+                return try secureURL(forRelativePath: "originals/\(photoID.uuidString).\(ext)")
+            }
+        }
+
+        let targetName = photoID.uuidString
+        if let entries = try? fileManager.contentsOfDirectory(at: originalsDirectory, includingPropertiesForKeys: nil) {
+            for entry in entries {
+                let nameWithoutExtension = entry.deletingPathExtension().lastPathComponent
+                if nameWithoutExtension.caseInsensitiveCompare(targetName) == .orderedSame {
+                    return try secureURL(forRelativePath: "originals/\(entry.lastPathComponent)")
+                }
+            }
+        }
+        throw PhotoArchiveError.photoNotFound
+    }
+
+    func delete(photoID: UUID) throws {
+        if let fileURL = try? url(for: photoID), fileManager.fileExists(atPath: fileURL.path) {
+            try fileManager.removeItem(at: fileURL)
+        }
     }
 
     private var originalsDirectory: URL {

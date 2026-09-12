@@ -16,6 +16,11 @@ struct RecognitionResult: Equatable, Sendable {
     let decimalReviewPositions: [Int]
 }
 
+enum InferenceProgress: Sendable, Equatable {
+    case detectingWindow
+    case classifyingDigits(window: NormalizedRect?)
+}
+
 enum InferenceError: Error, Equatable {
     case invalidClassifierOutput
 }
@@ -32,16 +37,22 @@ final class InferenceService: @unchecked Sendable {
         self.runtime = runtime
     }
 
-    func propose(imageURL: URL, manualWindow: NormalizedRect?) async throws -> RecognitionResult {
+    func propose(
+        imageURL: URL,
+        manualWindow: NormalizedRect?,
+        onProgress: (@Sendable (InferenceProgress) -> Void)? = nil
+    ) async throws -> RecognitionResult {
         let window: NormalizedRect?
         if let manualWindow {
             window = manualWindow
         } else {
+            onProgress?(.detectingWindow)
             let accepted = try await runtime.detectorCandidates(imageURL: imageURL)
                 .filter { $0.confidence >= 0.55 }
             window = accepted.count == 1 ? accepted[0].window : nil
         }
 
+        onProgress?(.classifyingDigits(window: window))
         guard let window else {
             return RecognitionResult(window: nil, proposal: nil, decimalReviewPositions: [])
         }

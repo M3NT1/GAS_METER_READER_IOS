@@ -6,6 +6,8 @@ protocol TrainingExampleStore: AnyObject {
     func record(_ example: TrainingExample) async throws
     func example(readingID: UUID) async throws -> TrainingExample?
     func count() async throws -> Int
+    func allExamples() async throws -> [TrainingExample]
+    func delete(readingID: UUID) async throws
 }
 
 @Model
@@ -76,6 +78,20 @@ final class SwiftDataTrainingExampleStore: TrainingExampleStore {
 
     func count() async throws -> Int {
         try modelContext.fetch(FetchDescriptor<PersistedTrainingExample>()).count
+    }
+
+    func allExamples() async throws -> [TrainingExample] {
+        let descriptor = FetchDescriptor<PersistedTrainingExample>(
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
+        return try modelContext.fetch(descriptor).compactMap { try? $0.domainValue() }
+    }
+
+    func delete(readingID: UUID) async throws {
+        if let stored = try storedExample(readingID: readingID) {
+            modelContext.delete(stored)
+            try modelContext.save()
+        }
     }
 
     private func storedExample(readingID: UUID) throws -> PersistedTrainingExample? {

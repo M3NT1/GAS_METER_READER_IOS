@@ -17,6 +17,64 @@ final class PhotoArchiveTests: XCTestCase {
         XCTAssertEqual(photo.capturedAt.timeIntervalSince1970, 1_781_815_422.865, accuracy: 0.001)
         XCTAssertTrue(photo.fileName.hasPrefix("originals/"))
         XCTAssertTrue(photo.fileName.hasSuffix(".jpg"))
+        XCTAssertEqual(photo.fileName, "originals/\(photo.id.uuidString).jpg")
+    }
+
+    func testStoreOriginalStoresByPhotoIDAndResolvesByURLForPhotoID() throws {
+        let data = try jpegData()
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let archive = try LocalPhotoArchive(rootDirectory: directory)
+
+        let photo = try archive.storeOriginal(data, suggestedExtension: "jpg")
+        let urlFromID = try archive.url(for: photo.id)
+
+        XCTAssertEqual(urlFromID, try archive.url(for: photo))
+        XCTAssertEqual(try Data(contentsOf: urlFromID), data)
+    }
+
+    func testStoreOriginalWithExplicitIDPreservesPhotoIdentifier() throws {
+        let data = try jpegData()
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let archive = try LocalPhotoArchive(rootDirectory: directory)
+        let explicitID = UUID()
+
+        let photo = try archive.storeOriginal(data, id: explicitID, suggestedExtension: "jpg")
+
+        XCTAssertEqual(photo.id, explicitID)
+        XCTAssertEqual(photo.fileName, "originals/\(explicitID.uuidString).jpg")
+        XCTAssertEqual(try archive.url(for: explicitID), try archive.url(for: photo))
+    }
+
+    func testURLForUnknownPhotoIDThrowsPhotoNotFound() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let archive = try LocalPhotoArchive(rootDirectory: directory)
+
+        XCTAssertThrowsError(try archive.url(for: UUID())) { error in
+            XCTAssertEqual(error as? PhotoArchiveError, .photoNotFound)
+        }
+    }
+
+    func testCollisionWhenDifferentDataStoredWithSameID() throws {
+        let data = try jpegData()
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let archive = try LocalPhotoArchive(rootDirectory: directory)
+        let sharedID = UUID()
+
+        _ = try archive.storeOriginal(data, id: sharedID, suggestedExtension: "jpg")
+
+        var differentData = data
+        differentData.append(Data([0x00, 0x01]))
+        XCTAssertThrowsError(try archive.storeOriginal(differentData, id: sharedID, suggestedExtension: "jpg")) { error in
+            XCTAssertEqual(error as? PhotoArchiveError, .contentHashCollision)
+        }
     }
 
     private func jpegData() throws -> Data {

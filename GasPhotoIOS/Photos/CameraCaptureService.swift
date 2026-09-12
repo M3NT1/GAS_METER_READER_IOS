@@ -17,9 +17,12 @@ final class CameraCaptureService: NSObject, AVCapturePhotoCaptureDelegate, @unch
         self.archive = archive
     }
 
-    func captureAndStore() async throws -> PhotoReference {
+    func captureAndStore(id: UUID = UUID()) async throws -> PhotoReference {
         let data = try await captureOriginalData()
-        return try archive.storeOriginal(data, suggestedExtension: "jpg")
+        Task.detached(priority: .utility) {
+            await PhotoLibraryManager.saveImage(data: data)
+        }
+        return try archive.storeOriginal(data, id: id, suggestedExtension: "jpg")
     }
 
     func captureOriginalData() async throws -> Data {

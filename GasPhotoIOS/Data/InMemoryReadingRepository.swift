@@ -33,4 +33,12 @@ final class InMemoryReadingRepository: ReadingRepository {
     func pendingSync() async throws -> [MeterReading] {
         readings.values.filter { $0.status == .pendingSync }
     }
+
+    func allReadings() async throws -> [MeterReading] {
+        readings.values.sorted { $0.capturedAt > $1.capturedAt }
+    }
+
+    func delete(id: UUID) async throws {
+        readings.removeValue(forKey: id)
+    }
 }

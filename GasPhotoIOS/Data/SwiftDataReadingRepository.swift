@@ -7,12 +7,25 @@ protocol ReadingRepository: AnyObject {
     func reading(id: UUID) async throws -> MeterReading
     func update(_ reading: MeterReading, expectedRevision: Int) async throws
     func pendingSync() async throws -> [MeterReading]
+    func allReadings() async throws -> [MeterReading]
+    func delete(id: UUID) async throws
 }
 
-enum ReadingRepositoryError: Error, Equatable {
+enum ReadingRepositoryError: LocalizedError, Equatable {
     case duplicateReading
     case readingNotFound
     case staleRevision
+
+    var errorDescription: String? {
+        switch self {
+        case .duplicateReading:
+            return "Ez a leolvasás már szerepel az adatbázisban."
+        case .readingNotFound:
+            return "A leolvasás nem található a helyi adatbázisban."
+        case .staleRevision:
+            return "A leolvasás állapota időközben frissült a háttérben."
+        }
+    }
 }
 
 @Model
@@ -124,6 +137,20 @@ final class SwiftDataReadingRepository: ReadingRepository {
         return try modelContext.fetch(descriptor)
             .filter { $0.statusRawValue == ReadingStatus.pendingSync.rawValue }
             .map { try $0.domainValue() }
+    }
+
+    func allReadings() async throws -> [MeterReading] {
+        let descriptor = FetchDescriptor<PersistedMeterReading>(
+            sortBy: [SortDescriptor(\.capturedAt, order: .reverse)]
+        )
+        return try modelContext.fetch(descriptor).compactMap { try? $0.domainValue() }
+    }
+
+    func delete(id: UUID) async throws {
+        if let stored = try storedReading(id: id) {
+            modelContext.delete(stored)
+            try modelContext.save()
+        }
     }
 
     private func storedReading(id: UUID) throws -> PersistedMeterReading? {

@@ -2,13 +2,41 @@ import Foundation
 import SwiftData
 
 protocol ReadingInferenceService: Sendable {
-    func propose(imageURL: URL, manualWindow: NormalizedRect?) async throws -> RecognitionResult
+    func propose(
+        imageURL: URL,
+        manualWindow: NormalizedRect?,
+        onProgress: (@Sendable (InferenceProgress) -> Void)?
+    ) async throws -> RecognitionResult
+
+    func propose(
+        imageURL: URL,
+        manualWindow: NormalizedRect?
+    ) async throws -> RecognitionResult
 }
-protocol TrainingService: Sendable {}
+
+extension ReadingInferenceService {
+    func propose(imageURL: URL, manualWindow: NormalizedRect?) async throws -> RecognitionResult {
+        try await propose(imageURL: imageURL, manualWindow: manualWindow, onProgress: nil)
+    }
+
+    func propose(
+        imageURL: URL,
+        manualWindow: NormalizedRect?,
+        onProgress: (@Sendable (InferenceProgress) -> Void)?
+    ) async throws -> RecognitionResult {
+        try await propose(imageURL: imageURL, manualWindow: manualWindow)
+    }
+}
 
 final class StubInferenceService: ReadingInferenceService, @unchecked Sendable {
-    func propose(imageURL: URL, manualWindow: NormalizedRect?) async throws -> RecognitionResult {
-        RecognitionResult(window: nil, proposal: nil, decimalReviewPositions: [])
+    func propose(
+        imageURL: URL,
+        manualWindow: NormalizedRect?,
+        onProgress: (@Sendable (InferenceProgress) -> Void)? = nil
+    ) async throws -> RecognitionResult {
+        onProgress?(.detectingWindow)
+        onProgress?(.classifyingDigits(window: manualWindow))
+        return RecognitionResult(window: manualWindow, proposal: nil, decimalReviewPositions: [])
     }
 }
 
@@ -20,11 +48,14 @@ final class ONNXInferenceService: ReadingInferenceService, @unchecked Sendable {
         service = InferenceService(runtime: runtime)
     }
 
-    func propose(imageURL: URL, manualWindow: NormalizedRect?) async throws -> RecognitionResult {
-        try await service.propose(imageURL: imageURL, manualWindow: manualWindow)
+    func propose(
+        imageURL: URL,
+        manualWindow: NormalizedRect?,
+        onProgress: (@Sendable (InferenceProgress) -> Void)? = nil
+    ) async throws -> RecognitionResult {
+        try await service.propose(imageURL: imageURL, manualWindow: manualWindow, onProgress: onProgress)
     }
 }
-final class LocalTrainingService: TrainingService, @unchecked Sendable {}
 
 @MainActor
 struct AppContainer {
