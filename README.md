@@ -3,10 +3,21 @@
 [![Platform](https://img.shields.io/badge/Platform-iOS%2018%2B%20%2F%20iOS%2026-blue.svg?style=flat-square&logo=apple)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-6.0%20Complete%20Concurrency-orange.svg?style=flat-square&logo=swift)](https://swift.org/)
 [![Runtime](https://img.shields.io/badge/Inference-ONNX%20Runtime%20Mobile-green.svg?style=flat-square)](https://onnxruntime.ai/)
-[![Home Assistant](https://img.shields.io/badge/Integration-Home%20Assistant-41BDF5.svg?style=flat-square&logo=home-assistant)](https://www.home-assistant.io/)
+[![Home Assistant Integration](https://img.shields.io/badge/Home%20Assistant-home--assistant--gas--photo-41BDF5.svg?style=flat-square&logo=home-assistant)](https://github.com/M3NT1/home-assistant-gas-photo)
 [![Tests](https://img.shields.io/badge/Tests-48%2F48%20Passed-brightgreen.svg?style=flat-square)]()
 
 A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibilis gázórák automatikus leolvasására és Home Assistant integrációjára. Az alkalmazás **100%-ban helyben (On-Device)**, internetkapcsolat és külső felhőszolgáltatás nélkül, beágyazott neurális hálózatokkal ismeri fel a számlálókeretet és a 8 darab analóg görgő számjegyeit (5 fekete egész + 3 piros tizedes).
+
+---
+
+## 🔗 Kapcsolódó Home Assistant Integráció (Kötelező a szinkronizációhoz!)
+
+> [!IMPORTANT]
+> A leolvasott adatok Home Assistantba történő beküldéséhez és az Energy Dashboard órás statisztikáihoz a Home Assistant szervereden futnia kell a szerveroldali egyedi integrációnak:
+>
+> 🏠 **[home-assistant-gas-photo](https://github.com/M3NT1/home-assistant-gas-photo)**
+>
+> A két tároló együtt alkotja a teljeskörű rendszert: az iPhone elvégzi a helyi AI leolvasást, a Home Assistant integráció pedig fogadja az adatot, vezeti a megbízható naplót (`ledger`), és ellátja adatokkal az Energia panelt.
 
 ---
 
@@ -31,7 +42,7 @@ A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibili
 - **Kettős Telemetria**: Külön mutatja az eredeti fotó pixelméretét (`px fotó`) és a képernyő pontméretét (`pt kijelző`).
 
 ### 4. 🏠 Home Assistant Szinkronizáció
-- **Közvetlen REST API Szinkron**: Az ellenőrzött leolvasás egyetlen gombnyomással szinkronizálható a Home Assistant `gas_photo` integrációval.
+- **Közvetlen REST API Szinkron**: Az ellenőrzött leolvasás egyetlen gombnyomással szinkronizálható a [home-assistant-gas-photo](https://github.com/M3NT1/home-assistant-gas-photo) integrációval.
 - **Időbélyeg-alapú Idempotencia**: Megelőzi a duplikált beküldéseket.
 - **Csökkenés Elleni Védelem**: Nem engedi beküldeni a korábbi óraállásnál kisebb értéket.
 - **Biztonságos Keychain Tárolás**: A Home Assistant URL és a Long-Lived Access Token az iOS biztonságos hardveres kulcstárában (`iOS Keychain`) tárolódik.
