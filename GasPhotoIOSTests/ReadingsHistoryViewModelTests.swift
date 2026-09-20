@@ -72,11 +72,12 @@ final class ReadingsHistoryViewModelTests: XCTestCase {
     private func makeTestContainer() throws -> AppContainer {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(
-            for: PersistedMeterReading.self, PersistedTrainingExample.self,
+            for: PersistedMeterReading.self, PersistedTrainingExample.self, PersistedMeter.self,
             configurations: configuration
         )
         return AppContainer(
             readingRepository: SwiftDataReadingRepository(modelContainer: modelContainer),
+            meterRepository: SwiftDataMeterRepository(modelContainer: modelContainer),
             photoArchive: LocalPhotoArchive(),
             inferenceService: StubInferenceService(),
             trainingExampleStore: SwiftDataTrainingExampleStore(modelContainer: modelContainer),

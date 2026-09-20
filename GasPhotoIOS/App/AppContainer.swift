@@ -60,6 +60,7 @@ final class ONNXInferenceService: ReadingInferenceService, @unchecked Sendable {
 @MainActor
 struct AppContainer {
     let readingRepository: any ReadingRepository
+    let meterRepository: any MeterRepository
     let photoArchive: any PhotoArchive
     let inferenceService: any ReadingInferenceService
     let trainingExampleStore: any TrainingExampleStore
@@ -67,10 +68,20 @@ struct AppContainer {
     let homeAssistantClient: any HomeAssistantClient
     let trainingService: any TrainingService
 
+    @MainActor
+    func bootstrapMeterCatalog() async throws {
+        let readings = try await readingRepository.allReadings()
+        try await MeterCatalogBootstrap.run(readings: readings, meters: meterRepository)
+    }
+
     static func live() -> AppContainer {
         let modelContainer: ModelContainer
         do {
-            modelContainer = try ModelContainer(for: PersistedMeterReading.self, PersistedTrainingExample.self)
+            modelContainer = try ModelContainer(
+                for: PersistedMeterReading.self,
+                PersistedTrainingExample.self,
+                PersistedMeter.self
+            )
         } catch {
             fatalError("A helyi leolvasási napló nem indítható el.")
         }
@@ -84,6 +95,7 @@ struct AppContainer {
 
         return AppContainer(
             readingRepository: SwiftDataReadingRepository(modelContainer: modelContainer),
+            meterRepository: SwiftDataMeterRepository(modelContainer: modelContainer),
             photoArchive: LocalPhotoArchive(),
             inferenceService: inferenceService,
             trainingExampleStore: SwiftDataTrainingExampleStore(modelContainer: modelContainer),

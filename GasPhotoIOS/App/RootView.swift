@@ -25,5 +25,8 @@ struct RootView: View {
                 }
             }
         }
+        .task {
+            try? await container.bootstrapMeterCatalog()
+        }
     }
 }
