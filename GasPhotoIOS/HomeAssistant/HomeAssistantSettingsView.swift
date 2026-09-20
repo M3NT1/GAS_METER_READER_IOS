@@ -26,122 +26,151 @@ struct HomeAssistantSettingsView: View {
                     get: { usageSettings?.isEnabled ?? false },
                     set: { usageSettings?.isEnabled = $0 }
                 ))
+
+                NavigationLink {
+                    HomeAssistantSetupGuideView()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "book.pages")
+                            .foregroundStyle(Color.accentColor)
+                        Text("Telepítési útmutató")
+                            .foregroundStyle(.primary)
+                    }
+                }
             } header: {
                 Text("Integráció állapota")
             } footer: {
                 Text("Kikapcsolt állapotban a leolvasások kizárólag a telefon helyi naplójában tárolódnak, és nem indul hálózati szinkronizáció.")
             }
 
-            Section {
-                HStack(spacing: 12) {
-                    Image(systemName: "network")
-                        .foregroundStyle(Color.accentColor)
-                    TextField("Cím (pl. 192.168.0.99:8123)", text: $address)
-                        .textInputAutocapitalization(.never)
-                        .keyboardType(.URL)
-                        .accessibilityLabel("Home Assistant címe")
-                }
-
-                HStack(spacing: 12) {
-                    Image(systemName: "key.fill")
-                        .foregroundStyle(Color.accentColor)
-                    SecureField(
-                        hasStoredCredentials ? "Új token megadása (elhagyható)" : "Hosszú élettartamú token",
-                        text: $token
-                    )
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .accessibilityLabel("Home Assistant hozzáférési token")
-                }
-
-                if hasStoredCredentials {
-                    HStack(spacing: 8) {
-                        Image(systemName: "checkmark.shield.fill")
-                            .foregroundStyle(.green)
-                        Text("Érvényes token elmentve a Keychainben.")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            } header: {
-                Label("Kiszolgáló beállítása", systemImage: "server.rack")
-            } footer: {
-                Label("A token kizárólag az iPhone biztonságos Keychain tárában marad, és közvetlenül a Home Assistant REST API-val kommunikál.", systemImage: "lock.shield.fill")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-
-            Section {
-                Button {
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    Task { await testConnection() }
-                } label: {
-                    HStack {
-                        Spacer()
-                        if isTesting {
-                            ProgressView()
-                                .padding(.trailing, 4)
-                            Text("Kapcsolat tesztelése...")
-                        } else {
-                            Label("Kapcsolat tesztelése", systemImage: "antenna.radiowaves.left.and.right")
-                                .fontWeight(.medium)
-                        }
-                        Spacer()
-                    }
-                }
-                .disabled(effectiveToken.isEmpty || address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isTesting || isSaving)
-
-                Button {
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    Task { await save() }
-                } label: {
-                    HStack {
-                        Spacer()
-                        if isSaving {
-                            ProgressView()
-                                .padding(.trailing, 4)
-                            Text("Mentés folyamatban...")
-                        } else {
-                            Label("Kapcsolat mentése", systemImage: "tray.and.arrow.down.fill")
-                                .fontWeight(.semibold)
-                        }
-                        Spacer()
-                    }
-                }
-                .disabled(effectiveToken.isEmpty || isSaving || isTesting)
-            }
-
-            if let testResult {
+            if usageSettings?.isEnabled == true {
                 Section {
-                    HStack(alignment: .top, spacing: 10) {
-                        Image(systemName: testResult.isSuccess ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                            .foregroundStyle(testResult.isSuccess ? Color.green : Color.red)
-                            .font(.title3)
+                    HStack(spacing: 12) {
+                        Image(systemName: "network")
+                            .foregroundStyle(Color.accentColor)
+                        TextField("Cím (pl. 192.168.0.99:8123)", text: $address)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(.URL)
+                            .accessibilityLabel("Home Assistant címe")
+                    }
 
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(testResult.isSuccess ? "Kapcsolat sikeres" : "Kapcsolati hiba")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(testResult.isSuccess ? Color.primary : Color.red)
+                    HStack(spacing: 12) {
+                        Image(systemName: "key.fill")
+                            .foregroundStyle(Color.accentColor)
+                        SecureField(
+                            hasStoredCredentials ? "Új token megadása (elhagyható)" : "Hosszú élettartamú token",
+                            text: $token
+                        )
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .accessibilityLabel("Home Assistant hozzáférési token")
+                    }
 
-                            Text(testResult.message)
-                                .font(.footnote)
+                    if hasStoredCredentials {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.shield.fill")
+                                .foregroundStyle(.green)
+                            Text("Érvényes token elmentve a Keychainben.")
+                                .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    .padding(.vertical, 2)
                 } header: {
-                    Text("Teszt eredménye")
+                    Label("Kiszolgáló beállítása", systemImage: "server.rack")
+                } footer: {
+                    Label("A token kizárólag az iPhone biztonságos Keychain tárában marad. Bekapcsolt szinkronizáció esetén a jóváhagyott gázóra-leolvasási értékek a megadott Home Assistant szerverre kerülnek továbbításra.", systemImage: "lock.shield.fill")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
-            }
 
-            if let saveStatusMessage {
                 Section {
-                    HStack(spacing: 8) {
-                        Image(systemName: "info.circle.fill")
-                            .foregroundStyle(Color.accentColor)
-                        Text(saveStatusMessage)
-                            .font(.subheadline)
+                    Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        Task { await testConnection() }
+                    } label: {
+                        HStack {
+                            Spacer()
+                            if isTesting {
+                                ProgressView()
+                                    .padding(.trailing, 4)
+                                Text("Kapcsolat tesztelése...")
+                            } else {
+                                Label("Kapcsolat tesztelése", systemImage: "antenna.radiowaves.left.and.right")
+                                    .fontWeight(.medium)
+                            }
+                            Spacer()
+                        }
+                    }
+                    .disabled(effectiveToken.isEmpty || address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isTesting || isSaving)
+
+                    Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        Task { await save() }
+                    } label: {
+                        HStack {
+                            Spacer()
+                            if isSaving {
+                                ProgressView()
+                                    .padding(.trailing, 4)
+                                Text("Mentés folyamatban...")
+                            } else {
+                                Label("Kapcsolat mentése", systemImage: "tray.and.arrow.down.fill")
+                                    .fontWeight(.semibold)
+                            }
+                            Spacer()
+                        }
+                    }
+                    .disabled(effectiveToken.isEmpty || isSaving || isTesting)
+                }
+
+                if let testResult {
+                    Section {
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: testResult.isSuccess ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                                .foregroundStyle(testResult.isSuccess ? Color.green : Color.red)
+                                .font(.title3)
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(testResult.isSuccess ? "Kapcsolat sikeres" : "Kapcsolati hiba")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(testResult.isSuccess ? Color.primary : Color.red)
+
+                                Text(testResult.message)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(.vertical, 2)
+                    } header: {
+                        Text("Teszt eredménye")
+                    }
+                }
+
+                if let saveStatusMessage {
+                    Section {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(Color.green)
+                            Text(saveStatusMessage)
+                                .font(.footnote)
+                                .foregroundStyle(Color.green)
+                        }
+                    }
+                }
+
+                if hasStoredCredentials {
+                    Section {
+                        Button(role: .destructive) {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            Task { await clearCredentials() }
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Label("Beállítások törlése", systemImage: "trash")
+                                Spacer()
+                            }
+                        }
                     }
                 }
             }
@@ -198,6 +227,18 @@ struct HomeAssistantSettingsView: View {
             saveStatusMessage = "Adj meg egy érvényes Home Assistant címet, például: 192.168.0.99:8123"
         } catch {
             saveStatusMessage = "A kapcsolat mentése nem sikerült: \(error.localizedDescription)"
+        }
+    }
+
+    private func clearCredentials() async {
+        do {
+            try await credentialStore.clear()
+            storedToken = ""
+            token = ""
+            hasStoredCredentials = false
+            saveStatusMessage = "A beállítások törölve."
+        } catch {
+            saveStatusMessage = "A beállítások törlése nem sikerült: \(error.localizedDescription)"
         }
     }
 }

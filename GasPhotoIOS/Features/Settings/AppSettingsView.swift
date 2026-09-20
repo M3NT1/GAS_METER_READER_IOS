@@ -112,7 +112,7 @@ struct AppSettingsView: View {
                 } header: {
                     Text("Okosotthon Kapcsolat")
                 } footer: {
-                    Text("A hitelesített leolvasások közvetlenül a Home Assistant gas_photo szolgáltatásába szinkronizálódnak.")
+                    Text("Opcionális kapcsolat. Bekapcsolva a hitelesített gázóra-leolvasások a saját Home Assistant gas_photo szolgáltatásodba szinkronizálódnak.")
                 }
 
                 // Section 3: Privacy & System Info
@@ -135,7 +135,7 @@ struct AppSettingsView: View {
                 } header: {
                     Text("Névjegy & Biztonság")
                 } footer: {
-                    Text("A fotók és az azonosító adatok kizárólag a telefonodon tárolódnak, a Keychain által titkosítva.")
+                    Text("A fotók és leolvasások a telefon védett helyi tárhelyén, a Home Assistant hozzáférési token a Keychainben tárolódik. Bekapcsolt szinkronizáció esetén az adatok a saját Home Assistant szerveredre távoznak.")
                 }
             }
             .navigationTitle("Beállítások")

@@ -40,6 +40,7 @@
 		54364DB541F122608369E259 /* PhotoArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */; };
 		54543D0F389460519525D497 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB3D1B091705049838DD23 /* AppContainer.swift */; };
 		552C57A75A4B74AF9C334D47 /* ReviewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0998D5DDCDABC7650B6BAB /* ReviewViewModelTests.swift */; };
+		63B1C10CE6D24B8E72895620 /* HomeAssistantSetupGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4577087BCCD45ABCCC5BCDB /* HomeAssistantSetupGuideView.swift */; };
 		67FB2C507700E8F3BB4F6EFD /* Reading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C71CD57169C261974A0DFEE /* Reading.swift */; };
 		6B7D7174AB3C3E269460B148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		6C1077BA60209E8E341F46A4 /* TrainingExampleStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E116B4F5FDE4BDC7AC79A036 /* TrainingExampleStoreTests.swift */; };
@@ -80,11 +81,13 @@
 		DAE1A10A2F24B85F8A82B25B /* HomeAssistantUsageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AAFDE50C37816B9FFA3AC2 /* HomeAssistantUsageSettings.swift */; };
 		E3609994E6AAD3304D3046B8 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */; };
 		E53742171D03E6E0F514B344 /* ReadingsHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E39AC6E5FCE4EBB4B735A0 /* ReadingsHistoryViewModel.swift */; };
+		E666161607A49EF558D104B3 /* HomeAssistantSetupGuideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7EAE40EF167D269723CAA9 /* HomeAssistantSetupGuideTests.swift */; };
 		E88DBC5A87E19270ED8662A5 /* digit-classifier-active.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 7F8BBC0E841135E6C8AFDC6B /* digit-classifier-active.onnx */; };
 		EA1C2E0E7EFEEDCF8E436BB3 /* WindowFineTuneSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6F945B84E1502A6D538ED9 /* WindowFineTuneSheet.swift */; };
 		EEED7810F7FA4EDBBDA720C6 /* ReadingValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB7B0A6B6A22A81C966661D /* ReadingValidatorTests.swift */; };
 		F14F2F470F8DA8ED418A5D06 /* optimizer_model.onnx in Resources */ = {isa = PBXBuildFile; fileRef = E0171566F238FC7C23C2EC93 /* optimizer_model.onnx */; };
 		F42AF8682B7672CBBC3B19A8 /* checkpoint in Resources */ = {isa = PBXBuildFile; fileRef = 042C497C3759595B40FD1CB3 /* checkpoint */; };
+		F6A70D42C5F5C249CB4F0A41 /* HomeAssistantSetupGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF2E607BF8FD59231FE6CE8 /* HomeAssistantSetupGuide.swift */; };
 		F751CA1024AEECE353AB455F /* PhotoArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */; };
 		F753F7AEA22C0507FE4C1E7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E246010151532361AABE6974 /* Assets.xcassets */; };
 		F86FF76EFF593C1A224E5A91 /* SwiftDataReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A15AA9A77F82D771D121292 /* SwiftDataReadingRepository.swift */; };
@@ -121,7 +124,9 @@
 		2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GasPhotoIOSApp.swift; path = App/GasPhotoIOSApp.swift; sourceTree = "<group>"; };
 		346DD9FA336C67C2E6D86A3E /* Pods_GasPhotoIOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		372126694358FA576FF61676 /* ReadingsHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingsHistoryView.swift; path = Features/History/ReadingsHistoryView.swift; sourceTree = "<group>"; };
+		3A7EAE40EF167D269723CAA9 /* HomeAssistantSetupGuideTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantSetupGuideTests.swift; sourceTree = "<group>"; };
 		3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingValidator.swift; path = Domain/ReadingValidator.swift; sourceTree = "<group>"; };
+		3AF2E607BF8FD59231FE6CE8 /* HomeAssistantSetupGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantSetupGuide.swift; path = Features/Settings/HomeAssistantSetupGuide.swift; sourceTree = "<group>"; };
 		430D2B50CF73EE9C1C72B5A0 /* Release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		44277C478B0A08980C3E1506 /* GasPhotoIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasPhotoIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6ED7F263A6A3AB1E396D1A /* ManualReadingInputView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ManualReadingInputView.swift; path = Features/Review/ManualReadingInputView.swift; sourceTree = "<group>"; };
@@ -169,6 +174,7 @@
 		BBF70B63B6B19885EBE3D531 /* CaptureView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureView.swift; path = Features/Capture/CaptureView.swift; sourceTree = "<group>"; };
 		C1E39AC6E5FCE4EBB4B735A0 /* ReadingsHistoryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingsHistoryViewModel.swift; path = Features/History/ReadingsHistoryViewModel.swift; sourceTree = "<group>"; };
 		C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoArchive.swift; path = Photos/PhotoArchive.swift; sourceTree = "<group>"; };
+		C4577087BCCD45ABCCC5BCDB /* HomeAssistantSetupGuideView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantSetupGuideView.swift; path = Features/Settings/HomeAssistantSetupGuideView.swift; sourceTree = "<group>"; };
 		C7899E6D559CC797ABDD4B04 /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoLibraryManager.swift; path = Photos/PhotoLibraryManager.swift; sourceTree = "<group>"; };
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		C9F7F325B706612531945FC5 /* MeterFormatTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MeterFormatTests.swift; sourceTree = "<group>"; };
@@ -301,6 +307,8 @@
 				4B6ED7F263A6A3AB1E396D1A /* ManualReadingInputView.swift */,
 				7ADDB9A686300B42AF190AEA /* ConsumptionCalculator.swift */,
 				9A5A5FB7E4CC4589A767AB90 /* MeterConsumptionView.swift */,
+				3AF2E607BF8FD59231FE6CE8 /* HomeAssistantSetupGuide.swift */,
+				C4577087BCCD45ABCCC5BCDB /* HomeAssistantSetupGuideView.swift */,
 			);
 			path = GasPhotoIOS;
 			sourceTree = "<group>";
@@ -371,6 +379,7 @@
 				085F7C2D6A5F78105B95CA80 /* CaptureMeterSelectionTests.swift */,
 				DB31AAA80178FED6390C214A /* ReadingProgressionValidatorTests.swift */,
 				F0B7238CAA68CC3FED178316 /* ConsumptionCalculatorTests.swift */,
+				3A7EAE40EF167D269723CAA9 /* HomeAssistantSetupGuideTests.swift */,
 			);
 			path = GasPhotoIOSTests;
 			sourceTree = "<group>";
@@ -546,6 +555,7 @@
 				AA8D2DF018F0935D57AA66A3 /* CaptureMeterSelectionTests.swift in Sources */,
 				A69DC88F8C1500F11CD4FC0E /* ReadingProgressionValidatorTests.swift in Sources */,
 				A0F5DD4D0692C9CEB2F12081 /* ConsumptionCalculatorTests.swift in Sources */,
+				E666161607A49EF558D104B3 /* HomeAssistantSetupGuideTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +613,8 @@
 				31BE5D4E8D474C7C92058A31 /* ManualReadingInputView.swift in Sources */,
 				225CE17B530676F65A1B36EB /* ConsumptionCalculator.swift in Sources */,
 				05EBBA44FFD9283033C843B0 /* MeterConsumptionView.swift in Sources */,
+				F6A70D42C5F5C249CB4F0A41 /* HomeAssistantSetupGuide.swift in Sources */,
+				63B1C10CE6D24B8E72895620 /* HomeAssistantSetupGuideView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
