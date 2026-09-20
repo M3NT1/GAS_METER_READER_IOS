@@ -52,6 +52,13 @@ A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibili
 - A tanítási vezérlőpult, előfeltétel-ellenőrzés és a csomagolt ONNX Training erőforrások rendelkezésre állnak.
 - **Korlát:** a jelenlegi `LocalTrainingService` szimulált epochokat és metrikákat ad; az aktiválás állapotmetaadatot ment. Valódi `ORTTrainingSession`, mért modellértékelés és az inferenciában használt modell cseréje még nincs bekötve. A telefonos modelltréning ezért nem tekinthető kész funkciónak.
 
+## Tervezés ezen a feature branchen
+
+A `codex/standalone-meter-journal` ág egyelőre **csak tervet** tartalmaz az önálló villany-/gáz-/vízóra-naplóhoz, az opcionális HA-kapcsolathoz és a beépített telepítési útmutatóhoz. Az új funkciók még nincsenek implementálva. Villany- és vízóránál az elfogadott első lépés fotó + kézi bevitel; a meglévő gázfelismerés megmarad.
+
+- [Specifikáció, döntések és GitHub-/fórumkutatás](docs/superpowers/specs/2026-09-20-standalone-meter-journal-design.md)
+- [Lépésekre bontott megvalósítási terv GPT Terra számára](docs/superpowers/plans/2026-09-20-standalone-meter-journal.md)
+
 ## Aktuális állapot — 2026-09-20
 
 - A jelenlegi alkalmazás egy `gas_main` azonosítójú, 5 egész + 3 tizedes jegyes gázórára épül.
