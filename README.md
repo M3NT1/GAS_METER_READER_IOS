@@ -48,24 +48,18 @@ A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibili
 - **Biztonságos Keychain Tárolás**: A Home Assistant URL és a Long-Lived Access Token az iOS Keychainben tárolódik.
 
 ### 5. Helyi tanítópéldák és tanítási felület
-- A jóváhagyott/javított, kerettel rendelkező leolvasások helyi tanítópéldaként tárolhatók.
+- A jóváhagyott/javított, kerettel rendelkező gázleolvasások helyi tanítópéldaként tárolhatók.
 - A tanítási vezérlőpult, előfeltétel-ellenőrzés és a csomagolt ONNX Training erőforrások rendelkezésre állnak.
 - **Korlát:** a jelenlegi `LocalTrainingService` szimulált epochokat és metrikákat ad; az aktiválás állapotmetaadatot ment. Valódi `ORTTrainingSession`, mért modellértékelés és az inferenciában használt modell cseréje még nincs bekötve. A telefonos modelltréning ezért nem tekinthető kész funkciónak.
 
-## Tervezés ezen a feature branchen
-
-A `codex/standalone-meter-journal` ág egyelőre **csak tervet** tartalmaz az önálló villany-/gáz-/vízóra-naplóhoz, az opcionális HA-kapcsolathoz és a beépített telepítési útmutatóhoz. Az új funkciók még nincsenek implementálva. Villany- és vízóránál az elfogadott első lépés fotó + kézi bevitel; a meglévő gázfelismerés megmarad.
-
-- [Specifikáció, döntések és GitHub-/fórumkutatás](docs/superpowers/specs/2026-09-20-standalone-meter-journal-design.md)
-- [Lépésekre bontott megvalósítási terv GPT Terra számára](docs/superpowers/plans/2026-09-20-standalone-meter-journal.md)
-
-## Aktuális állapot — 2026-09-20
-
-- A jelenlegi alkalmazás egy `gas_main` azonosítójú, 5 egész + 3 tizedes jegyes gázórára épül.
-- Helyi jóváhagyás és napló már van, de a jóváhagyott rekord állapota még `pendingSync`; külön HA nélküli üzemmód, mérőkatalógus és általános fogyasztási nézet még nincs.
-- A képfeldolgozás kezeli az EXIF-orientációt, raszterizálja a képet a kivágásokhoz, és a számjegyosztályozónál középre vágott átméretezést használ.
-- Az ellenőrző nézet újrahasznosítja a kamera előnézetét, illetve háttérben dekódolt bélyegképet tölt; keretváltozáskor jelzi az újrafelismerést.
-- A többféle mérő és az opcionális HA-kapcsolat külön feature fejlesztés tárgya; ezek nem a jelenlegi kiadás funkciói.
+### 6. 📊 Önálló Mérőóra-napló és Fogyasztási Intervallumok (Vigavi)
+- **Több mérőkategória**: Villany (`kWh`), gáz (`m³`) és víz (`m³`) mérők kezelése egyetlen felületen.
+- **Mérőkatalógus**: Tetszőleges számú mérőóra felvétele, testreszabható számláló-formátum (egész és tört jegyek száma), archiválási lehetőség.
+- **Kézi jóváhagyás**: Víz- és villanyórákhoz fotó + formátumhoz igazított kézi bevitel magyar tizedesvessző-támogatással.
+- **Értékprogresszió-védelem**: Nem engedi a számláló visszafelé járását vagy azonos időpontú ütközéseket.
+- **Fogyasztásszámítás**: Valós mérési intervallumok és összegzett időszakos fogyasztás megjelenítése mérőnként (`MeterConsumptionView`).
+- **Opcionális Home Assistant kapcsolat**: Új telepítésnél alapértelmezetten kikapcsolt; offline módban nulla hálózati kérés.
+- **Beépített telepítési útmutató**: Teljesen offline elérhető lépésről-lépésre útmutató a beállításokban és a [docs/home-assistant-setup.md](docs/home-assistant-setup.md) fájlban.
 
 ---
 
@@ -78,27 +72,44 @@ GasPhotoIOS/
 │   ├── AppContainer.swift             # Dependency Injection & Service Factory
 │   └── RootView.swift                 # Kamera és ellenőrzés közti navigáció
 ├── Domain/
+│   ├── Meter.swift                    # Mérő modell, kategóriák, formátumok
 │   ├── Reading.swift                  # Leolvasás modell (állapotok, normalizált érték)
-│   ├── ReadingValidator.swift         # 8 jegyű formátum és csökkenés-ellenőrzés
+│   ├── ReadingValidator.swift         # Formátum és számszaki validáció
+│   ├── ReadingProgressionValidator.swift # Mérőnkénti időbeli növekedés validáció
+│   ├── ConsumptionCalculator.swift    # Fogyasztási intervallumok és összegzés
 │   └── ModelTrainingDomain.swift      # Tanítási állapotgépek és konfigurációk
 ├── Features/
-│   ├── Capture/                       # Élő kamera nézet, Apple Intelligence szkenner HUD
-│   ├── Review/                        # Leolvasás-ellenőrző, görgőtárcsák, finomhangolás
-│   ├── History/                       # SwiftData leolvasási napló, szűrés, szinkronizáció
+│   ├── Capture/                       # Élő kamera nézet, mérőválasztó, Apple Intelligence szkenner HUD
+│   ├── Review/                        # Leolvasás-ellenőrző (gáz tárcsák vagy kézi numerikus bevitel)
+│   ├── History/                       # SwiftData leolvasási napló, szűrés, fogyasztási nézet
+│   ├── Meters/                        # Mérőkatalógus (lista és szerkesztő)
 │   ├── Training/                      # On-device modell tanítás vezérlőpult
-│   └── Settings/                      # Home Assistant kapcsolat és token beállítások
+│   └── Settings/                      # Beállítások, HA kapcsolat és offline útmutató
+├── HomeAssistant/
+│   ├── HomeAssistantClient.swift      # REST API szinkronizáció
+│   ├── HomeAssistantSyncPolicy.swift  # Feltöltési kapuk és szabályok
+│   └── HomeAssistantUsageSettings.swift # Opcionális használati kapcsoló
 ├── Inference/
 │   ├── InferenceService.swift         # YOLOv8 és roller klasszifikáció orchestrator
 │   ├── ONNXRuntime.swift              # Swift burkoló az ONNX futtatókörnyezethez
 │   ├── ORTInferenceBridge.[h|mm]      # C++ / Objective-C++ híd az onnxruntime-c könyvtárhoz
 │   └── ModelBundle.swift              # Beágyazott .onnx modellek feloldása
 ├── Data/
+│   ├── SwiftDataMeterRepository.swift
 │   ├── SwiftDataReadingRepository.swift
-│   └── SwiftDataTrainingExampleStore.swift
+│   ├── SwiftDataTrainingExampleStore.swift
+│   └── MeterCatalogBootstrap.swift
 └── Photos/
     ├── CameraCaptureService.swift     # AVFoundation 4K fotórögzítés
+    ├── ImageMetadataReader.swift      # EXIF időbélyeg és al-másodperc felolvasás
     └── PhotoArchive.swift             # SHA-256 hash alapú helyi képmentés
 ```
+
+---
+
+## 📋 Validációs Állapot
+
+A részletes teszteredményeket és határvonalakat a [docs/validation/standalone-meter-journal.md](docs/validation/standalone-meter-journal.md) tartalmazza (93 teszt, 0 hiba).
 
 ---
 

@@ -4,23 +4,24 @@ A projekt változásai a [Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
-## [Unreleased] — állapotmentés, 2026-09-20
+## [Unreleased]
 
-### Meglévő helyi változások rögzítése
-- EXIF-orientáció figyelembevétele és raszterizálás az ONNX képkivágások előtt.
-- Középre vágott átméretezés a számjegyosztályozó bemenetéhez.
-- Kamera-előnézet újrahasznosítása és aszinkron képbetöltés az ellenőrző nézetben.
-- Elkülönített helyi jóváhagyás és explicit Home Assistant-feltöltés; újrafelismerési és feltöltési állapotjelzések.
-- Bővített ONNX- és review-tesztek.
+## [1.1.0] — Vigavi: Önálló mérőóra-napló és Home Assistant integráció (2026-09-20)
 
-### Dokumentáció pontosítása
-- iOS 26+ / Xcode 26+, jelenlegi navigáció, adatküldés és Keychain szerepe.
-- A valódi telefonos modelltréning nincs bekötve: a jelenlegi szolgáltatás szimuláció. A korábbi 1.0.0 leírás ezt túlzottan kész funkcióként mutatta be.
-- Az önálló többórás napló és az opcionális HA-mód még nincs implementálva.
+### ✨ Hozzáadva (Added)
+- **Vigavi arculat**: Új alkalmazásnév (Vigavi = Villany-Gáz-Víz) és 1024x1024-es natív app ikon.
+- **Több mérőkategória**: Villany (`kWh`), gáz (`m³`) és víz (`m³`) támogatása testreszabható számláló-formátumokkal.
+- **SwiftData mérőkatalógus és migráció**: `Meter`, `PersistedMeter`, `SwiftDataMeterRepository`; a meglévő `gas_main` leolvasások idempotens átvétele adatvesztés nélkül (`MeterCatalogBootstrap`).
+- **Mérőválasztás a kameránál**: Interaktív mérőválasztó a keresőben, megváltoztathatatlan pillanatkép kép rögzítésekor/importálásakor (`CaptureViewModel`).
+- **Kézi leolvasás és formátumvalidáció**: Numerikus beviteli felület (`ManualReadingInputView`) magyar tizedesvessző-támogatással víz- és villanyórákhoz; az ONNX inferencia automatikus kihagyása kézi profilnál.
+- **Értékprogresszió-védelem**: `ReadingProgressionValidator` megelőzi a mérőnkénti számláló-visszafelé járást és az azonos időpontú ütközéseket.
+- **Fogyasztási intervallumok és nézet**: `ConsumptionCalculator` és `MeterConsumptionView` valós mérési intervallumok összegzésére és megjelenítésére.
+- **Opcionális Home Assistant használat**: Új telepítésnél kikapcsolt; offline módban nulla hálózati forgalom. Csak a meglévő `gas_main` tölthető fel; manuális leolvasások `.approvedLocal` státuszban maradnak és nem generálnak gáz-tanítómintát.
+- **Beépített offline telepítési útmutató**: `HomeAssistantSetupGuide` és `HomeAssistantSetupGuideView` lépésről lépésre vezeti végig a felhasználót a HACS, YAML, admin token és Energy panel beállításán.
 
-### Ellenőrzés
-- **2026-09-20: 51 teszt, 0 hiba — TEST SUCCEEDED**, Xcode 26.6, iOS 26.5, GasPhoto iPhone 14 Pro Max szimulátor. A valódi fotós teszt külső helyi fájltól függ és hiányakor visszatér; ez nem hordozható képfelismerési benchmark.
-- Fizikai készülékes kamera- és élő HA-próba ebben az állapotmentésben nem történt.
+### 🧪 Ellenőrzés
+- **93 teszt, 0 hiba — TEST SUCCEEDED**, Xcode 26.6, iOS 26.5 Simulator (GasPhoto iPhone 14 Pro Max).
+- Részletes validációs dokumentáció: `docs/validation/standalone-meter-journal.md`.
 
 ---
 
