@@ -28,6 +28,8 @@
 		4983F01B4A114F7CE6D204DE /* InMemoryReadingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */; };
 		4A63CFFC63076BC847E17A34 /* ModelTrainingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3DB9BA6D059E7A0FF3EFD /* ModelTrainingViewModelTests.swift */; };
 		4B932709508103367C6DC3BB /* window-detector-best.onnx in Resources */ = {isa = PBXBuildFile; fileRef = F4A4178C1C3795C2524FEECF /* window-detector-best.onnx */; };
+		4D07A6B59F37204E39F0D592 /* MeterFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F7F325B706612531945FC5 /* MeterFormatTests.swift */; };
+		5069450DEC88E441426DE27F /* Meter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227CAA23EEFD7C63BF747A8A /* Meter.swift */; };
 		512BEB98D92C40F25C50819D /* KeychainCredentialStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18D13F80DFC9ABEA0EE008E /* KeychainCredentialStoreTests.swift */; };
 		54364DB541F122608369E259 /* PhotoArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */; };
 		54543D0F389460519525D497 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB3D1B091705049838DD23 /* AppContainer.swift */; };
@@ -92,6 +94,7 @@
 		15C13EFA3968EC89D772A1CB /* URLSessionHomeAssistantClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLSessionHomeAssistantClient.swift; path = HomeAssistant/URLSessionHomeAssistantClient.swift; sourceTree = "<group>"; };
 		1BA0402B1023366416620FC3 /* TrainingService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrainingService.swift; path = Features/Training/TrainingService.swift; sourceTree = "<group>"; };
 		1C8780A305A3B5270212F649 /* HomeAssistantClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantClientTests.swift; sourceTree = "<group>"; };
+		227CAA23EEFD7C63BF747A8A /* Meter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Meter.swift; path = Domain/Meter.swift; sourceTree = "<group>"; };
 		249CF9D89D7AD78277562664 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		27A128588490D9709D87CC53 /* BuildSettings.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BuildSettings.xcconfig; sourceTree = "<group>"; };
 		2968C98EB05311BBD4EF8841 /* GasPhotoIOSApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GasPhotoIOSApp.swift; path = App/GasPhotoIOSApp.swift; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		C34ACFDA6EB37843E70C2429 /* PhotoArchive.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoArchive.swift; path = Photos/PhotoArchive.swift; sourceTree = "<group>"; };
 		C7899E6D559CC797ABDD4B04 /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoLibraryManager.swift; path = Photos/PhotoLibraryManager.swift; sourceTree = "<group>"; };
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		C9F7F325B706612531945FC5 /* MeterFormatTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MeterFormatTests.swift; sourceTree = "<group>"; };
 		CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePreprocessor.swift; path = Inference/ImagePreprocessor.swift; sourceTree = "<group>"; };
 		D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraCaptureService.swift; path = Photos/CameraCaptureService.swift; sourceTree = "<group>"; };
 		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 				1401BAD402CE0F541FF5138C /* ModelTrainingView.swift */,
 				E80D92F9A6AA0D5F0EFB61F8 /* ModelTrainingViewModel.swift */,
 				1BA0402B1023366416620FC3 /* TrainingService.swift */,
+				227CAA23EEFD7C63BF747A8A /* Meter.swift */,
 			);
 			path = GasPhotoIOS;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				BBB77467BA6D76D9E4EB7FE7 /* ReadingsHistoryViewModelTests.swift */,
 				E2F3DB9BA6D059E7A0FF3EFD /* ModelTrainingViewModelTests.swift */,
 				AFFD6B8B511C2005FEF6DE7D /* NormalizedRectTests.swift */,
+				C9F7F325B706612531945FC5 /* MeterFormatTests.swift */,
 			);
 			path = GasPhotoIOSTests;
 			sourceTree = "<group>";
@@ -486,6 +492,7 @@
 				0F1D3F6ED5A8572DFC7C6CCF /* ReadingsHistoryViewModelTests.swift in Sources */,
 				4A63CFFC63076BC847E17A34 /* ModelTrainingViewModelTests.swift in Sources */,
 				1DD4A3B9A691F2807FAFBAA4 /* NormalizedRectTests.swift in Sources */,
+				4D07A6B59F37204E39F0D592 /* MeterFormatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +538,7 @@
 				0DFA6C48383B5C2072794D22 /* ModelTrainingView.swift in Sources */,
 				7F02C5C55F7AC2A607A92350 /* ModelTrainingViewModel.swift in Sources */,
 				8AD4A0902A135EEE3E5E040B /* TrainingService.swift in Sources */,
+				5069450DEC88E441426DE27F /* Meter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
