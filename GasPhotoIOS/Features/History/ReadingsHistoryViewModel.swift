@@ -22,6 +22,7 @@ final class ReadingsHistoryViewModel {
     private let trainingExampleStore: any TrainingExampleStore
 
     var readings: [MeterReading] = []
+    var meters: [Meter] = []
     var selectedFilter: Filter = .all
     var isLoading = false
     var statusMessage: String?
@@ -59,10 +60,15 @@ final class ReadingsHistoryViewModel {
         defer { isLoading = false }
         do {
             readings = try await repository.allReadings()
+            meters = (try? await container.meterRepository.allMeters()) ?? []
             trainingCount = (try? await trainingExampleStore.count()) ?? 0
         } catch {
             errorMessage = "A leolvasások betöltése nem sikerült."
         }
+    }
+
+    func consumptionIntervals(for meter: Meter) throws -> [ConsumptionInterval] {
+        try ConsumptionCalculator.intervals(readings: readings, meter: meter)
     }
 
     func delete(reading: MeterReading) async {

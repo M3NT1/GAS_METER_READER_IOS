@@ -9,6 +9,7 @@ struct ReadingsHistoryView: View {
     @State private var readingToDelete: MeterReading? = nil
     @State private var isShowingDeleteConfirm = false
     @State private var isShowingTraining = false
+    @State private var isShowingConsumption = false
 
     var body: some View {
         NavigationStack {
@@ -119,17 +120,30 @@ struct ReadingsHistoryView: View {
                     Button("Bezárás") { dismiss() }
                 }
 
-                ToolbarItem(placement: .confirmationAction) {
-                    if model.pendingCount > 0 {
+                ToolbarItem(placement: .primaryAction) {
+                    HStack(spacing: 8) {
                         Button {
-                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            Task { await model.syncAllPending() }
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            isShowingConsumption = true
                         } label: {
                             HStack(spacing: 4) {
-                                Image(systemName: "arrow.triangle.2.circlepath")
-                                Text("Összes feltöltése (\(model.pendingCount))")
+                                Image(systemName: "chart.line.uptrend.xyaxis")
+                                Text("Fogyasztás")
                             }
                             .font(.caption.weight(.semibold))
+                        }
+
+                        if model.pendingCount > 0 {
+                            Button {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                Task { await model.syncAllPending() }
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "arrow.triangle.2.circlepath")
+                                    Text("Feltöltés (\(model.pendingCount))")
+                                }
+                                .font(.caption.weight(.semibold))
+                            }
                         }
                     }
                 }
@@ -158,6 +172,12 @@ struct ReadingsHistoryView: View {
                         trainingExampleStore: model.container.trainingExampleStore,
                         trainingService: model.container.trainingService
                     )
+                )
+            }
+            .sheet(isPresented: $isShowingConsumption) {
+                MeterConsumptionView(
+                    meters: model.meters,
+                    readings: model.readings
                 )
             }
         }
