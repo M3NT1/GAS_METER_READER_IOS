@@ -9,6 +9,7 @@ struct CaptureView: View {
 
     @State private var isShowingSettings = false
     @State private var isShowingHistory = false
+    @State private var isShowingMetersList = false
     @State private var selectedPhotoItem: PhotosPickerItem? = nil
     @State private var isShutterPressed = false
     @State private var isShutterFlashing = false
@@ -176,13 +177,53 @@ struct CaptureView: View {
 
                     Spacer()
 
-                    // Title Pill
-                    Text("Gázóra Leolvasó")
-                        .font(.subheadline.weight(.semibold))
+                    // Interactive Meter Selector Pill
+                    Menu {
+                        Section("Mérőóra kiválasztása") {
+                            ForEach(model.availableMeters) { meter in
+                                Button {
+                                    model.selectedMeterID = meter.id
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                } label: {
+                                    HStack {
+                                        Text(meter.name)
+                                        if model.selectedMeterID == meter.id {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Section {
+                            Button {
+                                isShowingMetersList = true
+                            } label: {
+                                Label("Mérők kezelése...", systemImage: "slider.horizontal.3")
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            if let current = model.currentSelectedMeter {
+                                Image(systemName: meterIconName(for: current.kind))
+                                    .font(.caption.weight(.bold))
+                                    .foregroundStyle(meterIconColor(for: current.kind))
+                                Text(current.name)
+                                    .font(.subheadline.weight(.semibold))
+                            } else {
+                                Image(systemName: "gauge.with.needle")
+                                Text("Mérő kiválasztása")
+                                    .font(.subheadline.weight(.semibold))
+                            }
+                            Image(systemName: "chevron.up.chevron.down")
+                                .font(.caption2.weight(.semibold))
+                                .foregroundStyle(.white.opacity(0.8))
+                        }
                         .foregroundStyle(Color.white)
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, 14)
                         .padding(.vertical, 8)
                         .background(.ultraThinMaterial, in: Capsule())
+                    }
 
                     Spacer()
 
@@ -305,6 +346,22 @@ struct CaptureView: View {
                 }
             )
         }
+        .sheet(isPresented: $isShowingMetersList) {
+            NavigationStack {
+                MeterListView(
+                    meterRepository: model.container.meterRepository,
+                    readingRepository: model.container.readingRepository
+                )
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Kész") {
+                            isShowingMetersList = false
+                            Task { await model.loadMeters() }
+                        }
+                    }
+                }
+            }
+        }
         .onChange(of: selectedPhotoItem) { _, newItem in
             guard let newItem else { return }
             Task {
@@ -318,6 +375,22 @@ struct CaptureView: View {
         .task {
             model.configureAndStart()
             await model.refreshReadingsCount()
+        }
+    }
+
+    private func meterIconName(for kind: MeterKind) -> String {
+        switch kind {
+        case .electricity: return "bolt.fill"
+        case .gas: return "flame.fill"
+        case .water: return "drop.fill"
+        }
+    }
+
+    private func meterIconColor(for kind: MeterKind) -> Color {
+        switch kind {
+        case .electricity: return .yellow
+        case .gas: return .orange
+        case .water: return .cyan
         }
     }
 

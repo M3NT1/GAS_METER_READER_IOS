@@ -51,6 +51,7 @@ final class ReadingsHistoryViewModelTests: XCTestCase {
 
     func testRegisterTrainingExampleSavesToStore() async throws {
         let container = try makeTestContainer()
+        try await container.meterRepository.save(.defaultGas)
         let reading = makeReading(
             status: .pendingSync,
             window: NormalizedRect(left: 0.2, top: 0.4, right: 0.8, bottom: 0.6),
@@ -69,7 +70,78 @@ final class ReadingsHistoryViewModelTests: XCTestCase {
         XCTAssertEqual(storedExample?.digits, "01889.542")
     }
 
-    private func makeTestContainer() throws -> AppContainer {
+    func testRegisterTrainingExampleRejectsManualMeter() async throws {
+        let container = try makeTestContainer()
+        let waterMeter = Meter(
+            id: "water_main",
+            name: "Vízóra",
+            kind: .water,
+            format: MeterFormat(integerDigits: 4, fractionalDigits: 3),
+            recognition: .manual,
+            isArchived: false
+        )
+        try await container.meterRepository.save(waterMeter)
+        let reading = makeReading(
+            meterID: "water_main",
+            status: .approvedLocal,
+            window: NormalizedRect(left: 0.2, top: 0.4, right: 0.8, bottom: 0.6),
+            approvedDigits: "0123.456"
+        )
+        try await container.readingRepository.insert(reading)
+
+        let vm = ReadingsHistoryViewModel(container: container)
+        await vm.load()
+        await vm.registerAsTrainingExample(reading: reading)
+
+        XCTAssertEqual(vm.trainingCount, 0)
+        XCTAssertEqual(vm.errorMessage, "Csak automatikus felismerésű gázóra menthető tanítómintaként.")
+    }
+
+    func testSyncBlocksWhenHomeAssistantDisabledOrMeterUnsupported() async throws {
+        // Case 1: HA disabled
+        let containerDisabled = try makeTestContainer(haEnabled: false)
+        try await containerDisabled.meterRepository.save(.defaultGas)
+        let gasReading = makeReading(status: .pendingSync, approvedDigits: "01889.542")
+        try await containerDisabled.readingRepository.insert(gasReading)
+
+        let vm1 = ReadingsHistoryViewModel(container: containerDisabled)
+        await vm1.load()
+        await vm1.sync(reading: gasReading)
+        XCTAssertEqual(vm1.errorMessage, "A Home Assistant szinkronizálás ehhez a mérőhöz nem engedélyezett.")
+
+        // Case 2: HA enabled, but meter is unsupported (e.g. manual water meter)
+        let containerEnabled = try makeTestContainer(haEnabled: true)
+        let waterMeter = Meter(
+            id: "water_main",
+            name: "Vízóra",
+            kind: .water,
+            format: MeterFormat(integerDigits: 4, fractionalDigits: 3),
+            recognition: .manual,
+            isArchived: false
+        )
+        try await containerEnabled.meterRepository.save(waterMeter)
+        let waterReading = makeReading(meterID: "water_main", status: .approvedLocal, approvedDigits: "0123.456")
+        try await containerEnabled.readingRepository.insert(waterReading)
+
+        let vm2 = ReadingsHistoryViewModel(container: containerEnabled)
+        await vm2.load()
+        await vm2.sync(reading: waterReading)
+        XCTAssertEqual(vm2.errorMessage, "A Home Assistant szinkronizálás ehhez a mérőhöz nem engedélyezett.")
+    }
+
+    func testSyncAllPendingBlocksWhenHomeAssistantDisabled() async throws {
+        let container = try makeTestContainer(haEnabled: false)
+        try await container.meterRepository.save(.defaultGas)
+        let gasReading = makeReading(status: .pendingSync, approvedDigits: "01889.542")
+        try await container.readingRepository.insert(gasReading)
+
+        let vm = ReadingsHistoryViewModel(container: container)
+        await vm.load()
+        await vm.syncAllPending()
+        XCTAssertEqual(vm.errorMessage, "A Home Assistant kapcsolat ki van kapcsolva.")
+    }
+
+    private func makeTestContainer(haEnabled: Bool = false) throws -> AppContainer {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let modelContainer = try ModelContainer(
             for: PersistedMeterReading.self, PersistedTrainingExample.self, PersistedMeter.self,
@@ -83,11 +155,13 @@ final class ReadingsHistoryViewModelTests: XCTestCase {
             trainingExampleStore: SwiftDataTrainingExampleStore(modelContainer: modelContainer),
             credentialStore: KeychainCredentialStore(),
             homeAssistantClient: URLSessionHomeAssistantClient(),
-            trainingService: LocalTrainingService()
+            trainingService: LocalTrainingService(),
+            homeAssistantUsageSettings: InMemoryHomeAssistantUsageSettings(isEnabled: haEnabled)
         )
     }
 
     private func makeReading(
+        meterID: String = "gas_main",
         status: ReadingStatus,
         window: NormalizedRect? = nil,
         approvedDigits: String? = nil
@@ -95,7 +169,7 @@ final class ReadingsHistoryViewModelTests: XCTestCase {
         MeterReading(
             id: UUID(),
             revision: 0,
-            meterID: "gas_main",
+            meterID: meterID,
             photoID: UUID(),
             capturedAt: .now,
             window: window,

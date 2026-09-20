@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeAssistantSettingsView: View {
     let credentialStore: any CredentialStore
     var client: any HomeAssistantClient = URLSessionHomeAssistantClient()
+    var usageSettings: (any HomeAssistantUsageSettings)? = nil
 
     @State private var address = "192.168.0.99:8123"
     @State private var token = ""
@@ -20,6 +21,17 @@ struct HomeAssistantSettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                Toggle("Home Assistant használata", isOn: Binding(
+                    get: { usageSettings?.isEnabled ?? false },
+                    set: { usageSettings?.isEnabled = $0 }
+                ))
+            } header: {
+                Text("Integráció állapota")
+            } footer: {
+                Text("Kikapcsolt állapotban a leolvasások kizárólag a telefon helyi naplójában tárolódnak, és nem indul hálózati szinkronizáció.")
+            }
+
             Section {
                 HStack(spacing: 12) {
                     Image(systemName: "network")
@@ -139,10 +151,14 @@ struct HomeAssistantSettingsView: View {
     }
 
     private func loadCredentials() async {
-        guard let credentials = try? await credentialStore.load() else { return }
+        guard let credentials = try? await credentialStore.load() else {
+            usageSettings?.initializeIfNeeded(hasCredentials: false)
+            return
+        }
         address = credentials.baseURL.absoluteString
         storedToken = credentials.accessToken
         hasStoredCredentials = true
+        usageSettings?.initializeIfNeeded(hasCredentials: true)
     }
 
     private func testConnection() async {

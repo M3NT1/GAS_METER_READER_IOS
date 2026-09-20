@@ -14,7 +14,11 @@ struct ReviewView: View {
         self.model = model
         self.photoURL = photoURL
         self.onRetake = onRetake
-        _displayDigits = State(initialValue: model.reading.approvedDigits ?? Self.formattedProposal(model.reading.proposal?.digits))
+        if model.meter.recognition == .manual {
+            _displayDigits = State(initialValue: model.reading.approvedDigits ?? "")
+        } else {
+            _displayDigits = State(initialValue: model.reading.approvedDigits ?? Self.formattedProposal(model.reading.proposal?.digits))
+        }
         let initialWindow = model.reading.window ?? NormalizedRect(left: 0.18, top: 0.40, right: 0.82, bottom: 0.58)
         _window = State(initialValue: initialWindow)
     }
@@ -22,11 +26,20 @@ struct ReviewView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // 1. Photo Card with Bounding Box
-                photoCard
+                if model.meter.recognition == .manual {
+                    ManualReadingInputView(
+                        meter: model.meter,
+                        displayImage: model.displayImage,
+                        isLoadingImage: model.isLoadingDisplayImage,
+                        displayDigits: $displayDigits
+                    )
+                } else {
+                    // 1. Photo Card with Bounding Box
+                    photoCard
 
-                // 2. Analog Roller Dials Card
-                dialsCard
+                    // 2. Analog Roller Dials Card
+                    dialsCard
+                }
 
                 // 3. Status & Details Card
                 detailsCard
@@ -38,7 +51,7 @@ struct ReviewView: View {
             .padding(.vertical, 12)
         }
         .background(Color(uiColor: .systemGroupedBackground).ignoresSafeArea())
-        .navigationTitle("Gázóra ellenőrzése")
+        .navigationTitle("\(model.meter.name) ellenőrzése")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
@@ -267,6 +280,10 @@ struct ReviewView: View {
                     Label("Feltöltésre vár", systemImage: "arrow.triangle.2.circlepath")
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(Color.orange)
+                } else if model.status == .approvedLocal {
+                    Label("Helyben mentve", systemImage: "checkmark.circle.fill")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Color.blue)
                 } else {
                     Text("Jóváhagyásra vár")
                         .font(.subheadline)
@@ -292,7 +309,19 @@ struct ReviewView: View {
     // Action Section
     private var actionSection: some View {
         VStack(spacing: 12) {
-            if model.status == .pendingSync {
+            if model.status == .approvedLocal {
+                VStack(spacing: 8) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .foregroundStyle(Color.green)
+                            .font(.title3)
+                        Text("Állás sikeresen mentve a helyi naplóban!")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(.primary)
+                    }
+                    .padding(.vertical, 8)
+                }
+            } else if model.status == .pendingSync {
                 // Step 2: Reading is saved locally, now offer explicit upload to Home Assistant
                 VStack(spacing: 10) {
                     HStack(spacing: 8) {

@@ -84,6 +84,12 @@ final class ReadingsHistoryViewModel {
             return
         }
 
+        let meter = try? await container.meterRepository.meter(id: reading.meterID)
+        guard let meter, HomeAssistantSyncPolicy.mayStartRequest(enabled: container.homeAssistantUsageSettings.isEnabled, meter: meter) else {
+            errorMessage = "A Home Assistant szinkronizálás ehhez a mérőhöz nem engedélyezett."
+            return
+        }
+
         do {
             guard let credentials = try await credentialStore.load() else {
                 errorMessage = "Nincsenek megadva a Home Assistant beállítások."
@@ -108,6 +114,11 @@ final class ReadingsHistoryViewModel {
         let pendings = readings.filter { $0.status == .pendingSync }
         guard !pendings.isEmpty else { return }
 
+        guard container.homeAssistantUsageSettings.isEnabled else {
+            errorMessage = "A Home Assistant kapcsolat ki van kapcsolva."
+            return
+        }
+
         guard let credentials = try? await credentialStore.load() else {
             errorMessage = "Nincsenek megadva a Home Assistant beállítások."
             return
@@ -115,6 +126,12 @@ final class ReadingsHistoryViewModel {
 
         var successCount = 0
         for reading in pendings {
+            guard container.homeAssistantUsageSettings.isEnabled else { break }
+            guard let meter = try? await container.meterRepository.meter(id: reading.meterID),
+                  HomeAssistantSyncPolicy.mayStartRequest(enabled: true, meter: meter) else {
+                continue
+            }
+
             if let verified = try? await homeAssistantClient.sync(reading: reading, credentials: credentials) {
                 var updated = reading
                 updated.revision = max(updated.revision, verified.revision) + 1
@@ -131,6 +148,12 @@ final class ReadingsHistoryViewModel {
     }
 
     func registerAsTrainingExample(reading: MeterReading) async {
+        guard let meter = try? await container.meterRepository.meter(id: reading.meterID),
+              meter.recognition == .legacyGas8 else {
+            errorMessage = "Csak automatikus felismerésű gázóra menthető tanítómintaként."
+            return
+        }
+
         guard let window = reading.window, let digits = reading.approvedDigits ?? reading.proposal?.digits else {
             errorMessage = "Csak kerettel és számértékkel rendelkező leolvasás menthető tanítómintaként."
             return

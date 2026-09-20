@@ -17,7 +17,12 @@ final class ReviewViewModelTests: XCTestCase {
 
     func testApproveRecordsManualCorrectionAsPendingSync() async throws {
         let repository = InMemoryReadingRepository()
-        let model = ReviewViewModel(reading: makeReading(), repository: repository)
+        let haSettings = InMemoryHomeAssistantUsageSettings(isEnabled: true)
+        let model = ReviewViewModel(
+            reading: makeReading(),
+            repository: repository,
+            homeAssistantUsageSettings: haSettings
+        )
 
         await model.approve(displayDigits: "01817.759")
 
@@ -31,7 +36,12 @@ final class ReviewViewModelTests: XCTestCase {
         let repository = InMemoryReadingRepository()
         let captured = makeReading()
         try await repository.insert(captured)
-        let model = ReviewViewModel(reading: captured, repository: repository)
+        let haSettings = InMemoryHomeAssistantUsageSettings(isEnabled: true)
+        let model = ReviewViewModel(
+            reading: captured,
+            repository: repository,
+            homeAssistantUsageSettings: haSettings
+        )
 
         await model.approve(displayDigits: "01817.759")
 
@@ -182,12 +192,14 @@ final class ReviewViewModelTests: XCTestCase {
         let credentials = try HomeAssistantCredentials(baseURL: "http://ha.local:8123", accessToken: "token123")
         let credentialStore = MockCredentialStore(credentials: credentials)
         let mockHAClient = MockHAClient()
+        let haSettings = InMemoryHomeAssistantUsageSettings(isEnabled: true)
         let reading = makeReading()
         let model = ReviewViewModel(
             reading: reading,
             repository: repository,
             credentialStore: credentialStore,
-            homeAssistantClient: mockHAClient
+            homeAssistantClient: mockHAClient,
+            homeAssistantUsageSettings: haSettings
         )
 
         // Step 1: Approve saves locally in pendingSync, does NOT sync automatically
@@ -199,6 +211,108 @@ final class ReviewViewModelTests: XCTestCase {
         await model.syncApprovedReading()
         XCTAssertEqual(model.status, .synced)
         XCTAssertEqual(mockHAClient.syncCallsCount, 1)
+    }
+
+    func testApproveWithDisabledHomeAssistantSavesAsApprovedLocalAndExplicitSyncDoesNotCallHA() async throws {
+        let repository = InMemoryReadingRepository()
+        let credentials = try HomeAssistantCredentials(baseURL: "http://ha.local:8123", accessToken: "token123")
+        let credentialStore = MockCredentialStore(credentials: credentials)
+        let mockHAClient = MockHAClient()
+        let haSettings = InMemoryHomeAssistantUsageSettings(isEnabled: false)
+        let reading = makeReading()
+        let model = ReviewViewModel(
+            reading: reading,
+            repository: repository,
+            credentialStore: credentialStore,
+            homeAssistantClient: mockHAClient,
+            homeAssistantUsageSettings: haSettings
+        )
+
+        // When HA is disabled, approve saves as approvedLocal and triggers 0 requests
+        await model.approve(displayDigits: "01826.811")
+        XCTAssertEqual(model.status, .approvedLocal)
+        XCTAssertEqual(mockHAClient.syncCallsCount, 0)
+
+        // Explicit sync also makes 0 requests
+        await model.syncApprovedReading()
+        XCTAssertEqual(model.status, .approvedLocal)
+        XCTAssertEqual(mockHAClient.syncCallsCount, 0)
+        XCTAssertNotNil(model.lastError)
+    }
+
+    func testApproveManualWaterMeterDoesNotRecordTrainingExample() async throws {
+        let repository = InMemoryReadingRepository()
+        let trainingStore = InMemoryTrainingExampleStore()
+        let waterMeter = Meter(
+            id: "water_main",
+            name: "Fő vízóra",
+            kind: .water,
+            format: MeterFormat(integerDigits: 5, fractionalDigits: 3),
+            recognition: .manual,
+            isArchived: false
+        )
+        let reading = MeterReading(
+            id: UUID(),
+            revision: 0,
+            meterID: waterMeter.id,
+            photoID: UUID(),
+            capturedAt: .now,
+            window: NormalizedRect(left: 0.1, top: 0.2, right: 0.9, bottom: 0.4),
+            proposal: nil,
+            approvedDigits: nil,
+            status: .needsReview,
+            modelVersion: nil,
+            lastSyncError: nil
+        )
+        let model = ReviewViewModel(
+            reading: reading,
+            meter: waterMeter,
+            repository: repository,
+            trainingExampleStore: trainingStore
+        )
+
+        await model.approve(displayDigits: "00123.456")
+
+        XCTAssertEqual(model.status, .approvedLocal)
+        let example = try await trainingStore.example(readingID: reading.id)
+        XCTAssertNil(example, "Manual meter must never record training examples")
+    }
+
+    func testApproveManualMeterFormatValidation() async throws {
+        let repository = InMemoryReadingRepository()
+        let elecMeter = Meter(
+            id: "elec_main",
+            name: "Villanyóra",
+            kind: .electricity,
+            format: MeterFormat(integerDigits: 6, fractionalDigits: 3),
+            recognition: .manual,
+            isArchived: false
+        )
+        let reading = MeterReading(
+            id: UUID(),
+            revision: 0,
+            meterID: elecMeter.id,
+            photoID: UUID(),
+            capturedAt: .now,
+            window: nil,
+            proposal: nil,
+            approvedDigits: nil,
+            status: .needsReview,
+            modelVersion: nil,
+            lastSyncError: nil
+        )
+        let model = ReviewViewModel(
+            reading: reading,
+            meter: elecMeter,
+            repository: repository
+        )
+
+        // 6 digits integer + 3 fractional: "12,45" normalizes to "000012.450"
+        await model.approve(displayDigits: "12,45")
+
+        XCTAssertEqual(model.status, .approvedLocal)
+        let stored = try await repository.reading(id: reading.id)
+        XCTAssertEqual(stored.approvedDigits, "000012.450")
     }
 }
 

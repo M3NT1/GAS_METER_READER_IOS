@@ -65,6 +65,24 @@ final class CaptureViewModel {
     var errorMessage: String?
     var review: (model: ReviewViewModel, photoURL: URL)?
     var readingsCount: Int = 0
+    var availableMeters: [Meter] = []
+    var selectedMeterID: String?
+
+    var currentSelectedMeter: Meter? {
+        availableMeters.first { $0.id == selectedMeterID }
+    }
+
+    func loadMeters() async {
+        do {
+            let all = try await container.meterRepository.allMeters()
+            availableMeters = all.filter { !$0.isArchived }
+            if selectedMeterID == nil || !availableMeters.contains(where: { $0.id == selectedMeterID }) {
+                selectedMeterID = availableMeters.first(where: { $0.id == "gas_main" })?.id ?? availableMeters.first?.id
+            }
+        } catch {
+            // Keep existing selection
+        }
+    }
 
     var zoomFactor: CGFloat = 1.0
     let minZoomFactor: CGFloat = 1.0
@@ -155,6 +173,10 @@ final class CaptureViewModel {
     }
 
     func configureAndStart() {
+        Task { [weak self] in
+            await self?.loadMeters()
+        }
+
         guard !isConfigured else {
             if !session.isRunning {
                 let captureSession = session
@@ -207,6 +229,12 @@ final class CaptureViewModel {
     }
 
     func capture() async {
+        guard let selectedMeterID,
+              let meterSnapshot = availableMeters.first(where: { $0.id == selectedMeterID }) else {
+            errorMessage = "Válassz ki egy aktív mérőórát a fotózás előtt."
+            return
+        }
+
         isCapturing = true
         phase = .capturingPhoto
         defer {
@@ -236,36 +264,38 @@ final class CaptureViewModel {
             var reading = MeterReading(
                 id: UUID(),
                 revision: 0,
-                meterID: "gas_main",
+                meterID: meterSnapshot.id,
                 photoID: photo.id,
                 capturedAt: photo.capturedAt,
                 window: nil,
                 proposal: nil,
                 approvedDigits: nil,
                 status: .needsReview,
-                modelVersion: "window-detector-best + digit-classifier-active",
+                modelVersion: meterSnapshot.recognition == .legacyGas8 ? "window-detector-best + digit-classifier-active" : nil,
                 lastSyncError: nil
             )
             try await repository.insert(reading)
 
-            let recognition = try await inference.propose(imageURL: photoURL, manualWindow: nil) { [weak self] progress in
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    switch progress {
-                    case .detectingWindow:
-                        self.phase = .detectingWindow
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    case .classifyingDigits:
-                        self.phase = .recognizingDigits
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            if meterSnapshot.recognition == .legacyGas8 {
+                let recognition = try await inference.propose(imageURL: photoURL, manualWindow: nil) { [weak self] progress in
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        switch progress {
+                        case .detectingWindow:
+                            self.phase = .detectingWindow
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        case .classifyingDigits:
+                            self.phase = .recognizingDigits
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        }
                     }
                 }
+                reading.window = recognition.window
+                reading.proposal = recognition.proposal
+                reading.status = recognition.proposal == nil ? .needsReview : .counterRecognized
+                try await repository.update(reading, expectedRevision: 0)
+                reading.revision = 1
             }
-            reading.window = recognition.window
-            reading.proposal = recognition.proposal
-            reading.status = recognition.proposal == nil ? .needsReview : .counterRecognized
-            try await repository.update(reading, expectedRevision: 0)
-            reading.revision = 1
 
             self.phase = .completed
             UINotificationFeedbackGenerator().notificationOccurred(.success)
@@ -274,9 +304,11 @@ final class CaptureViewModel {
             review = (
                 ReviewViewModel(
                     reading: reading,
+                    meter: meterSnapshot,
                     repository: repository,
                     credentialStore: credentialStore,
                     homeAssistantClient: homeAssistantClient,
+                    homeAssistantUsageSettings: container.homeAssistantUsageSettings,
                     trainingExampleStore: trainingExampleStore,
                     inferenceService: inference,
                     photoURL: photoURL,
@@ -301,6 +333,12 @@ final class CaptureViewModel {
     }
 
     func importPhoto(data: Data) async {
+        guard let selectedMeterID,
+              let meterSnapshot = availableMeters.first(where: { $0.id == selectedMeterID }) else {
+            errorMessage = "Válassz ki egy aktív mérőórát a fotó beolvasása előtt."
+            return
+        }
+
         isCapturing = true
         phase = .capturingPhoto
         defer {
@@ -319,36 +357,38 @@ final class CaptureViewModel {
             var reading = MeterReading(
                 id: UUID(),
                 revision: 0,
-                meterID: "gas_main",
+                meterID: meterSnapshot.id,
                 photoID: photo.id,
                 capturedAt: photo.capturedAt,
                 window: nil,
                 proposal: nil,
                 approvedDigits: nil,
                 status: .needsReview,
-                modelVersion: "window-detector-best + digit-classifier-active",
+                modelVersion: meterSnapshot.recognition == .legacyGas8 ? "window-detector-best + digit-classifier-active" : nil,
                 lastSyncError: nil
             )
             try await repository.insert(reading)
 
-            let recognition = try await inference.propose(imageURL: photoURL, manualWindow: nil) { [weak self] progress in
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    switch progress {
-                    case .detectingWindow:
-                        self.phase = .detectingWindow
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    case .classifyingDigits:
-                        self.phase = .recognizingDigits
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            if meterSnapshot.recognition == .legacyGas8 {
+                let recognition = try await inference.propose(imageURL: photoURL, manualWindow: nil) { [weak self] progress in
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        switch progress {
+                        case .detectingWindow:
+                            self.phase = .detectingWindow
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        case .classifyingDigits:
+                            self.phase = .recognizingDigits
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        }
                     }
                 }
+                reading.window = recognition.window
+                reading.proposal = recognition.proposal
+                reading.status = recognition.proposal == nil ? .needsReview : .counterRecognized
+                try await repository.update(reading, expectedRevision: 0)
+                reading.revision = 1
             }
-            reading.window = recognition.window
-            reading.proposal = recognition.proposal
-            reading.status = recognition.proposal == nil ? .needsReview : .counterRecognized
-            try await repository.update(reading, expectedRevision: 0)
-            reading.revision = 1
 
             self.phase = .completed
             UINotificationFeedbackGenerator().notificationOccurred(.success)
@@ -357,9 +397,11 @@ final class CaptureViewModel {
             review = (
                 ReviewViewModel(
                     reading: reading,
+                    meter: meterSnapshot,
                     repository: repository,
                     credentialStore: credentialStore,
                     homeAssistantClient: homeAssistantClient,
+                    homeAssistantUsageSettings: container.homeAssistantUsageSettings,
                     trainingExampleStore: trainingExampleStore,
                     inferenceService: inference,
                     photoURL: photoURL,
@@ -384,12 +426,15 @@ final class CaptureViewModel {
             errorMessage = "A leolvasáshoz tartozó fotó nem található."
             return
         }
+        let meter = try? await container.meterRepository.meter(id: reading.meterID)
         review = (
             ReviewViewModel(
                 reading: reading,
+                meter: meter,
                 repository: repository,
                 credentialStore: credentialStore,
                 homeAssistantClient: homeAssistantClient,
+                homeAssistantUsageSettings: container.homeAssistantUsageSettings,
                 trainingExampleStore: trainingExampleStore,
                 inferenceService: inference,
                 photoURL: photoURL

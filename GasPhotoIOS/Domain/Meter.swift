@@ -48,3 +48,15 @@ struct Meter: Identifiable, Codable, Equatable, Sendable {
     let recognition: RecognitionProfile
     var isArchived: Bool
 }
+
+extension Meter {
+    static let defaultGas = Meter(
+        id: "gas_main",
+        name: "Gázóra",
+        kind: .gas,
+        format: MeterFormat(integerDigits: 5, fractionalDigits: 3),
+        recognition: .legacyGas8,
+        isArchived: false
+    )
+}
+

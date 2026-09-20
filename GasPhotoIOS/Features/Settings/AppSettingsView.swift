@@ -46,12 +46,47 @@ struct AppSettingsView: View {
                     Text("A számlálógörgők és az ablakkeret felismerésének helyi finomhangolása a saját mérőórád fotóival.")
                 }
 
-                // Section 2: Home Assistant Integration
+                // Section 2: Meter Catalog
+                Section {
+                    NavigationLink {
+                        MeterListView(
+                            meterRepository: container.meterRepository,
+                            readingRepository: container.readingRepository
+                        )
+                    } label: {
+                        HStack(spacing: 12) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .fill(Color.orange.gradient)
+                                    .frame(width: 34, height: 34)
+                                Image(systemName: "gauge.with.needle")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 16))
+                            }
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Mérőórák")
+                                    .font(.body.weight(.medium))
+                                Text("Villany-, gáz- és vízórák kezelése")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                } header: {
+                    Text("Mérőkatalógus")
+                } footer: {
+                    Text("Itt vehetsz fel új mérőórákat (villany, gáz, víz), állíthatod be a számlálók formátumát vagy archiválhatod a régieket.")
+                }
+
+                // Section 3: Home Assistant Integration
                 Section {
                     NavigationLink {
                         HomeAssistantSettingsView(
                             credentialStore: container.credentialStore,
-                            client: container.homeAssistantClient
+                            client: container.homeAssistantClient,
+                            usageSettings: container.homeAssistantUsageSettings
                         )
                     } label: {
                         HStack(spacing: 12) {

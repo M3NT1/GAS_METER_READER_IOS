@@ -361,6 +361,15 @@ struct ReadingsHistoryView: View {
                     .foregroundStyle(.green)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
+                } else if reading.status == .approvedLocal {
+                    HStack(spacing: 4) {
+                        Image(systemName: "checkmark.circle.fill")
+                        Text("Helyben mentve")
+                    }
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(.blue)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
                 }
             }
         }
@@ -387,6 +396,11 @@ struct ReadingsHistoryView: View {
                 Text("Home Assistant szinkronizálva")
                     .font(.caption2.weight(.medium))
                     .foregroundStyle(.green)
+            case .approvedLocal:
+                Circle().fill(Color.blue).frame(width: 6, height: 6)
+                Text("Helyben mentve")
+                    .font(.caption2.weight(.medium))
+                    .foregroundStyle(.blue)
             }
         }
         .padding(.horizontal, 8)

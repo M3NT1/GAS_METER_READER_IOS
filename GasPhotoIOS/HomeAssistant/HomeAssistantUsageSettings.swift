@@ -30,3 +30,20 @@ final class UserDefaultsHomeAssistantUsageSettings: HomeAssistantUsageSettings {
         userDefaults.set(true, forKey: Key.hasInitialized)
     }
 }
+
+@MainActor
+final class InMemoryHomeAssistantUsageSettings: HomeAssistantUsageSettings {
+    var isEnabled: Bool
+    private var hasInitialized: Bool
+
+    init(isEnabled: Bool = false, hasInitialized: Bool = false) {
+        self.isEnabled = isEnabled
+        self.hasInitialized = hasInitialized
+    }
+
+    func initializeIfNeeded(hasCredentials: Bool) {
+        guard !hasInitialized else { return }
+        isEnabled = hasCredentials
+        hasInitialized = true
+    }
+}

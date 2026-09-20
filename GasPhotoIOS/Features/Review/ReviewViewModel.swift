@@ -6,9 +6,11 @@ import UIKit
 @MainActor
 @Observable
 final class ReviewViewModel {
+    let meter: Meter
     private let repository: any ReadingRepository
     private let credentialStore: (any CredentialStore)?
     private let homeAssistantClient: (any HomeAssistantClient)?
+    private let homeAssistantUsageSettings: (any HomeAssistantUsageSettings)?
     private let trainingExampleStore: (any TrainingExampleStore)?
     private let inferenceService: (any ReadingInferenceService)?
     private let photoURL: URL?
@@ -23,18 +25,29 @@ final class ReviewViewModel {
 
     init(
         reading: MeterReading,
+        meter: Meter? = nil,
         repository: any ReadingRepository,
         credentialStore: (any CredentialStore)? = nil,
         homeAssistantClient: (any HomeAssistantClient)? = nil,
+        homeAssistantUsageSettings: (any HomeAssistantUsageSettings)? = nil,
         trainingExampleStore: (any TrainingExampleStore)? = nil,
         inferenceService: (any ReadingInferenceService)? = nil,
         photoURL: URL? = nil,
         displayImage: UIImage? = nil
     ) {
         self.reading = reading
+        self.meter = meter ?? Meter(
+            id: reading.meterID,
+            name: "Gázóra",
+            kind: .gas,
+            format: MeterFormat(integerDigits: 5, fractionalDigits: 3),
+            recognition: .legacyGas8,
+            isArchived: false
+        )
         self.repository = repository
         self.credentialStore = credentialStore
         self.homeAssistantClient = homeAssistantClient
+        self.homeAssistantUsageSettings = homeAssistantUsageSettings
         self.trainingExampleStore = trainingExampleStore
         self.inferenceService = inferenceService
         self.photoURL = photoURL
@@ -71,7 +84,11 @@ final class ReviewViewModel {
     }
 
     func canApprove(displayDigits: String) -> Bool {
-        (try? ReadingValidator.approvedDigits(displayDigits)) != nil
+        if meter.recognition == .legacyGas8 {
+            return (try? ReadingValidator.approvedDigits(displayDigits)) != nil
+        } else {
+            return (try? ReadingValidator.approvedDigits(displayDigits, format: meter.format)) != nil
+        }
     }
 
     @discardableResult
@@ -105,14 +122,28 @@ final class ReviewViewModel {
     func approve(displayDigits: String, window: NormalizedRect? = nil) async {
         let approved: ApprovedReadingValue
         do {
-            approved = try ReadingValidator.approvedDigits(displayDigits)
+            if meter.recognition == .legacyGas8 {
+                approved = try ReadingValidator.approvedDigits(displayDigits)
+            } else {
+                approved = try ReadingValidator.approvedDigits(displayDigits, format: meter.format)
+            }
         } catch {
-            lastError = "A megadott érték nem jóváhagyható: pontosan 8 számjegy szükséges (5 egész + 3 tizedes)."
+            lastError = meter.recognition == .legacyGas8
+                ? "A jóváhagyáshoz pontosan 8 számjegy szükséges."
+                : "A megadott érték nem felel meg a mérőóra formátumának."
             return
         }
 
-        if let progressionError = await validateProgression(uploadValue: approved.uploadValue) {
-            lastError = progressionError
+        let allReadings = (try? await repository.allReadings()) ?? []
+        do {
+            try ReadingProgressionValidator.validate(
+                candidate: reading,
+                approved: approved,
+                meter: meter,
+                allReadings: allReadings
+            )
+        } catch {
+            lastError = error.localizedDescription
             return
         }
 
@@ -125,7 +156,12 @@ final class ReviewViewModel {
             updated.window = window
         }
         updated.approvedDigits = approved.displayValue
-        updated.status = .pendingSync
+        let haEnabled = homeAssistantUsageSettings?.isEnabled ?? false
+        if HomeAssistantSyncPolicy.mayStartRequest(enabled: haEnabled, meter: meter) {
+            updated.status = .pendingSync
+        } else {
+            updated.status = .approvedLocal
+        }
         updated.revision = reading.revision + 1
 
         do {
@@ -159,6 +195,12 @@ final class ReviewViewModel {
     }
 
     func syncApprovedReading() async {
+        let haEnabled = homeAssistantUsageSettings?.isEnabled ?? false
+        guard HomeAssistantSyncPolicy.mayStartRequest(enabled: haEnabled, meter: meter) else {
+            lastError = "A Home Assistant szinkronizálás nem engedélyezett ehhez a mérőhöz."
+            return
+        }
+
         guard reading.status == .pendingSync || reading.approvedDigits != nil,
               let credentialStore,
               let homeAssistantClient else { return }
@@ -171,10 +213,19 @@ final class ReviewViewModel {
         }
 
         if let approvedDigits = reading.approvedDigits,
-           let approved = try? ReadingValidator.approvedDigits(approvedDigits),
-           let progressionError = await validateProgression(uploadValue: approved.uploadValue) {
-            lastError = progressionError
-            return
+           let approved = try? ReadingValidator.approvedDigits(approvedDigits, format: meter.format) {
+            let allReadings = (try? await repository.allReadings()) ?? []
+            do {
+                try ReadingProgressionValidator.validate(
+                    candidate: reading,
+                    approved: approved,
+                    meter: meter,
+                    allReadings: allReadings
+                )
+            } catch {
+                lastError = error.localizedDescription
+                return
+            }
         }
 
         do {
@@ -212,40 +263,9 @@ final class ReviewViewModel {
         }
     }
 
-    private func validateProgression(uploadValue: String) async -> String? {
-        guard let currentVal = Double(uploadValue),
-              let allReadings = try? await repository.allReadings() else {
-            return nil
-        }
-        let otherReadings = allReadings.filter {
-            $0.id != reading.id && ($0.status == .synced || $0.approvedDigits != nil)
-        }
-
-        // Korábbi időpontban rögzített leolvasások
-        let earlierReadings = otherReadings.filter { $0.capturedAt <= reading.capturedAt }
-        if let latestPrior = earlierReadings.max(by: { $0.capturedAt < $1.capturedAt }),
-           let priorDigits = latestPrior.approvedDigits,
-           let priorApproved = try? ReadingValidator.approvedDigits(priorDigits),
-           let priorVal = Double(priorApproved.uploadValue),
-           currentVal < priorVal {
-            return "A megadott állás (\(uploadValue) m³) kisebb, mint a korábbi rögzített állás (\(priorApproved.uploadValue) m³). A gázóra számlálója nem csökkenhet visszafelé! Ellenőrizd a beírt számjegyeket."
-        }
-
-        // Későbbi időpontban rögzített leolvasások
-        let laterReadings = otherReadings.filter { $0.capturedAt >= reading.capturedAt }
-        if let earliestLater = laterReadings.min(by: { $0.capturedAt < $1.capturedAt }),
-           let laterDigits = earliestLater.approvedDigits,
-           let laterApproved = try? ReadingValidator.approvedDigits(laterDigits),
-           let laterVal = Double(laterApproved.uploadValue),
-           currentVal > laterVal {
-            return "A megadott állás (\(uploadValue) m³) nagyobb, mint a későbbi rögzített állás (\(laterApproved.uploadValue) m³). Ellenőrizd a dátumot vagy a számjegyeket!"
-        }
-
-        return nil
-    }
-
     private func recordTrainingExampleIfPossible() async {
-        guard let trainingExampleStore,
+        guard meter.recognition == .legacyGas8,
+              let trainingExampleStore,
               let window = reading.window,
               let digits = reading.approvedDigits else { return }
 

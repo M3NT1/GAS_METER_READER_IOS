@@ -6,6 +6,7 @@ enum ReadingStatus: String, Codable, CaseIterable, Sendable {
     case counterRecognized
     case pendingSync
     case synced
+    case approvedLocal
 }
 
 struct NormalizedRect: Codable, Equatable, Sendable {

@@ -77,7 +77,8 @@ final class MeterRepositoryTests: XCTestCase {
             trainingExampleStore: InMemoryTrainingExampleStore(),
             credentialStore: KeychainCredentialStore(),
             homeAssistantClient: URLSessionHomeAssistantClient(),
-            trainingService: LocalTrainingService()
+            trainingService: LocalTrainingService(),
+            homeAssistantUsageSettings: InMemoryHomeAssistantUsageSettings()
         )
         try await container.readingRepository.insert(makeReading(meterID: "gas_main"))
 

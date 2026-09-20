@@ -67,6 +67,7 @@ struct AppContainer {
     let credentialStore: any CredentialStore
     let homeAssistantClient: any HomeAssistantClient
     let trainingService: any TrainingService
+    let homeAssistantUsageSettings: any HomeAssistantUsageSettings
 
     @MainActor
     func bootstrapMeterCatalog() async throws {
@@ -101,7 +102,8 @@ struct AppContainer {
             trainingExampleStore: SwiftDataTrainingExampleStore(modelContainer: modelContainer),
             credentialStore: KeychainCredentialStore(),
             homeAssistantClient: URLSessionHomeAssistantClient(),
-            trainingService: LocalTrainingService()
+            trainingService: LocalTrainingService(),
+            homeAssistantUsageSettings: UserDefaultsHomeAssistantUsageSettings()
         )
     }
 }

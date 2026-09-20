@@ -21,9 +21,11 @@
 		1DD4A3B9A691F2807FAFBAA4 /* NormalizedRectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFD6B8B511C2005FEF6DE7D /* NormalizedRectTests.swift */; };
 		23060A5A5FDD4B7D310F4809 /* InMemoryMeterRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B853FA75402E929D05BC6737 /* InMemoryMeterRepository.swift */; };
 		243A9AAB555BF72EB8691C88 /* ReadingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */; };
+		31BE5D4E8D474C7C92058A31 /* ManualReadingInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ED7F263A6A3AB1E396D1A /* ManualReadingInputView.swift */; };
 		3225C69110E03B8ABC3C24DE /* training_model.onnx in Resources */ = {isa = PBXBuildFile; fileRef = 9D71ED24593CD02F93073A98 /* training_model.onnx */; };
 		3228541D992D617693B1A7F4 /* ImagePreprocessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F030BC1CD90A311A9953F7A /* ImagePreprocessorTests.swift */; };
 		38D3A40558680E47032708F5 /* ONNXRuntimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888E9770065568352C050B4 /* ONNXRuntimeTests.swift */; };
+		3E0A4AFDC6262B767C5E49D6 /* ReadingProgressionValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827251850DA3FD60B895109 /* ReadingProgressionValidator.swift */; };
 		3EB6E9A4DA5582E0E79771C5 /* HomeAssistantResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55107C5A917A02B6DB15908 /* HomeAssistantResponseDecoder.swift */; };
 		4571EA6A02E301B11FBB1269 /* ImageMetadataReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66BC17B204038FC96315D35 /* ImageMetadataReaderTests.swift */; };
 		45E796E2876A30F5564D1801 /* HomeAssistantResponseDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */; };
@@ -59,12 +61,16 @@
 		9A79ED4D9BC631907C53C6D1 /* HomeAssistantClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8780A305A3B5270212F649 /* HomeAssistantClientTests.swift */; };
 		9F6FDB0C82DFBB8B2543703D /* eval_model.onnx in Resources */ = {isa = PBXBuildFile; fileRef = AA47D6BC46CC87282F41E4DF /* eval_model.onnx */; };
 		A5591B768618192B3BE39AB1 /* TrainingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40FA05B07D7CDF051A90F9 /* TrainingExample.swift */; };
+		A69DC88F8C1500F11CD4FC0E /* ReadingProgressionValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB31AAA80178FED6390C214A /* ReadingProgressionValidatorTests.swift */; };
+		A6DB08D855BB08EA20423309 /* MeterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0099CF6F7E51FD041151E68A /* MeterListView.swift */; };
+		AA8D2DF018F0935D57AA66A3 /* CaptureMeterSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F7C2D6A5F78105B95CA80 /* CaptureMeterSelectionTests.swift */; };
 		AD6CA90B2838F36D494C89C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */; };
 		B1809E95AE672DD2CBC20C9F /* ReadingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372126694358FA576FF61676 /* ReadingsHistoryView.swift */; };
 		C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85715E93D44CB82FB34564 /* RootView.swift */; };
 		CD5B507D183A670417C91653 /* ONNXRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF99951854638D414690828 /* ONNXRuntime.swift */; };
 		D02656B1A297E9C82C2099AF /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF70B63B6B19885EBE3D531 /* CaptureView.swift */; };
+		D3720E6D5CAB5A75F29E3E54 /* MeterEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9526766970434DC199A923 /* MeterEditorView.swift */; };
 		D426DB4B7C02D82A5574816B /* ImageMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CE7CDA02F6902E1773618 /* ImageMetadataReader.swift */; };
 		D5CBA00F005885BDCD086BBE /* ModelBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF60D50C1F852B6DD8955B /* ModelBundle.swift */; };
 		D84E4AC9361C937B54FEE9CC /* ORTInferenceBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 66B5639083B2C75DC907E55A /* ORTInferenceBridge.mm */; };
@@ -94,8 +100,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0099CF6F7E51FD041151E68A /* MeterListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MeterListView.swift; path = Features/Meters/MeterListView.swift; sourceTree = "<group>"; };
 		016252461D2790F48BC7BE6D /* HomeAssistantSyncPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantSyncPolicy.swift; path = HomeAssistant/HomeAssistantSyncPolicy.swift; sourceTree = "<group>"; };
 		042C497C3759595B40FD1CB3 /* checkpoint */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = checkpoint; path = Resources/Training/Digit/checkpoint; sourceTree = "<group>"; };
+		085F7C2D6A5F78105B95CA80 /* CaptureMeterSelectionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CaptureMeterSelectionTests.swift; sourceTree = "<group>"; };
 		0B0E3E55197811A4B85F22C8 /* Pods-GasPhotoIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewViewModel.swift; path = Features/Review/ReviewViewModel.swift; sourceTree = "<group>"; };
 		13FE7752451CA0B90361A7CE /* HomeAssistantSyncPolicyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantSyncPolicyTests.swift; sourceTree = "<group>"; };
@@ -113,6 +121,7 @@
 		3AE92ACB1FD1025D28EF99FF /* ReadingValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingValidator.swift; path = Domain/ReadingValidator.swift; sourceTree = "<group>"; };
 		430D2B50CF73EE9C1C72B5A0 /* Release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		44277C478B0A08980C3E1506 /* GasPhotoIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GasPhotoIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B6ED7F263A6A3AB1E396D1A /* ManualReadingInputView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ManualReadingInputView.swift; path = Features/Review/ManualReadingInputView.swift; sourceTree = "<group>"; };
 		4C5BFD5EBD37002562149DA5 /* InferenceServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InferenceServiceTests.swift; sourceTree = "<group>"; };
 		558C69E6B2CBCE604077C267 /* MagnifierLoupeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MagnifierLoupeView.swift; path = Features/Review/MagnifierLoupeView.swift; sourceTree = "<group>"; };
 		56E583CEE5BDEE301BBFD01C /* Pods_GasPhotoIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GasPhotoIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +157,7 @@
 		B18D13F80DFC9ABEA0EE008E /* KeychainCredentialStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeychainCredentialStoreTests.swift; sourceTree = "<group>"; };
 		B746235883114E787EFEF222 /* ORTInferenceBridge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ORTInferenceBridge.h; path = Inference/ORTInferenceBridge.h; sourceTree = "<group>"; };
 		B7B35971FEBBF35555AF835C /* SwiftDataMeterRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftDataMeterRepository.swift; path = Data/SwiftDataMeterRepository.swift; sourceTree = "<group>"; };
+		B827251850DA3FD60B895109 /* ReadingProgressionValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadingProgressionValidator.swift; path = Domain/ReadingProgressionValidator.swift; sourceTree = "<group>"; };
 		B853FA75402E929D05BC6737 /* InMemoryMeterRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryMeterRepository.swift; path = Data/InMemoryMeterRepository.swift; sourceTree = "<group>"; };
 		BB85715E93D44CB82FB34564 /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = App/RootView.swift; sourceTree = "<group>"; };
 		BBB77467BA6D76D9E4EB7FE7 /* ReadingsHistoryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingsHistoryViewModelTests.swift; sourceTree = "<group>"; };
@@ -158,10 +168,12 @@
 		C8CA70E06E57A6B8D300F1F1 /* Debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		C9F7F325B706612531945FC5 /* MeterFormatTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MeterFormatTests.swift; sourceTree = "<group>"; };
 		CCAFE4D54206E3178DFABF4A /* ImagePreprocessor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImagePreprocessor.swift; path = Inference/ImagePreprocessor.swift; sourceTree = "<group>"; };
+		CE9526766970434DC199A923 /* MeterEditorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MeterEditorView.swift; path = Features/Meters/MeterEditorView.swift; sourceTree = "<group>"; };
 		D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CameraCaptureService.swift; path = Photos/CameraCaptureService.swift; sourceTree = "<group>"; };
 		D53C2E9600C99EB6F79F2D50 /* InMemoryReadingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryReadingRepository.swift; path = Data/InMemoryReadingRepository.swift; sourceTree = "<group>"; };
 		D6AAFDE50C37816B9FFA3AC2 /* HomeAssistantUsageSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantUsageSettings.swift; path = HomeAssistant/HomeAssistantUsageSettings.swift; sourceTree = "<group>"; };
 		D7C8AD4C128B3ADE505F36E8 /* HomeAssistantResponseDecoderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeAssistantResponseDecoderTests.swift; sourceTree = "<group>"; };
+		DB31AAA80178FED6390C214A /* ReadingProgressionValidatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadingProgressionValidatorTests.swift; sourceTree = "<group>"; };
 		E0171566F238FC7C23C2EC93 /* optimizer_model.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = optimizer_model.onnx; path = Resources/Training/Digit/optimizer_model.onnx; sourceTree = "<group>"; };
 		E01B4BD076964A406B00BA3F /* CaptureViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CaptureViewModel.swift; path = Features/Capture/CaptureViewModel.swift; sourceTree = "<group>"; };
 		E116B4F5FDE4BDC7AC79A036 /* TrainingExampleStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrainingExampleStoreTests.swift; sourceTree = "<group>"; };
@@ -277,6 +289,10 @@
 				B7B35971FEBBF35555AF835C /* SwiftDataMeterRepository.swift */,
 				016252461D2790F48BC7BE6D /* HomeAssistantSyncPolicy.swift */,
 				D6AAFDE50C37816B9FFA3AC2 /* HomeAssistantUsageSettings.swift */,
+				B827251850DA3FD60B895109 /* ReadingProgressionValidator.swift */,
+				CE9526766970434DC199A923 /* MeterEditorView.swift */,
+				0099CF6F7E51FD041151E68A /* MeterListView.swift */,
+				4B6ED7F263A6A3AB1E396D1A /* ManualReadingInputView.swift */,
 			);
 			path = GasPhotoIOS;
 			sourceTree = "<group>";
@@ -344,6 +360,8 @@
 				C9F7F325B706612531945FC5 /* MeterFormatTests.swift */,
 				69C277515E885565C114A513 /* MeterRepositoryTests.swift */,
 				13FE7752451CA0B90361A7CE /* HomeAssistantSyncPolicyTests.swift */,
+				085F7C2D6A5F78105B95CA80 /* CaptureMeterSelectionTests.swift */,
+				DB31AAA80178FED6390C214A /* ReadingProgressionValidatorTests.swift */,
 			);
 			path = GasPhotoIOSTests;
 			sourceTree = "<group>";
@@ -516,6 +534,8 @@
 				4D07A6B59F37204E39F0D592 /* MeterFormatTests.swift in Sources */,
 				6F4898531CE123714AFBA5CC /* MeterRepositoryTests.swift in Sources */,
 				816F129B5D056B4B04EB0F99 /* HomeAssistantSyncPolicyTests.swift in Sources */,
+				AA8D2DF018F0935D57AA66A3 /* CaptureMeterSelectionTests.swift in Sources */,
+				A69DC88F8C1500F11CD4FC0E /* ReadingProgressionValidatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,6 +587,10 @@
 				8DF66D5D10A66EEB8BAEB041 /* SwiftDataMeterRepository.swift in Sources */,
 				936B9310EEB9969B884E473C /* HomeAssistantSyncPolicy.swift in Sources */,
 				DAE1A10A2F24B85F8A82B25B /* HomeAssistantUsageSettings.swift in Sources */,
+				3E0A4AFDC6262B767C5E49D6 /* ReadingProgressionValidator.swift in Sources */,
+				D3720E6D5CAB5A75F29E3E54 /* MeterEditorView.swift in Sources */,
+				A6DB08D855BB08EA20423309 /* MeterListView.swift in Sources */,
+				31BE5D4E8D474C7C92058A31 /* ManualReadingInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
