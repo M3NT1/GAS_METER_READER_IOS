@@ -279,7 +279,8 @@ final class CaptureViewModel {
                     homeAssistantClient: homeAssistantClient,
                     trainingExampleStore: trainingExampleStore,
                     inferenceService: inference,
-                    photoURL: photoURL
+                    photoURL: photoURL,
+                    displayImage: capturedPreviewImage
                 ),
                 photoURL
             )
@@ -361,7 +362,8 @@ final class CaptureViewModel {
                     homeAssistantClient: homeAssistantClient,
                     trainingExampleStore: trainingExampleStore,
                     inferenceService: inference,
-                    photoURL: photoURL
+                    photoURL: photoURL,
+                    displayImage: capturedPreviewImage
                 ),
                 photoURL
             )

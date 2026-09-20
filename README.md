@@ -1,10 +1,9 @@
 # GasPhotoIOS — Helyi Mesterséges Intelligenciás Gázóra-leolvasó iOS Alkalmazás
 
-[![Platform](https://img.shields.io/badge/Platform-iOS%2018%2B%20%2F%20iOS%2026-blue.svg?style=flat-square&logo=apple)](https://developer.apple.com/ios/)
+[![Platform](https://img.shields.io/badge/Platform-iOS%2026%2B-blue.svg?style=flat-square&logo=apple)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-6.0%20Complete%20Concurrency-orange.svg?style=flat-square&logo=swift)](https://swift.org/)
 [![Runtime](https://img.shields.io/badge/Inference-ONNX%20Runtime%20Mobile-green.svg?style=flat-square)](https://onnxruntime.ai/)
 [![Home Assistant Integration](https://img.shields.io/badge/Home%20Assistant-home--assistant--gas--photo-41BDF5.svg?style=flat-square&logo=home-assistant)](https://github.com/M3NT1/home-assistant-gas-photo)
-[![Tests](https://img.shields.io/badge/Tests-48%2F48%20Passed-brightgreen.svg?style=flat-square)]()
 
 A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibilis gázórák automatikus leolvasására és Home Assistant integrációjára. Az alkalmazás **100%-ban helyben (On-Device)**, internetkapcsolat és külső felhőszolgáltatás nélkül, beágyazott neurális hálózatokkal ismeri fel a számlálókeretet és a 8 darab analóg görgő számjegyeit (5 fekete egész + 3 piros tizedes).
 
@@ -17,7 +16,7 @@ A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibili
 >
 > 🏠 **[home-assistant-gas-photo](https://github.com/M3NT1/home-assistant-gas-photo)**
 >
-> A két tároló együtt alkotja a teljeskörű rendszert: az iPhone elvégzi a helyi AI leolvasást, a Home Assistant integráció pedig fogadja az adatot, vezeti a megbízható naplót (`ledger`), és ellátja adatokkal az Energia panelt.
+> A két tároló együtt biztosítja a Home Assistantba szinkronizáló rendszert: az iPhone elvégzi a helyi AI leolvasást, a Home Assistant integráció pedig fogadja az adatot, vezeti a megbízható naplót (`ledger`), és ellátja adatokkal az Energia panelt.
 
 ---
 
@@ -26,7 +25,7 @@ A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibili
 ### 1. 🧠 Teljesen Helyi Gépi Látás és Neurális Hálózatok
 - **Számlálókeret-kereső (YOLOv8)**: Automatikusan lokalizálja a mérő számlálóablakát a 12 MP / 4K kamerafotón.
 - **Számjegy-osztályozó (8 görgős konvolúciós háló)**: Egyenként értékeli a felismert számláló 8 darab görgőjét (0–9 számjegyek + bizonytalansági konfidenciaérték).
-- **Adatvédelem és Sebesség**: A fotók, a leolvasási napló és az AI modellek kizárólag a készüléken futnak, nem távoznak a telefonról.
+- **Adatvédelem és Sebesség**: A felismerés a készüléken fut. A fotóarchívum és a helyi napló az alkalmazás tárhelyén van; a felhasználó által indított HA-feltöltés az óraállást és a kapcsolódó metaadatokat küldi el. A Fotók könyvtárba mentett képekre a rendszer iCloud-beállításai érvényesek.
 
 ### 2. ✨ 2025/2026 Apple Intelligence Scanner Élmény
 - **Zárvillanás & Kimerevített Előnézet (Freeze-Frame)**: A fotó exponálásakor a kép azonnal kimerevedik, elkerülve a „lefagyott az app” érzést az AI futás közben.
@@ -43,14 +42,23 @@ A **GasPhotoIOS** egy modern, natív iOS alkalmazás Sacofgas G4 és kompatibili
 
 ### 4. 🏠 Home Assistant Szinkronizáció
 - **Közvetlen REST API Szinkron**: Az ellenőrzött leolvasás egyetlen gombnyomással szinkronizálható a [home-assistant-gas-photo](https://github.com/M3NT1/home-assistant-gas-photo) integrációval.
-- **Időbélyeg-alapú Idempotencia**: Megelőzi a duplikált beküldéseket.
+- **Külön helyi jóváhagyás és feltöltés**: A jóváhagyás helyben ment; a HA-feltöltés külön művelet.
+- **Stabil rekordazonosító és revízió**: A leolvasás UUID-jéből képzett azonosítóval küld, majd visszaolvassa és ellenőrzi a szerveren tárolt rekordot.
 - **Csökkenés Elleni Védelem**: Nem engedi beküldeni a korábbi óraállásnál kisebb értéket.
-- **Biztonságos Keychain Tárolás**: A Home Assistant URL és a Long-Lived Access Token az iOS biztonságos hardveres kulcstárában (`iOS Keychain`) tárolódik.
+- **Biztonságos Keychain Tárolás**: A Home Assistant URL és a Long-Lived Access Token az iOS Keychainben tárolódik.
 
-### 5. 🔄 Telefonon Futó Modell-újratanítás (On-Device Training)
-- **Helyi Példatár (Training Example Store)**: Minden manuálisan jóváhagyott vagy javított leolvasást tanítópéldaként megőriz a SwiftData adatbázisban.
-- **ONNX Runtime Training**: A készülék képes helyben, közvetlenül az iPhone-on finomhangolni a számjegyosztályozó modellt, külső szerver bevonása nélkül.
-- **Akkumulátor- és Töltésvédelem**: Csak akkor indítható el, ha a telefon töltőre van csatlakoztatva.
+### 5. Helyi tanítópéldák és tanítási felület
+- A jóváhagyott/javított, kerettel rendelkező leolvasások helyi tanítópéldaként tárolhatók.
+- A tanítási vezérlőpult, előfeltétel-ellenőrzés és a csomagolt ONNX Training erőforrások rendelkezésre állnak.
+- **Korlát:** a jelenlegi `LocalTrainingService` szimulált epochokat és metrikákat ad; az aktiválás állapotmetaadatot ment. Valódi `ORTTrainingSession`, mért modellértékelés és az inferenciában használt modell cseréje még nincs bekötve. A telefonos modelltréning ezért nem tekinthető kész funkciónak.
+
+## Aktuális állapot — 2026-09-20
+
+- A jelenlegi alkalmazás egy `gas_main` azonosítójú, 5 egész + 3 tizedes jegyes gázórára épül.
+- Helyi jóváhagyás és napló már van, de a jóváhagyott rekord állapota még `pendingSync`; külön HA nélküli üzemmód, mérőkatalógus és általános fogyasztási nézet még nincs.
+- A képfeldolgozás kezeli az EXIF-orientációt, raszterizálja a képet a kivágásokhoz, és a számjegyosztályozónál középre vágott átméretezést használ.
+- Az ellenőrző nézet újrahasznosítja a kamera előnézetét, illetve háttérben dekódolt bélyegképet tölt; keretváltozáskor jelzi az újrafelismerést.
+- A többféle mérő és az opcionális HA-kapcsolat külön feature fejlesztés tárgya; ezek nem a jelenlegi kiadás funkciói.
 
 ---
 
@@ -61,7 +69,7 @@ GasPhotoIOS/
 ├── App/
 │   ├── GasPhotoIOSApp.swift          # Alkalmazás belépési pont
 │   ├── AppContainer.swift             # Dependency Injection & Service Factory
-│   └── RootView.swift                 # Fő navigációs tabok (Kamera, Előzmények, Beállítások)
+│   └── RootView.swift                 # Kamera és ellenőrzés közti navigáció
 ├── Domain/
 │   ├── Reading.swift                  # Leolvasás modell (állapotok, normalizált érték)
 │   ├── ReadingValidator.swift         # 8 jegyű formátum és csökkenés-ellenőrzés
@@ -90,8 +98,8 @@ GasPhotoIOS/
 ## 🚀 Fejlesztői Környezet és Beállítás
 
 ### Előfeltételek
-- **macOS Sequoia** (vagy újabb)
-- **Xcode 16+** (iOS 18+ SDK / iOS 26 Deployment Target)
+- **Az Xcode 26 által támogatott macOS-verzió**
+- **Xcode 26+**, iOS 26+ SDK és futtatókörnyezet
 - **CocoaPods** (`brew install cocoapods` vagy `gem install cocoapods`)
 
 ### Telepítés és Indítás
@@ -102,7 +110,7 @@ GasPhotoIOS/
    cd GAS_METER_READER_IOS
    ```
 
-2. Telepítsd a CocoaPods függőségeket (ONNX Runtime Mobile C/C++ csomag):
+2. Telepítsd a CocoaPods függőségeket (`onnxruntime-training-objc` 1.19.2, a Podfile.lock szerint):
    ```bash
    pod install
    ```
@@ -120,16 +128,18 @@ GasPhotoIOS/
 
 A projekt szigorú, Swift 6 szálbiztonsági (`SWIFT_STRICT_CONCURRENCY = complete`) szabályoknak megfelelő egységtesztekkel van lefedve.
 
-A teljes tesztcsomag futtatása terminálból:
+Először válassz elérhető iOS 26+ szimulátort az `xcrun simctl list devices available` paranccsal. A teljes tesztcsomag:
 ```bash
 xcodebuild test \
   -workspace GasPhotoIOS.xcworkspace \
   -scheme GasPhotoIOS \
-  -destination "platform=iOS Simulator,id=1EA06092-5C2F-4760-BCE2-BA712AE07EF2"
+  -destination "platform=iOS Simulator,id=<SIMULATOR_UDID>"
 ```
 
 **Teszteredmények:**
-- ✅ **48 / 48 teszt sikeres** (`** TEST SUCCEEDED **`)
+- A korábbi 48/48 eredmény történeti adat; az aktuális ellenőrzés eredménye a [CHANGELOG](CHANGELOG.md) 2026-09-20-i bejegyzésében szerepel.
+- A valódi fotós ONNX-teszt helyi, repón kívüli mintaképet használ, és hiányzó fájlnál visszatér; a zöld tesztszám önmagában nem bizonyítja ennek a mintának a kiértékelését.
+- A szimulátorteszt nem helyettesíti a fizikai iPhone-os kamera- és élő HA-ellenőrzést.
 - Lefedett területek:
   - Inferencia pipeline és aszinkron fázisjelentés (`InferenceServiceTests`)
   - ONNX Runtime integráció és görgő-kiértékelés (`ONNXRuntimeTests`)

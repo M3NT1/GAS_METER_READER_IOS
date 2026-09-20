@@ -176,6 +176,55 @@ final class ReviewViewModelTests: XCTestCase {
         XCTAssertTrue(model.lastError?.contains("kisebb") == true)
         XCTAssertTrue(model.lastError?.contains("nem csökkenhet") == true)
     }
+
+    func testApproveLeavesReadingInPendingSyncAndExplicitSyncPushesToHomeAssistant() async throws {
+        let repository = InMemoryReadingRepository()
+        let credentials = try HomeAssistantCredentials(baseURL: "http://ha.local:8123", accessToken: "token123")
+        let credentialStore = MockCredentialStore(credentials: credentials)
+        let mockHAClient = MockHAClient()
+        let reading = makeReading()
+        let model = ReviewViewModel(
+            reading: reading,
+            repository: repository,
+            credentialStore: credentialStore,
+            homeAssistantClient: mockHAClient
+        )
+
+        // Step 1: Approve saves locally in pendingSync, does NOT sync automatically
+        await model.approve(displayDigits: "01826.811")
+        XCTAssertEqual(model.status, .pendingSync)
+        XCTAssertEqual(mockHAClient.syncCallsCount, 0)
+
+        // Step 2: Explicit sync uploads to Home Assistant and transitions to synced
+        await model.syncApprovedReading()
+        XCTAssertEqual(model.status, .synced)
+        XCTAssertEqual(mockHAClient.syncCallsCount, 1)
+    }
+}
+
+private final class MockCredentialStore: CredentialStore, @unchecked Sendable {
+    var credentials: HomeAssistantCredentials?
+    init(credentials: HomeAssistantCredentials? = nil) { self.credentials = credentials }
+    func load() async throws -> HomeAssistantCredentials? { credentials }
+    func save(_ creds: HomeAssistantCredentials) async throws { credentials = creds }
+    func clear() async throws { credentials = nil }
+}
+
+private final class MockHAClient: HomeAssistantClient, @unchecked Sendable {
+    var syncCallsCount = 0
+    func sync(reading: MeterReading, credentials: HomeAssistantCredentials) async throws -> HomeAssistantReading {
+        syncCallsCount += 1
+        return HomeAssistantReading(
+            id: reading.id.uuidString,
+            revision: reading.revision + 1,
+            meterID: reading.meterID,
+            value: reading.approvedDigits ?? "0",
+            capturedAt: reading.capturedAt
+        )
+    }
+    func testConnection(credentials: HomeAssistantCredentials) async throws -> ConnectionTestResult {
+        ConnectionTestResult(isSuccess: true, message: "OK")
+    }
 }
 
 private final class MockInferenceService: ReadingInferenceService, @unchecked Sendable {

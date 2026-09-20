@@ -1,5 +1,7 @@
 import Foundation
+import ImageIO
 import Observation
+import UIKit
 
 @MainActor
 @Observable
@@ -13,6 +15,9 @@ final class ReviewViewModel {
     private(set) var reading: MeterReading
     private(set) var lastError: String?
     private(set) var isAnalyzingWindow: Bool = false
+    private(set) var displayImage: UIImage?
+    private(set) var isLoadingDisplayImage: Bool = false
+    private(set) var isSyncing: Bool = false
 
     var status: ReadingStatus { reading.status }
 
@@ -23,7 +28,8 @@ final class ReviewViewModel {
         homeAssistantClient: (any HomeAssistantClient)? = nil,
         trainingExampleStore: (any TrainingExampleStore)? = nil,
         inferenceService: (any ReadingInferenceService)? = nil,
-        photoURL: URL? = nil
+        photoURL: URL? = nil,
+        displayImage: UIImage? = nil
     ) {
         self.reading = reading
         self.repository = repository
@@ -32,6 +38,36 @@ final class ReviewViewModel {
         self.trainingExampleStore = trainingExampleStore
         self.inferenceService = inferenceService
         self.photoURL = photoURL
+        self.displayImage = displayImage
+        if displayImage == nil, let photoURL {
+            loadDisplayImage(from: photoURL)
+        }
+    }
+
+    private func loadDisplayImage(from url: URL) {
+        isLoadingDisplayImage = true
+        Task.detached(priority: .userInitiated) { [weak self] in
+            let loadedImage = Self.decodeDisplayThumbnail(at: url, maxPixelSize: 1600)
+            await MainActor.run {
+                guard let self else { return }
+                self.displayImage = loadedImage
+                self.isLoadingDisplayImage = false
+            }
+        }
+    }
+
+    nonisolated private static func decodeDisplayThumbnail(at url: URL, maxPixelSize: Int) -> UIImage? {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixelSize,
+            kCGImageSourceShouldCacheImmediately: true
+        ]
+        guard let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else {
+            return nil
+        }
+        return UIImage(cgImage: cgImage)
     }
 
     func canApprove(displayDigits: String) -> Bool {
@@ -120,13 +156,15 @@ final class ReviewViewModel {
         }
 
         await recordTrainingExampleIfPossible()
-        await syncApprovedReading()
     }
 
     func syncApprovedReading() async {
         guard reading.status == .pendingSync || reading.approvedDigits != nil,
               let credentialStore,
               let homeAssistantClient else { return }
+
+        isSyncing = true
+        defer { isSyncing = false }
 
         if let latest = try? await repository.reading(id: reading.id) {
             reading = latest

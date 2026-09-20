@@ -4,6 +4,26 @@ A projekt változásai a [Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ---
 
+## [Unreleased] — állapotmentés, 2026-09-20
+
+### Meglévő helyi változások rögzítése
+- EXIF-orientáció figyelembevétele és raszterizálás az ONNX képkivágások előtt.
+- Középre vágott átméretezés a számjegyosztályozó bemenetéhez.
+- Kamera-előnézet újrahasznosítása és aszinkron képbetöltés az ellenőrző nézetben.
+- Elkülönített helyi jóváhagyás és explicit Home Assistant-feltöltés; újrafelismerési és feltöltési állapotjelzések.
+- Bővített ONNX- és review-tesztek.
+
+### Dokumentáció pontosítása
+- iOS 26+ / Xcode 26+, jelenlegi navigáció, adatküldés és Keychain szerepe.
+- A valódi telefonos modelltréning nincs bekötve: a jelenlegi szolgáltatás szimuláció. A korábbi 1.0.0 leírás ezt túlzottan kész funkcióként mutatta be.
+- Az önálló többórás napló és az opcionális HA-mód még nincs implementálva.
+
+### Ellenőrzés
+- **2026-09-20: 51 teszt, 0 hiba — TEST SUCCEEDED**, Xcode 26.6, iOS 26.5, GasPhoto iPhone 14 Pro Max szimulátor. A valódi fotós teszt külső helyi fájltól függ és hiányakor visszatér; ez nem hordozható képfelismerési benchmark.
+- Fizikai készülékes kamera- és élő HA-próba ebben az állapotmentésben nem történt.
+
+---
+
 ## [1.0.0] - 2026-09-12
 
 ### ✨ Hozzáadva (Added)

@@ -57,7 +57,7 @@ struct ReviewView: View {
             }
         }
         .sheet(isPresented: $isShowingFineTune) {
-            if let photoURL, let image = UIImage(contentsOfFile: photoURL.path) {
+            if let image = model.displayImage {
                 WindowFineTuneSheet(
                     window: $window,
                     image: image,
@@ -92,7 +92,7 @@ struct ReviewView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 } else {
-                    if let photoURL, UIImage(contentsOfFile: photoURL.path) != nil {
+                    if model.displayImage != nil {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             isShowingFineTune = true
@@ -122,7 +122,7 @@ struct ReviewView: View {
             }
 
             ZStack {
-                if let photoURL, let image = UIImage(contentsOfFile: photoURL.path) {
+                if let image = model.displayImage {
                     WindowEditorView(
                         window: $window,
                         image: image,
@@ -136,6 +136,16 @@ struct ReviewView: View {
                             }
                         }
                     }
+                } else if model.isLoadingDisplayImage {
+                    VStack(spacing: 12) {
+                        ProgressView()
+                            .tint(.white)
+                            .controlSize(.regular)
+                        Text("Fotó előkészítése...")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(.white.opacity(0.85))
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     ContentUnavailableView("Nincs fotó", systemImage: "camera")
                         .frame(height: 240)
@@ -179,11 +189,28 @@ struct ReviewView: View {
                     .foregroundStyle(Color.accentColor)
             }
 
+            if model.isAnalyzingWindow {
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .controlSize(.small)
+                        .tint(Color.accentColor)
+                    Text("Számjegyek újraszámolása a módosított keret alapján...")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(Color.accentColor)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color.accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .transition(.opacity.combined(with: .scale(scale: 0.95)))
+            }
+
             // Analog Roller Dials View
             RollerDialsView(
                 displayDigits: $displayDigits,
                 uncertainPositions: model.reading.proposal?.uncertainPositions ?? []
             )
+            .opacity(model.isAnalyzingWindow ? 0.6 : 1.0)
+            .animation(.easeInOut(duration: 0.2), value: model.isAnalyzingWindow)
 
             // Uncertain warning if needed
             if let proposal = model.reading.proposal, !proposal.uncertainPositions.isEmpty {
@@ -264,47 +291,110 @@ struct ReviewView: View {
 
     // Action Section
     private var actionSection: some View {
-        VStack(spacing: 10) {
-            Button {
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                Task { await model.approve(displayDigits: displayDigits, window: window) }
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.headline)
-                    Text("Ellenőriztem, jóváhagyás")
-                        .font(.headline.weight(.semibold))
-                }
-                .frame(maxWidth: .infinity)
-                .frame(height: 52)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(model.canApprove(displayDigits: displayDigits) ? Color.accentColor : Color.gray.opacity(0.3))
-                )
-                .foregroundStyle(Color.white)
-            }
-            .buttonStyle(.plain)
-            .disabled(!model.canApprove(displayDigits: displayDigits))
-
+        VStack(spacing: 12) {
             if model.status == .pendingSync {
-                Button {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    Task { await model.syncApprovedReading() }
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: "arrow.up.circle.fill")
-                        Text("Újraküldés a Home Assistantba")
+                // Step 2: Reading is saved locally, now offer explicit upload to Home Assistant
+                VStack(spacing: 10) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .foregroundStyle(Color.green)
+                            .font(.subheadline)
+                        Text("Állás rögzítve helyben. Készen áll a feltöltésre.")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(.primary)
                     }
-                    .font(.subheadline.weight(.medium))
+                    .padding(.vertical, 2)
+
+                    Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        Task { await model.syncApprovedReading() }
+                    } label: {
+                        HStack(spacing: 8) {
+                            if model.isSyncing {
+                                ProgressView()
+                                    .tint(.white)
+                                    .controlSize(.small)
+                                Text("Feltöltés folyamatban...")
+                                    .font(.headline.weight(.semibold))
+                            } else {
+                                Image(systemName: "arrow.up.circle.fill")
+                                    .font(.headline)
+                                Text("Feltöltés a Home Assistantba")
+                                    .font(.headline.weight(.semibold))
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 52)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .fill(model.isSyncing ? Color.accentColor.opacity(0.7) : Color.accentColor)
+                        )
+                        .foregroundStyle(Color.white)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(model.isSyncing)
+                }
+            } else if model.status == .synced {
+                // Already synced to Home Assistant
+                VStack(spacing: 10) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(Color.green)
+                            .font(.title3)
+                        Text("Sikeresen feltöltve a Home Assistantba!")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(Color.green)
+                    }
+                    .padding(.vertical, 4)
+
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        Task { await model.syncApprovedReading() }
+                    } label: {
+                        HStack(spacing: 6) {
+                            if model.isSyncing {
+                                ProgressView()
+                                    .controlSize(.small)
+                                Text("Szinkronizálás...")
+                            } else {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                                Text("Újraküldés a Home Assistantba")
+                            }
+                        }
+                        .font(.subheadline.weight(.medium))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.accentColor, lineWidth: 1.5)
+                        )
+                        .foregroundStyle(Color.accentColor)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(model.isSyncing)
+                }
+            } else {
+                // Step 1: User reviews and approves locally
+                Button {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    Task { await model.approve(displayDigits: displayDigits, window: window) }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.headline)
+                        Text("Helyi jóváhagyás és mentés")
+                            .font(.headline.weight(.semibold))
+                    }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 44)
+                    .frame(height: 52)
                     .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.accentColor, lineWidth: 1.5)
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(model.canApprove(displayDigits: displayDigits) && !model.isAnalyzingWindow ? Color.accentColor : Color.gray.opacity(0.3))
                     )
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(Color.white)
                 }
                 .buttonStyle(.plain)
+                .disabled(!model.canApprove(displayDigits: displayDigits) || model.isAnalyzingWindow)
             }
         }
         .padding(.top, 6)

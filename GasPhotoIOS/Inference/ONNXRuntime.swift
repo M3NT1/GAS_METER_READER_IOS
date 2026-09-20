@@ -41,11 +41,38 @@ actor ONNXRuntime: InferenceRuntime {
     }
 
     private func cgImage(at url: URL) throws -> CGImage {
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
-              let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else {
             throw ONNXRuntimeError.unreadableImage
         }
-        return image
+        let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any]
+        let width = properties?[kCGImagePropertyPixelWidth] as? Int ?? 4032
+        let height = properties?[kCGImagePropertyPixelHeight] as? Int ?? 4032
+        let maxDim = max(width, height)
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxDim,
+            kCGImageSourceShouldCacheImmediately: true
+        ]
+        guard let thumb = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else {
+            throw ONNXRuntimeError.unreadableImage
+        }
+        // Rasterize the thumb into a linear bitmap CGContext so that subsequent sub-cropping operations
+        // (both for the window rect and for individual roller slices) work reliably without hardware surface offsets.
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        guard let context = CGContext(
+            data: nil,
+            width: thumb.width,
+            height: thumb.height,
+            bitsPerComponent: 8,
+            bytesPerRow: thumb.width * 4,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue | CGBitmapInfo.byteOrder32Big.rawValue
+        ) else {
+            return thumb
+        }
+        context.draw(thumb, in: CGRect(x: 0, y: 0, width: thumb.width, height: thumb.height))
+        return context.makeImage() ?? thumb
     }
 
     private func tensorData(_ tensor: FloatTensor) -> Data {
