@@ -33,7 +33,7 @@ final class PersistedMeterReading {
     @Attribute(.unique) var id: UUID
     var revision: Int
     var meterID: String
-    var photoID: UUID
+    var photoID: UUID?
     var capturedAt: Date
     var windowData: Data?
     var proposalData: Data?

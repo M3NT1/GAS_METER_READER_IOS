@@ -74,7 +74,9 @@ final class ReadingsHistoryViewModel {
     func delete(reading: MeterReading) async {
         do {
             try await repository.delete(id: reading.id)
-            try? archive.delete(photoID: reading.photoID)
+            if let photoID = reading.photoID {
+                try? archive.delete(photoID: photoID)
+            }
             try? await trainingExampleStore.delete(readingID: reading.id)
             readings.removeAll { $0.id == reading.id }
             trainingCount = (try? await trainingExampleStore.count()) ?? 0
@@ -160,15 +162,17 @@ final class ReadingsHistoryViewModel {
             return
         }
 
-        guard let window = reading.window, let digits = reading.approvedDigits ?? reading.proposal?.digits else {
-            errorMessage = "Csak kerettel és számértékkel rendelkező leolvasás menthető tanítómintaként."
+        guard let photoID = reading.photoID,
+              let window = reading.window,
+              let digits = reading.approvedDigits ?? reading.proposal?.digits else {
+            errorMessage = "Csak fotóval, kerettel és számértékkel rendelkező leolvasás menthető tanítómintaként."
             return
         }
 
         let formattedDigits = digits.contains(".") ? digits : formatDigitsWithDecimal(digits)
         let example = TrainingExample(
             readingID: reading.id,
-            photoID: reading.photoID,
+            photoID: photoID,
             window: window,
             digits: formattedDigits,
             decision: .approved,

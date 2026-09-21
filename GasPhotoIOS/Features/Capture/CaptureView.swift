@@ -10,6 +10,7 @@ struct CaptureView: View {
     @State private var isShowingSettings = false
     @State private var isShowingHistory = false
     @State private var isShowingMetersList = false
+    @State private var isShowingManualEntry = false
     @State private var selectedPhotoItem: PhotosPickerItem? = nil
     @State private var isShutterPressed = false
     @State private var isShutterFlashing = false
@@ -315,20 +316,37 @@ struct CaptureView: View {
 
                     Spacer()
 
-                    // Right: PhotosPicker gallery import button
-                    PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
-                        Circle()
-                            .fill(.ultraThinMaterial)
-                            .frame(width: 52, height: 52)
-                            .overlay(
-                                Image(systemName: "photo.badge.plus")
-                                    .font(.system(size: 20, weight: .medium))
-                                    .foregroundStyle(.white)
-                            )
+                    // Right: Manual Entry & Gallery Import
+                    HStack(spacing: 12) {
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            isShowingManualEntry = true
+                        } label: {
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .frame(width: 52, height: 52)
+                                .overlay(
+                                    Image(systemName: "square.and.pencil")
+                                        .font(.system(size: 20, weight: .medium))
+                                        .foregroundStyle(.white)
+                                )
+                        }
+                        .accessibilityLabel("Kézi leolvasás rögzítése fotó nélkül")
+
+                        PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .frame(width: 52, height: 52)
+                                .overlay(
+                                    Image(systemName: "photo.badge.plus")
+                                        .font(.system(size: 20, weight: .medium))
+                                        .foregroundStyle(.white)
+                                )
+                        }
+                        .accessibilityLabel("Fotó beolvasása a galériából")
                     }
-                    .accessibilityLabel("Fotó beolvasása a galériából")
                 }
-                .padding(.horizontal, 36)
+                .padding(.horizontal, 24)
                 .padding(.bottom, 28)
             }
         }
@@ -361,6 +379,19 @@ struct CaptureView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $isShowingManualEntry) {
+            ManualReadingEntryView(
+                meterRepository: model.container.meterRepository,
+                readingRepository: model.container.readingRepository,
+                homeAssistantUsageSettings: model.container.homeAssistantUsageSettings,
+                initialMeterID: model.selectedMeterID,
+                onSaved: { _ in
+                    Task {
+                        await model.refreshReadingsCount()
+                    }
+                }
+            )
         }
         .onChange(of: selectedPhotoItem) { _, newItem in
             guard let newItem else { return }

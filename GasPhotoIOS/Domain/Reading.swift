@@ -85,7 +85,7 @@ struct MeterReading: Identifiable, Codable, Equatable, Sendable {
     let id: UUID
     var revision: Int
     let meterID: String
-    let photoID: UUID
+    let photoID: UUID?
     let capturedAt: Date
     var window: NormalizedRect?
     var proposal: DigitProposal?
@@ -93,6 +93,32 @@ struct MeterReading: Identifiable, Codable, Equatable, Sendable {
     var status: ReadingStatus
     var modelVersion: String?
     var lastSyncError: String?
+
+    init(
+        id: UUID = UUID(),
+        revision: Int = 0,
+        meterID: String,
+        photoID: UUID? = nil,
+        capturedAt: Date = .now,
+        window: NormalizedRect? = nil,
+        proposal: DigitProposal? = nil,
+        approvedDigits: String? = nil,
+        status: ReadingStatus,
+        modelVersion: String? = nil,
+        lastSyncError: String? = nil
+    ) {
+        self.id = id
+        self.revision = revision
+        self.meterID = meterID
+        self.photoID = photoID
+        self.capturedAt = capturedAt
+        self.window = window
+        self.proposal = proposal
+        self.approvedDigits = approvedDigits
+        self.status = status
+        self.modelVersion = modelVersion
+        self.lastSyncError = lastSyncError
+    }
 }
 
 struct ApprovedReadingValue: Equatable, Sendable {

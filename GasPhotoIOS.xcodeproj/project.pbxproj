@@ -49,6 +49,7 @@
 		71AC044032C76F461230BF23 /* WindowEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8526B5303533654CF80143DE /* WindowEditorView.swift */; };
 		740ECCC6AE2BAF2BEA9E54B0 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F732FD5BD6911616589F732 /* ReviewView.swift */; };
 		791DCFE48156391603D3C103 /* MagnifierLoupeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C69E6B2CBCE604077C267 /* MagnifierLoupeView.swift */; };
+		7BA149737A7CE89F9E94987F /* ManualReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046AA9B3F575DDC08CE3CA86 /* ManualReadingEntryView.swift */; };
 		7D549D94AFB97D8B700D9ED0 /* SwiftDataReadingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E42C97DAD22A3B118935D05 /* SwiftDataReadingRepositoryTests.swift */; };
 		7F02C5C55F7AC2A607A92350 /* ModelTrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80D92F9A6AA0D5F0EFB61F8 /* ModelTrainingViewModel.swift */; };
 		816F129B5D056B4B04EB0F99 /* HomeAssistantSyncPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FE7752451CA0B90361A7CE /* HomeAssistantSyncPolicyTests.swift */; };
@@ -70,6 +71,7 @@
 		AA8D2DF018F0935D57AA66A3 /* CaptureMeterSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F7C2D6A5F78105B95CA80 /* CaptureMeterSelectionTests.swift */; };
 		AD6CA90B2838F36D494C89C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249CF9D89D7AD78277562664 /* Foundation.framework */; };
 		ADED1AAAD81283A6D09EFB15 /* CameraCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33C7C987CD424D989E44AF2 /* CameraCaptureService.swift */; };
+		AE8D4CD12A3B120563C0057E /* ManualReadingEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A168D9824ADC35FB9C247D /* ManualReadingEntryTests.swift */; };
 		B1809E95AE672DD2CBC20C9F /* ReadingsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372126694358FA576FF61676 /* ReadingsHistoryView.swift */; };
 		C40F97A45A29F29A54E2DAD5 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85715E93D44CB82FB34564 /* RootView.swift */; };
 		CD5B507D183A670417C91653 /* ONNXRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF99951854638D414690828 /* ONNXRuntime.swift */; };
@@ -109,6 +111,7 @@
 		0099CF6F7E51FD041151E68A /* MeterListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MeterListView.swift; path = Features/Meters/MeterListView.swift; sourceTree = "<group>"; };
 		016252461D2790F48BC7BE6D /* HomeAssistantSyncPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeAssistantSyncPolicy.swift; path = HomeAssistant/HomeAssistantSyncPolicy.swift; sourceTree = "<group>"; };
 		042C497C3759595B40FD1CB3 /* checkpoint */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = checkpoint; path = Resources/Training/Digit/checkpoint; sourceTree = "<group>"; };
+		046AA9B3F575DDC08CE3CA86 /* ManualReadingEntryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ManualReadingEntryView.swift; path = Features/Review/ManualReadingEntryView.swift; sourceTree = "<group>"; };
 		085F7C2D6A5F78105B95CA80 /* CaptureMeterSelectionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CaptureMeterSelectionTests.swift; sourceTree = "<group>"; };
 		0B0E3E55197811A4B85F22C8 /* Pods-GasPhotoIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.release.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		0E23DA7ED5205AD176CCDC3F /* ReviewViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReviewViewModel.swift; path = Features/Review/ReviewViewModel.swift; sourceTree = "<group>"; };
@@ -162,6 +165,7 @@
 		9A9FD425828F2DCD63CD6D1D /* PhotoArchiveTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhotoArchiveTests.swift; sourceTree = "<group>"; };
 		9D71ED24593CD02F93073A98 /* training_model.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = training_model.onnx; path = Resources/Training/Digit/training_model.onnx; sourceTree = "<group>"; };
 		A1D2C3EA5CF679746A9ECB5F /* Pods-GasPhotoIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GasPhotoIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GasPhotoIOSTests/Pods-GasPhotoIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A2A168D9824ADC35FB9C247D /* ManualReadingEntryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualReadingEntryTests.swift; sourceTree = "<group>"; };
 		AA47D6BC46CC87282F41E4DF /* eval_model.onnx */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = eval_model.onnx; path = Resources/Training/Digit/eval_model.onnx; sourceTree = "<group>"; };
 		AFFD6B8B511C2005FEF6DE7D /* NormalizedRectTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NormalizedRectTests.swift; sourceTree = "<group>"; };
 		B18D13F80DFC9ABEA0EE008E /* KeychainCredentialStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeychainCredentialStoreTests.swift; sourceTree = "<group>"; };
@@ -309,6 +313,7 @@
 				9A5A5FB7E4CC4589A767AB90 /* MeterConsumptionView.swift */,
 				3AF2E607BF8FD59231FE6CE8 /* HomeAssistantSetupGuide.swift */,
 				C4577087BCCD45ABCCC5BCDB /* HomeAssistantSetupGuideView.swift */,
+				046AA9B3F575DDC08CE3CA86 /* ManualReadingEntryView.swift */,
 			);
 			path = GasPhotoIOS;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				DB31AAA80178FED6390C214A /* ReadingProgressionValidatorTests.swift */,
 				F0B7238CAA68CC3FED178316 /* ConsumptionCalculatorTests.swift */,
 				3A7EAE40EF167D269723CAA9 /* HomeAssistantSetupGuideTests.swift */,
+				A2A168D9824ADC35FB9C247D /* ManualReadingEntryTests.swift */,
 			);
 			path = GasPhotoIOSTests;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				A69DC88F8C1500F11CD4FC0E /* ReadingProgressionValidatorTests.swift in Sources */,
 				A0F5DD4D0692C9CEB2F12081 /* ConsumptionCalculatorTests.swift in Sources */,
 				E666161607A49EF558D104B3 /* HomeAssistantSetupGuideTests.swift in Sources */,
+				AE8D4CD12A3B120563C0057E /* ManualReadingEntryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +622,7 @@
 				05EBBA44FFD9283033C843B0 /* MeterConsumptionView.swift in Sources */,
 				F6A70D42C5F5C249CB4F0A41 /* HomeAssistantSetupGuide.swift in Sources */,
 				63B1C10CE6D24B8E72895620 /* HomeAssistantSetupGuideView.swift in Sources */,
+				7BA149737A7CE89F9E94987F /* ManualReadingEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

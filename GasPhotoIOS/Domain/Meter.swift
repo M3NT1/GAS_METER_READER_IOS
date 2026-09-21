@@ -5,6 +5,14 @@ enum MeterKind: String, Codable, CaseIterable, Sendable {
     case gas
     case water
 
+    var displayName: String {
+        switch self {
+        case .electricity: "Villany"
+        case .gas: "Gáz"
+        case .water: "Víz"
+        }
+    }
+
     var unitSymbol: String {
         switch self {
         case .electricity:
@@ -37,6 +45,14 @@ struct MeterFormat: Codable, Equatable, Sendable {
 
     var isValid: Bool {
         (1...9).contains(integerDigits) && (0...3).contains(fractionalDigits)
+    }
+
+    var previewLabel: String {
+        if fractionalDigits > 0 {
+            return "\(integerDigits) egész + \(fractionalDigits) tizedes"
+        } else {
+            return "\(integerDigits) egész számjegy"
+        }
     }
 }
 

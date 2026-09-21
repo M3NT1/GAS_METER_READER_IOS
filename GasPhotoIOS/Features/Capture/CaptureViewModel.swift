@@ -63,7 +63,7 @@ final class CaptureViewModel {
     var phase: CapturePhase = .idle
     var capturedPreviewImage: UIImage? = nil
     var errorMessage: String?
-    var review: (model: ReviewViewModel, photoURL: URL)?
+    var review: (model: ReviewViewModel, photoURL: URL?)?
     var readingsCount: Int = 0
     var availableMeters: [Meter] = []
     var selectedMeterID: String?
@@ -422,9 +422,11 @@ final class CaptureViewModel {
     }
 
     func openReadingReview(reading: MeterReading) async {
-        guard let photoURL = try? archive.url(for: reading.photoID) else {
-            errorMessage = "A leolvasáshoz tartozó fotó nem található."
-            return
+        let photoURL: URL?
+        if let photoID = reading.photoID {
+            photoURL = try? archive.url(for: photoID)
+        } else {
+            photoURL = nil
         }
         let meter = try? await container.meterRepository.meter(id: reading.meterID)
         review = (

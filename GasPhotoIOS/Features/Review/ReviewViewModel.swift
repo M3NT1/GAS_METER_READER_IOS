@@ -265,6 +265,7 @@ final class ReviewViewModel {
 
     private func recordTrainingExampleIfPossible() async {
         guard meter.recognition == .legacyGas8,
+              let photoID = reading.photoID,
               let trainingExampleStore,
               let window = reading.window,
               let digits = reading.approvedDigits else { return }
@@ -279,7 +280,7 @@ final class ReviewViewModel {
         let decision: TrainingDecision = proposedValue == digits ? .approved : .corrected
         let example = TrainingExample(
             readingID: reading.id,
-            photoID: reading.photoID,
+            photoID: photoID,
             window: window,
             digits: digits,
             decision: decision,

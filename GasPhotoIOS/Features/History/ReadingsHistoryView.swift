@@ -10,6 +10,7 @@ struct ReadingsHistoryView: View {
     @State private var isShowingDeleteConfirm = false
     @State private var isShowingTraining = false
     @State private var isShowingConsumption = false
+    @State private var isShowingManualEntry = false
 
     var body: some View {
         NavigationStack {
@@ -121,7 +122,16 @@ struct ReadingsHistoryView: View {
                 }
 
                 ToolbarItem(placement: .primaryAction) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 12) {
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            isShowingManualEntry = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.body.weight(.semibold))
+                        }
+                        .accessibilityLabel("Új kézi leolvasás rögzítése")
+
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             isShowingConsumption = true
@@ -180,6 +190,17 @@ struct ReadingsHistoryView: View {
                     readings: model.readings
                 )
             }
+            .sheet(isPresented: $isShowingManualEntry) {
+                ManualReadingEntryView(
+                    meterRepository: model.container.meterRepository,
+                    readingRepository: model.container.readingRepository,
+                    homeAssistantUsageSettings: model.container.homeAssistantUsageSettings,
+                    initialMeterID: nil,
+                    onSaved: { _ in
+                        Task { await model.load() }
+                    }
+                )
+            }
         }
     }
 
@@ -187,9 +208,9 @@ struct ReadingsHistoryView: View {
     private var summaryCards: some View {
         HStack(spacing: 12) {
             statCard(
-                title: "Összes fotó",
+                title: "Összes leolvasás",
                 value: "\(model.readings.count)",
-                icon: "photo.stack",
+                icon: "list.clipboard",
                 color: .blue
             )
 
@@ -237,10 +258,13 @@ struct ReadingsHistoryView: View {
 
     // Reading Card Row
     private func readingRow(_ reading: MeterReading) -> some View {
-        VStack(spacing: 12) {
+        let unitSymbol = model.meters.first(where: { $0.id == reading.meterID })?.kind.unitSymbol ?? "m³"
+
+        return VStack(spacing: 12) {
             HStack(alignment: .top, spacing: 14) {
-                // Photo Thumbnail
-                if let url = model.photoURL(for: reading.photoID),
+                // Photo Thumbnail or Manual Entry Icon
+                if let photoID = reading.photoID,
+                   let url = model.photoURL(for: photoID),
                    let uiImage = UIImage(contentsOfFile: url.path) {
                     Image(uiImage: uiImage)
                         .resizable()
@@ -253,11 +277,12 @@ struct ReadingsHistoryView: View {
                         )
                 } else {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color.secondary.opacity(0.15))
+                        .fill(Color.secondary.opacity(0.12))
                         .frame(width: 64, height: 64)
                         .overlay(
-                            Image(systemName: "photo")
-                                .foregroundStyle(.secondary)
+                            Image(systemName: reading.photoID == nil ? "square.and.pencil" : "photo")
+                                .font(.system(size: reading.photoID == nil ? 22 : 20))
+                                .foregroundStyle(reading.photoID == nil ? Color.accentColor : Color.secondary)
                         )
                 }
 
@@ -269,7 +294,7 @@ struct ReadingsHistoryView: View {
                             Text(approved)
                                 .font(.system(size: 20, weight: .bold, design: .monospaced))
                                 .foregroundStyle(.primary)
-                            Text("m³")
+                            Text(unitSymbol)
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(.secondary)
                         }
@@ -279,7 +304,7 @@ struct ReadingsHistoryView: View {
                             Text(formatted)
                                 .font(.system(size: 18, weight: .semibold, design: .monospaced))
                                 .foregroundStyle(.primary)
-                            Text("m³")
+                            Text(unitSymbol)
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(.secondary)
                         }
@@ -317,10 +342,12 @@ struct ReadingsHistoryView: View {
                         }
                     }
 
-                    Button {
-                        Task { await model.registerAsTrainingExample(reading: reading) }
-                    } label: {
-                        Label("Mentés tanítómintaként", systemImage: "brain.head.profile")
+                    if reading.photoID != nil {
+                        Button {
+                            Task { await model.registerAsTrainingExample(reading: reading) }
+                        } label: {
+                            Label("Mentés tanítómintaként", systemImage: "brain.head.profile")
+                        }
                     }
 
                     Divider()
