@@ -29,12 +29,24 @@ final class ReadingsHistoryViewModel {
     var errorMessage: String?
     var trainingCount: Int = 0
 
+    func meter(for id: String) -> Meter? {
+        meters.first { $0.id == id }
+    }
+
+    func canSync(reading: MeterReading) -> Bool {
+        guard let meter = meter(for: reading.meterID) else { return false }
+        return HomeAssistantSyncPolicy.mayStartRequest(enabled: container.homeAssistantUsageSettings.isEnabled, meter: meter)
+    }
+
     var filteredReadings: [MeterReading] {
         switch selectedFilter {
         case .all:
             return readings
         case .pending:
-            return readings.filter { $0.status == .pendingSync }
+            return readings.filter {
+                $0.status == .pendingSync ||
+                ($0.status == .approvedLocal && $0.approvedDigits != nil && canSync(reading: $0))
+            }
         case .synced:
             return readings.filter { $0.status == .synced }
         case .needsReview:
@@ -43,7 +55,10 @@ final class ReadingsHistoryViewModel {
     }
 
     var pendingCount: Int {
-        readings.filter { $0.status == .pendingSync }.count
+        readings.filter {
+            $0.status == .pendingSync ||
+            ($0.status == .approvedLocal && $0.approvedDigits != nil && canSync(reading: $0))
+        }.count
     }
 
     init(container: AppContainer) {
@@ -119,7 +134,10 @@ final class ReadingsHistoryViewModel {
     }
 
     func syncAllPending() async {
-        let pendings = readings.filter { $0.status == .pendingSync }
+        let pendings = readings.filter {
+            $0.status == .pendingSync ||
+            ($0.status == .approvedLocal && $0.approvedDigits != nil && canSync(reading: $0))
+        }
         guard !pendings.isEmpty else { return }
 
         guard container.homeAssistantUsageSettings.isEnabled else {

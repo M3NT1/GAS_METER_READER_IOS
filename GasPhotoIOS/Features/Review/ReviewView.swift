@@ -310,16 +310,59 @@ struct ReviewView: View {
     private var actionSection: some View {
         VStack(spacing: 12) {
             if model.status == .approvedLocal {
-                VStack(spacing: 8) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "checkmark.seal.fill")
-                            .foregroundStyle(Color.green)
-                            .font(.title3)
-                        Text("Állás sikeresen mentve a helyi naplóban!")
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(.primary)
+                if model.canUploadToHomeAssistant {
+                    VStack(spacing: 10) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .foregroundStyle(Color.green)
+                                .font(.subheadline)
+                            Text("Állás rögzítve helyben. Készen áll a feltöltésre.")
+                                .font(.subheadline.weight(.medium))
+                                .foregroundStyle(.primary)
+                        }
+                        .padding(.vertical, 2)
+
+                        Button {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            Task { await model.syncApprovedReading() }
+                        } label: {
+                            HStack(spacing: 8) {
+                                if model.isSyncing {
+                                    ProgressView()
+                                        .tint(.white)
+                                        .controlSize(.small)
+                                    Text("Feltöltés folyamatban...")
+                                        .font(.headline.weight(.semibold))
+                                } else {
+                                    Image(systemName: "arrow.up.circle.fill")
+                                        .font(.headline)
+                                    Text("Feltöltés a Home Assistantba")
+                                        .font(.headline.weight(.semibold))
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 52)
+                            .background(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .fill(model.isSyncing ? Color.accentColor.opacity(0.7) : Color.accentColor)
+                            )
+                            .foregroundStyle(Color.white)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(model.isSyncing)
                     }
-                    .padding(.vertical, 8)
+                } else {
+                    VStack(spacing: 8) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .foregroundStyle(Color.green)
+                                .font(.title3)
+                            Text("Állás sikeresen mentve a helyi naplóban!")
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(.primary)
+                        }
+                        .padding(.vertical, 8)
+                    }
                 }
             } else if model.status == .pendingSync {
                 // Step 2: Reading is saved locally, now offer explicit upload to Home Assistant

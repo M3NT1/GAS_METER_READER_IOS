@@ -3,9 +3,14 @@ import Foundation
 @MainActor
 enum MeterCatalogBootstrap {
     static func run(readings: [MeterReading], meters: any MeterRepository) async throws {
-        let existingIDs = Set(try await meters.allMeters().map(\.id))
-        let readingIDs = Set(readings.map(\.meterID))
+        let existingMeters = try await meters.allMeters()
+        let existingIDs = Set(existingMeters.map(\.id))
 
+        if existingMeters.isEmpty {
+            try await meters.save(Meter.defaultGas)
+        }
+
+        let readingIDs = Set(readings.map(\.meterID))
         for meterID in readingIDs.subtracting(existingIDs).sorted() {
             try await meters.save(legacyMeter(for: meterID))
         }

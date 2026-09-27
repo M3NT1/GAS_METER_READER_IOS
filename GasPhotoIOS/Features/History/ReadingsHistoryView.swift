@@ -409,14 +409,31 @@ struct ReadingsHistoryView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
                 } else if reading.status == .approvedLocal {
-                    HStack(spacing: 4) {
-                        Image(systemName: "checkmark.circle.fill")
-                        Text("Helyben mentve")
+                    if model.canSync(reading: reading) {
+                        Button {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            Task { await model.sync(reading: reading) }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "arrow.up.circle.fill")
+                                Text("Feltöltés")
+                            }
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(Color.blue, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                        }
+                    } else {
+                        HStack(spacing: 4) {
+                            Image(systemName: "checkmark.circle.fill")
+                            Text("Helyben mentve")
+                        }
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.blue)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
                     }
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(.blue)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
                 }
             }
         }

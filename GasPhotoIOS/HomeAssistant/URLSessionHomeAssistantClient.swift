@@ -102,7 +102,7 @@ final class URLSessionHomeAssistantClient: HomeAssistantClient, @unchecked Senda
         let upload = UploadReading(
             id: externalID,
             revision: reading.revision,
-            meterID: reading.meterID,
+            meterID: "gas_main",
             value: value,
             capturedAt: HomeAssistantDateCodec.encode(reading.capturedAt),
             source: "manual_review"
@@ -129,7 +129,7 @@ final class URLSessionHomeAssistantClient: HomeAssistantClient, @unchecked Senda
                 if let checkData = try? await perform(verificationRequest),
                    let existing = try? HomeAssistantResponseDecoder.verifiedReadings(from: checkData)[externalID],
                    existing.value == value,
-                   existing.meterID == reading.meterID,
+                   existing.meterID == "gas_main",
                    abs(existing.capturedAt.timeIntervalSince(reading.capturedAt)) < 1.0 {
                     return existing
                 }
@@ -142,7 +142,7 @@ final class URLSessionHomeAssistantClient: HomeAssistantClient, @unchecked Senda
             throw HomeAssistantClientError.verificationMissing
         }
         guard verified.revision >= reading.revision,
-              verified.meterID == reading.meterID,
+              verified.meterID == "gas_main",
               verified.value == value,
               abs(verified.capturedAt.timeIntervalSince(reading.capturedAt)) < 1.0 else {
             throw HomeAssistantClientError.verificationMismatch

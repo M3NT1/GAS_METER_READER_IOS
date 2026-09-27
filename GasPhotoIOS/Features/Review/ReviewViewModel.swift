@@ -22,6 +22,10 @@ final class ReviewViewModel {
     private(set) var isSyncing: Bool = false
 
     var status: ReadingStatus { reading.status }
+    var canUploadToHomeAssistant: Bool {
+        let haEnabled = homeAssistantUsageSettings?.isEnabled ?? false
+        return HomeAssistantSyncPolicy.mayStartRequest(enabled: haEnabled, meter: meter)
+    }
 
     init(
         reading: MeterReading,
