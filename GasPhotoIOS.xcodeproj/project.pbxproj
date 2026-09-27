@@ -441,6 +441,7 @@
 				TargetAttributes = {
 					25892F660FEE598AB58F4FEB = {
 						DevelopmentTeam = TYZM6FTNXW;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -646,6 +647,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TYZM6FTNXW;
 				INFOPLIST_FILE = GasPhotoIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -664,6 +666,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TYZM6FTNXW;
 				INFOPLIST_FILE = GasPhotoIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
